@@ -1,16 +1,10 @@
-import { UserButton, useUser } from "@clerk/clerk-react";
-import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { axios } from "../services/axios";
+import { UserProfile } from "@clerk/nextjs";
 import { getUserById } from "../utils/users";
 
-const clerkAPIKEY = process.env.CLERK_API_KEY;
-
-export default function Home({ user }) {
+export default function ProfilePage() {
   return (
     <div>
-      <h1 className="underline">Clerk + NextJS App</h1>
-      <span className="text-3xl">Hello {user.first_name}</span>
-      <UserButton />
+      <UserProfile />
     </div>
   );
 }
