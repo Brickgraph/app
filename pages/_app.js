@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import { setAuthorizationHeader } from "../services/auth";
 import { useEffect } from "react";
-import { axios } from "../services/axios";
 
 const publicPages = [];
 
@@ -19,7 +18,7 @@ function SetAxiosAuthHeader() {
   const setAuthFromSession = async () => {
     const token = await session.getToken();
 
-    console.log("Session", session.user);
+    console.log("Token", token);
     setAuthorizationHeader(token);
   };
 
