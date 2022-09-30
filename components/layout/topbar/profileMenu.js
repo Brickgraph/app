@@ -13,10 +13,6 @@ function classNames(...classes) {
 export default function ProfileDropdown() {
   const { user } = useUser();
   const { signOut } = useClerk();
-  const [profileModal, setProfileModal] = useState(false);
-  const handleProfileClick = () => {
-    setProfileModal(true);
-  };
 
   return (
     <div className="ml-4 flex items-center md:ml-6">
