@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import { setAuthorizationHeader } from "../services/auth";
 import { useEffect } from "react";
+import Head from "next/head";
+import { appDetails } from "../config";
+import Layout from "../components/layout/layout";
 
 const publicPages = [];
 
@@ -18,7 +21,6 @@ function SetAxiosAuthHeader() {
   const setAuthFromSession = async () => {
     const token = await session.getToken();
 
-    console.log("Token", token);
     setAuthorizationHeader(token);
   };
 
@@ -46,7 +48,18 @@ function MyApp({ Component, pageProps }) {
         <>
           <SignedIn>
             <SetAxiosAuthHeader />
-            <Component {...pageProps} />
+            <Layout>
+              <Head>
+                <title>{appDetails.appName}</title>
+                <meta name="description" content={appDetails.metaDescription} />
+                <meta
+                  name="viewport"
+                  content="initial-scale=1 width=device-width"
+                />
+                <link rel="icon" href={appDetails.favicon} />
+              </Head>
+              <Component {...pageProps} />
+            </Layout>
           </SignedIn>
           <SignedOut>
             <RedirectToSignIn />

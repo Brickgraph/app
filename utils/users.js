@@ -12,7 +12,7 @@ export async function getUserById(userId) {
   return user;
 }
 
-export async function getSessionByID(sessionId) {
+export async function getSessionById(sessionId) {
   const res = await axios.get(
     `https://api.clerk.dev/v1/sessions/${sessionId}`,
     {

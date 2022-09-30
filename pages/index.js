@@ -1,16 +1,12 @@
-import { UserButton, useUser } from "@clerk/clerk-react";
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { axios } from "../services/axios";
-import { getUserById } from "../utils/users";
+import { getUserById, getSessionById } from "../utils/users";
 
 const clerkAPIKEY = process.env.CLERK_API_KEY;
 
-export default function Home({ user }) {
+export default function Home({ user, session }) {
   return (
     <div>
-      <h1 className="underline">Clerk + NextJS App</h1>
       <span className="text-3xl">Hello {user.first_name}</span>
-      <UserButton />
     </div>
   );
 }
@@ -26,7 +22,8 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const user = await getUserById(userId);
+    const session = await getSessionById(sessionId);
 
-    return { props: { user } };
+    return { props: { user, session } };
   }
 );
