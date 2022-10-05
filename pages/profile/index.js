@@ -1,5 +1,3 @@
-import { userAgent } from "next/server";
-
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById } from "../../utils/users";
 

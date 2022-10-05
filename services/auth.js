@@ -1,5 +1,6 @@
 import { axios } from "./axios";
+import { brickgraph } from "./brickgraph-api";
 
 export const setAuthorizationHeader = (token) => {
-  axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+  brickgraph.defaults.headers["Authorization"] = `Bearer ${token}`;
 };

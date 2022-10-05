@@ -1,6 +1,5 @@
 import { UserProfile } from "@clerk/nextjs";
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { getUserById } from "../../utils/users";
 
 export default function ProfilePage() {
   return (
@@ -12,7 +11,7 @@ export default function ProfilePage() {
 
 export const getServerSideProps = withServerSideAuth(
   async ({ req, resolvedUrl }) => {
-    const { userId, sessionId } = req.auth;
+    const { sessionId } = req.auth;
 
     if (!sessionId) {
       return {
@@ -20,8 +19,6 @@ export const getServerSideProps = withServerSideAuth(
       };
     }
 
-    const user = await getUserById(userId);
-
-    return { props: { user } };
+    return { props: {} };
   }
 );

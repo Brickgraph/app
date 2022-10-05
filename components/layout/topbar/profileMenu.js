@@ -32,9 +32,11 @@ export default function ProfileDropdown() {
               <img
                 className="h-8 w-8 rounded-full"
                 src={
-                  `${user}`
-                    ? `${user.profileImageUrl}`
-                    : "/images/profiles/giraffe-profile-placeholder.png"
+                  user.profileImageUrl.includes(
+                    "https://www.gravatar.com/avatar"
+                  )
+                    ? "/images/profiles/giraffe-close-up.png"
+                    : `${user.profileImageUrl}`
                 }
                 alt=""
               />
