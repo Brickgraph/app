@@ -5,6 +5,8 @@ import { BellIcon } from "@heroicons/react/outline";
 import { useClerk, RedirectToSignIn, UserProfile } from "@clerk/clerk-react";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,7 +31,7 @@ export default function ProfileDropdown() {
           <div>
             <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-400">
               <span className="sr-only">Open user menu</span>
-              <img
+              <Image
                 className="h-8 w-8 rounded-full"
                 src={
                   user.profileImageUrl.includes(
@@ -54,7 +56,7 @@ export default function ProfileDropdown() {
             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
               <Menu.Item key="profile">
                 {({ active }) => (
-                  <a
+                  <Link
                     href="/profile"
                     className={classNames(
                       active ? "bg-gray-100" : "",
@@ -62,12 +64,12 @@ export default function ProfileDropdown() {
                     )}
                   >
                     Profile
-                  </a>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item key="account">
                 {({ active }) => (
-                  <a
+                  <Link
                     href="/profile/account"
                     className={classNames(
                       active ? "bg-gray-100" : "",
@@ -75,7 +77,7 @@ export default function ProfileDropdown() {
                     )}
                   >
                     Account
-                  </a>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item key="sign-out">
