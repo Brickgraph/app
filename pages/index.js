@@ -2,6 +2,7 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById, getSessionById } from "../utils/users";
 import { brickgraph } from "../services/brickgraph-api";
 import { useState } from "react";
+import { CytoscapeGraph } from "../components/visualisations/cytoscapeGraph";
 
 const clerkAPIKEY = process.env.CLERK_API_KEY;
 
@@ -21,6 +22,10 @@ export default function Home({ user, session }) {
     <>
       <div>
         <span className="text-3xl">Hello {user.first_name}</span>
+        <br />
+        <div id="cy" className="px-10">
+          <CytoscapeGraph />
+        </div>
         <br />
         <button onClick={handleClick} disabled={isLoading}>
           Test Backend
