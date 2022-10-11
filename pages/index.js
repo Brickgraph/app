@@ -3,6 +3,8 @@ import { getUserById, getSessionById } from "../utils/users";
 import { brickgraph } from "../services/brickgraph-api";
 import { useState } from "react";
 import { CytoscapeGraph } from "../components/visualisations/cytoscapeGraph";
+import { ForceGraph } from "../components/visualisations/D3Graph";
+import VisGraph from "../components/visualisations/visGraph";
 
 const clerkAPIKEY = process.env.CLERK_API_KEY;
 
@@ -23,10 +25,17 @@ export default function Home({ user, session }) {
       <div>
         <span className="text-3xl">Hello {user.first_name}</span>
         <br />
-        <div id="cy" className="px-10">
+        {/* <div id="cy" className="px-10">
           <CytoscapeGraph />
         </div>
-        <br />
+        <br /> */}
+        {/* <div id="d3" className="border-2 border-rose-600">
+          <ForceGraph height={800} width={800} />
+        </div>
+        <br /> */}
+        <div id="vis" className="h-auto border-2 border-rose-600">
+          <VisGraph />
+        </div>
         <button onClick={handleClick} disabled={isLoading}>
           Test Backend
         </button>

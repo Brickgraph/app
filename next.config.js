@@ -4,7 +4,10 @@ const nextConfig = {
   swcMinify: true,
 };
 
-const withTM = require("next-transpile-modules")(["react-cytoscapejs"]);
+const withTM = require("next-transpile-modules")([
+  "react-cytoscapejs",
+  "react-force-graph-2d",
+]);
 
 module.exports = nextConfig;
 module.exports = withTM({ ...nextConfig });
