@@ -1,4 +1,4 @@
-const data = {
+const visData = {
   nodes: [
     { id: "Myriel", group: 1, label: "Myriel" },
     { id: "Napoleon", group: 1 },
@@ -336,4 +336,4 @@ const data = {
   ],
 };
 
-export default data;
+export default visData;

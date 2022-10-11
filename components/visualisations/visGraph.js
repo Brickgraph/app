@@ -1,15 +1,15 @@
 import Graph from "react-graph-vis";
 import React, { useState } from "react";
-import data from "./testData1";
+// import visData from "./testData_vis";
 
-const VisGraph = () => {
+const VisGraph = ({ graphData }) => {
   const options = {
     layout: {
       hierarchical: false,
     },
     nodes: {
       shape: "circle",
-      size: 16,
+      size: 12,
     },
     edges: {
       color: "orange",
@@ -21,7 +21,7 @@ const VisGraph = () => {
 
   const [state, setState] = useState({
     counter: 5,
-    graph: data,
+    graph: graphData,
     events: {
       select: ({ nodes, edges }) => {
         // alert("Welome to Brickgraph");
