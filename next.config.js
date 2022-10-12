@@ -11,3 +11,4 @@ const withTM = require("next-transpile-modules")([
 
 module.exports = nextConfig;
 module.exports = withTM({ ...nextConfig });
+module.exports = { images: { domains: ["images.clerk.dev"] } };

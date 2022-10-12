@@ -15,6 +15,7 @@ function classNames(...classes) {
 export default function ProfileDropdown() {
   const { user } = useUser();
   const { signOut } = useClerk();
+  const [isAccountOpen, setAccountIsOpen] = useState(false);
 
   return (
     <div className="ml-4 flex items-center md:ml-6">
@@ -58,30 +59,32 @@ export default function ProfileDropdown() {
             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
               <Menu.Item key="profile">
                 {({ active }) => (
-                  <div
+                  <button
                     className={classNames(
                       active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
+                      "block px-4 py-2 text-sm text-gray-700 w-full text-left"
                     )}
+                    onClick={() => {
+                      window.location.href = "/profile";
+                    }}
                   >
-                    <Link href="/profile">
-                      <a>Profile</a>
-                    </Link>
-                  </div>
+                    Profile
+                  </button>
                 )}
               </Menu.Item>
               <Menu.Item key="account">
                 {({ active }) => (
-                  <div
+                  <button
                     className={classNames(
                       active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
+                      "block px-4 py-2 text-sm text-gray-700 w-full text-left"
                     )}
+                    onClick={() => {
+                      window.location.href = "/profile/account";
+                    }}
                   >
-                    <Link href="/profile/account">
-                      <a>Account</a>
-                    </Link>
-                  </div>
+                    Account
+                  </button>
                 )}
               </Menu.Item>
               <Menu.Item key="sign-out">

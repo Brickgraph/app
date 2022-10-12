@@ -5,6 +5,7 @@ import { useState } from "react";
 import VisGraph from "../components/visualisations/visGraph";
 import ModalBase from "../components/modals/modalBase";
 import data from "../components/visualisations/testData_vis";
+import { UserProfile } from "@clerk/nextjs";
 
 const clerkAPIKEY = process.env.CLERK_API_KEY;
 
@@ -53,10 +54,7 @@ export default function Home({ user, session, graphData }) {
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
         >
-          <h1 className="text-3xl">Hello World</h1>
-          <a href="https://www.google.com" target={"_blank"}>
-            Google
-          </a>
+          <h1 className="text-2xl">Modal Goes Here</h1>
         </ModalBase>
       </div>
     </>

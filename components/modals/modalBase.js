@@ -11,14 +11,14 @@ const ModalBase = ({ isVisible, children, onClose }) => {
   return (
     <div
       id="wrapper"
-      className="fixed inset-0 h-screen bg-black bg-opacity-25 
-                 backdrop-blur-sm flex justify-center items-center"
+      className="fixed inset-0 p-10 bg-black bg-opacity-25 
+                 backdrop-blur-sm flex justify-center items-center z-20"
       onClick={handleClose}
     >
       <div className="md:w-[600px] w-[90%] md:mx-auto flex flex-col">
         <button
           onClick={() => onClose()}
-          className="text-white text-xl place-self-end"
+          className="text-orange-600 text-xl place-self-end"
         >
           x
         </button>
