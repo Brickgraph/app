@@ -1,4 +1,4 @@
-const visData = {
+export const visData = {
   nodes: [
     { id: "Myriel", group: 1, label: "Myriel" },
     { id: "Napoleon", group: 1 },
@@ -336,4 +336,14 @@ const visData = {
   ],
 };
 
-export default visData;
+export const visNodesDict = visData.nodes.reduce((acc, node) => {
+  acc[node.id] = node;
+  return acc;
+}, {});
+
+export function visNodesDictFunc(data) {
+  return data.reduce((acc, node) => {
+    acc[node.id] = node;
+    return acc;
+  }, {});
+}

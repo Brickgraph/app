@@ -1,8 +1,13 @@
 import Graph from "react-graph-vis";
 import React, { useState } from "react";
 // import visData from "./testData_vis";
+import ModalBase from "../modals/modalBase";
+import { visNodesDictFunc } from "./testData_vis";
 
-const VisGraph = ({ graphData }) => {
+const VisGraph = ({ graphData, graphDataDict }) => {
+  // console.log(graphData.nodes);
+  const nodesData = visNodesDictFunc(graphData.nodes);
+  // console.log(nodesData);
   const options = {
     layout: {
       hierarchical: false,
@@ -18,20 +23,23 @@ const VisGraph = ({ graphData }) => {
     interaction: { hover: true },
   };
   const [nodeHovered, setNodeHovered] = useState(null);
+  const [nodeSelected, setNodeSelected] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [state, setState] = useState({
     counter: 5,
     graph: graphData,
     events: {
-      select: ({ nodes, edges }) => {
-        // alert("Welome to Brickgraph");
-        console.log("Selected nodes:");
-        console.log(nodes);
-        console.log("Selected edges:");
-        console.log(edges);
+      selectNode: function (e) {
+        var { nodes, edges } = e;
+        console.log(nodes[0]);
+        var nodeId = nodes;
+        var node = nodesData[nodeId];
+        console.log(node);
+        setNodeSelected(node);
+        setIsModalVisible(true);
       },
       hoverNode: ({ node }) => {
-        console.log(node);
         setNodeHovered(node);
       },
     },
@@ -47,7 +55,21 @@ const VisGraph = ({ graphData }) => {
         clusterThreshold={100}
         physics={{ enabled: true, solver: "forceAtlas2Based" }}
       />
-      <span>{nodeHovered}</span>
+      {/* <div>
+        <span>Selected: {nodeSelected}</span>
+      </div> */}
+      <div>
+        <span>Hovered: {nodeHovered}</span>
+      </div>
+      <ModalBase
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      >
+        <h1 className="text-2xl text-black">
+          {nodeSelected ? nodeSelected.id : ""} -{" "}
+          {nodeSelected ? nodeSelected.group : ""}
+        </h1>
+      </ModalBase>
     </>
   );
 };

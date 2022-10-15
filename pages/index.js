@@ -4,14 +4,17 @@ import { brickgraph } from "../services/brickgraph-api";
 import { useState } from "react";
 import VisGraph from "../components/visualisations/visGraph";
 import ModalBase from "../components/modals/modalBase";
-import data from "../components/visualisations/testData_vis";
+import {
+  visData,
+  visNodesDict,
+} from "../components/visualisations/testData_vis";
 import { UserProfile } from "@clerk/nextjs";
 
 const clerkAPIKEY = process.env.CLERK_API_KEY;
 
-export default function Home({ user, session, graphData }) {
+export default function Home({ user, session, graphData, graphDataDict }) {
   // Function to fetch data from an API
-  console.log(graphData);
+  console.log(graphDataDict);
   const [data, setData] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -28,15 +31,20 @@ export default function Home({ user, session, graphData }) {
       <div>
         <span className="text-3xl">Hello {user.first_name}</span>
         <br />
-        <button onClick={() => setIsModalVisible(true)}>Modal</button>
+        <button
+          className="bg-giraffe-500 hover:bg-giraffe-900 text-white font-bold py-2 px-4 rounded"
+          onClick={() => setIsModalVisible(true)}
+        >
+          Node Data
+        </button>
         <br />
         {/* <button onClick={handleClick} disabled={isLoading}>
           Test Backend
         </button>
         <br /> */}
-        {/* <div id="vis" className="h-auto border-2 border-rose-600">
-          <VisGraph graphData={graphData} />
-        </div> */}
+        <div id="vis" className="p-4 w-[90%] pl-4 border-2 border-rose-600">
+          <VisGraph graphData={graphData} graphDataDict={graphDataDict} />
+        </div>
       </div>
       {/* <div>
         {isLoading && <h2>Loading...</h2>}
@@ -54,7 +62,7 @@ export default function Home({ user, session, graphData }) {
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
         >
-          <h1 className="text-2xl">Modal Goes Here</h1>
+          <h1 className="text-2xl text-giraffe-500">Hello World</h1>
         </ModalBase>
       </div>
     </>
@@ -74,8 +82,9 @@ export const getServerSideProps = withServerSideAuth(
     const user = await getUserById(userId);
     const session = await getSessionById(sessionId);
     // const { data } = await brickgraph.get("/test/graph_test");
-    const graphData = data;
+    const graphData = visData;
+    const graphDataDict = visNodesDict;
 
-    return { props: { user, session, graphData } };
+    return { props: { user, session, graphData, graphDataDict } };
   }
 );
