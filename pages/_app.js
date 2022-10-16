@@ -20,7 +20,6 @@ function SetAxiosAuthHeader() {
 
   const setAuthFromSession = async () => {
     const token = await session.getToken();
-    // console.log(token);
 
     setAuthorizationHeader(token);
   };

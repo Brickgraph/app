@@ -2,68 +2,39 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById, getSessionById } from "../utils/users";
 import { brickgraph } from "../services/brickgraph-api";
 import { useState } from "react";
-import VisGraph from "../components/visualisations/visGraph";
-import ModalBase from "../components/modals/modalBase";
-import {
-  visData,
-  visNodesDict,
-} from "../components/visualisations/testData_vis";
-import { UserProfile } from "@clerk/nextjs";
+import VisGraph from "../components/visualisations/graph/visGraph";
+import { visData } from "../components/visualisations/graph/testData_vis";
+import { setAuthorizationHeader } from "../services/auth";
 
-const clerkAPIKEY = process.env.CLERK_API_KEY;
-
-export default function Home({ user, session, graphData, graphDataDict }) {
-  // Function to fetch data from an API
-  console.log(graphDataDict);
+export default function Home({ user, backendStatus, backendData }) {
   const [data, setData] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const handleClick = async () => {
     setIsLoading(true);
-    const response = await brickgraph.get("/auth/test");
-    console.log(response);
-    setData(response.data);
-    setIsLoading(false);
+    const response = await testBackend();
+    if (response.status === 200) {
+      setData(response.data);
+      console.log("SUCCESS", response.data);
+      setIsLoading(false);
+    }
+    console.log(response.status);
   };
 
   return (
     <>
       <div>
-        <span className="text-3xl">Hello {user.first_name}</span>
+        <span className="text-md md: text-lg xl:text-3xl">
+          Hello {user.first_name}
+        </span>
         <br />
-        <button
-          className="bg-giraffe-500 hover:bg-giraffe-900 text-white font-bold py-2 px-4 rounded"
-          onClick={() => setIsModalVisible(true)}
-        >
-          Node Data
-        </button>
+        <button onClick={handleClick}>Test</button>
         <br />
-        {/* <button onClick={handleClick} disabled={isLoading}>
-          Test Backend
-        </button>
-        <br /> */}
-        <div id="vis" className="p-4 w-[90%] pl-4 border-2 border-rose-600">
-          <VisGraph graphData={graphData} graphDataDict={graphDataDict} />
+        {/* <div id="vis" className="p-4 w-[90%] pl-4 border-2 border-rose-600">
+          <VisGraph graphData={graphData} />
+        </div> */}
+        <div className="p-4 w-[90%] pl-4 border-2 border-orange-500">
+          <VisGraph status={backendStatus} data={backendData.graph} />
         </div>
-      </div>
-      {/* <div>
-        {isLoading && <h2>Loading...</h2>}
-        {!isLoading && (
-          <div key={data.user_id}>
-            <h2>{data.email}</h2>
-            <h2>{data.subscription}</h2>
-            <h2>{data.is_admin}</h2>
-            <br />
-          </div>
-        )}
-      </div> */}
-      <div>
-        <ModalBase
-          isVisible={isModalVisible}
-          onClose={() => setIsModalVisible(false)}
-        >
-          <h1 className="text-2xl text-giraffe-500">Hello World</h1>
-        </ModalBase>
       </div>
     </>
   );
@@ -71,7 +42,7 @@ export default function Home({ user, session, graphData, graphDataDict }) {
 
 export const getServerSideProps = withServerSideAuth(
   async ({ req, resolvedUrl }) => {
-    const { userId, sessionId } = req.auth;
+    const { userId, sessionId, getToken } = req.auth;
 
     if (!sessionId) {
       return {
@@ -80,11 +51,15 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const user = await getUserById(userId);
-    const session = await getSessionById(sessionId);
-    // const { data } = await brickgraph.get("/test/graph_test");
-    const graphData = visData;
-    const graphDataDict = visNodesDict;
+    const token = await getToken();
+    //const graphData = visData;
 
-    return { props: { user, session, graphData, graphDataDict } };
+    // Backend data to populate graph
+    setAuthorizationHeader(token);
+    const backendResponse = await brickgraph.get("test/graph_test");
+    const backendStatus = backendResponse.status;
+    const backendData = backendResponse.data;
+
+    return { props: { user, backendStatus, backendData } };
   }
 );
