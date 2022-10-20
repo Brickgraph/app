@@ -1,16 +1,16 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { getUserById, getSessionById } from "../utils/users";
-import { brickgraph } from "../services/brickgraph-api";
-import { useState } from "react";
+import { getUserById } from "../utils/users";
+import { brickgraph, brickgraphRequest } from "../services/brickgraph-api";
 import VisGraph from "../components/visualisations/graph/visGraph";
 import { setAuthorizationHeader } from "../services/auth";
 
-export default function Home({ user, backendStatus, backendData }) {
+export default function Home({ user, status, data, testGraphData }) {
+  console.log("TEST", testGraphData);
   return (
     <>
       <div>
         <div className="p-4 h-[100%] w-[100%] flex items-center">
-          <VisGraph status={backendStatus} data={backendData.graph} />
+          <VisGraph status={status} data={data.graph} />
         </div>
       </div>
     </>
@@ -31,11 +31,12 @@ export const getServerSideProps = withServerSideAuth(
     const token = await getToken();
 
     // Backend data to populate graph
-    setAuthorizationHeader(token);
-    const backendResponse = await brickgraph.get("test/graph_test");
-    const backendStatus = backendResponse.status;
-    const backendData = backendResponse.data;
+    const { status, data } = await brickgraphRequest(token).get(
+      "test/graph_test"
+    );
+    const testResponse = await brickgraphRequest(token).get("test");
+    const testGraphData = testResponse.data;
 
-    return { props: { user, backendStatus, backendData } };
+    return { props: { user, status, data, testGraphData } };
   }
 );

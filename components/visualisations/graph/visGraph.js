@@ -15,10 +15,8 @@ export const GraphVisual = ({
     setIsDataLoading((current) => !current);
   };
 
-  // Refreshes graph when button is clicked
+  // Refreshes graph when button is clicked, or data is changed
   useEffect(() => {
-    var waitTime = 1000;
-    setTimeout(() => {}, waitTime);
     setIsDataLoading(true);
   }, [dataLoading]);
 

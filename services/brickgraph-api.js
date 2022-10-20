@@ -7,10 +7,13 @@ export const brickgraph = Axios.create({
 });
 
 export function brickgraphRequest(token) {
-  const headers = { Authorization: `Bearer ${token}` };
-  return Axios.create({
-    headers: { "Content-Type": "application/json" },
+  const request = Axios.create({
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
     authorization: "",
     baseURL: "http://127.0.0.1:8000",
   });
+  return request;
 }
