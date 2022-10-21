@@ -42,11 +42,11 @@ export const GraphVisual = ({
   return (
     <>
       <div className="relative h-full">
-        <div className="absolute top-0 right-0 transform z-10">
+        <div className="absolute top-1 right-1 transform z-10">
           <div>
             <button
               onClick={resetData}
-              className="text-sm text-bold rounded border-orange-500 border-1 p-2 hover:bg-orange-500 text-grey-800 hover:text-white"
+              className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
             >
               Refresh
             </button>
@@ -68,7 +68,12 @@ export const GraphVisual = ({
 const VisGraph = ({ status, data }) => {
   const [responseStatus, setResponseStatus] = useState(status);
   if (responseStatus !== 200) {
-    return <div>No Data available right now... Please try again later.</div>;
+    return (
+      <div>
+        No Data available right now... Please try again later. Looks like a{" "}
+        {responseStatus} error.
+      </div>
+    );
   }
 
   const nodesDict = nodesDictFunc(data);
@@ -112,15 +117,14 @@ const VisGraph = ({ status, data }) => {
   );
 
   const { graph, events } = state;
-
   return (
-    <div className="flex flex-col">
-      <div>
+    <div className="flex flex-col p-4 overflow-auto">
+      <div className="h-[calc(100vh-100px)] border-grey-300 border-2">
         <GraphVisual
           options={options}
           events={events}
           data={graph}
-          height={"500px"}
+          height={"100%"}
           width={"100%"}
         />
       </div>
