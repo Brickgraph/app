@@ -4,7 +4,6 @@ import ModalBase from "../../modals/modalBase";
 import { nodesDictFunc } from "./toDictFunctions";
 
 export const GraphVisual = ({
-  options,
   events,
   data,
   height = "100%",
@@ -31,6 +30,25 @@ export const GraphVisual = ({
     };
   });
 
+  const [hierarchical, setHierachical] = useState(false);
+  const changeFormat = () => {
+    setHierachical((current) => !current);
+  };
+  const options = {
+    layout: {
+      hierarchical: hierarchical,
+    },
+    nodes: {
+      shape: "circle",
+      size: 12,
+    },
+    edges: {
+      color: "orange",
+      physics: false,
+    },
+    interaction: { hover: true },
+  };
+
   if (dataLoading !== true) {
     return (
       <>
@@ -43,14 +61,20 @@ export const GraphVisual = ({
     <>
       <div className="relative h-full">
         <div className="absolute top-1 right-1 transform z-10">
-          <div>
-            <button
-              onClick={resetData}
-              className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-            >
-              Refresh
-            </button>
-          </div>
+          <button
+            onClick={resetData}
+            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+          >
+            Refresh
+          </button>
+        </div>
+        <div className="absolute top-1 left-1 transform z-10">
+          <button
+            onClick={changeFormat}
+            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+          >
+            {hierarchical ? "View: Network" : "View: Hierarchy"}
+          </button>
         </div>
         <Graph
           graph={data}
@@ -81,21 +105,6 @@ const VisGraph = ({ status, data }) => {
   const [nodeSelected, setNodeSelected] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const options = {
-    layout: {
-      hierarchical: false,
-    },
-    nodes: {
-      shape: "circle",
-      size: 12,
-    },
-    edges: {
-      color: "orange",
-      physics: false,
-    },
-    interaction: { hover: true },
-  };
-
   const [state, setState] = useState(
     {
       counter: 5,
@@ -121,7 +130,6 @@ const VisGraph = ({ status, data }) => {
     <div className="flex flex-col p-4 overflow-auto">
       <div className="h-[calc(100vh-100px)] border-grey-300 border-2">
         <GraphVisual
-          options={options}
           events={events}
           data={graph}
           height={"100%"}
@@ -133,10 +141,28 @@ const VisGraph = ({ status, data }) => {
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
       >
-        <h1 className="text-2xl text-black">
-          {nodeSelected ? nodeSelected.id : ""} -{" "}
-          {nodeSelected ? nodeSelected.group : ""}
+        <h1 className="text-xl text-orange-700 text-bold">
+          {nodeSelected ? nodeSelected.group : ""}:{" "}
+          {nodeSelected ? nodeSelected.label : ""}
         </h1>
+        <br />
+        <h1 className="text-lg text-orange-800 text-bold">Details</h1>
+        <ul>
+          {nodeSelected
+            ? Object.keys(nodeSelected).map((key, index) => {
+                return (
+                  <>
+                    <li>
+                      <p className="text-md">
+                        <span className="text-bold text-orange-900">{key}</span>
+                        : {nodeSelected[key]}
+                      </p>
+                    </li>
+                  </>
+                );
+              })
+            : ""}
+        </ul>
       </ModalBase>
     </div>
   );

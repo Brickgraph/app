@@ -3,11 +3,10 @@ import { getUserById } from "../utils/users";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import VisGraph from "../components/visualisations/graph/visGraph";
 
-export default function Home({ user, status, data, testGraphData }) {
-  console.log("TEST", testGraphData);
+export default function Home({ user, status, data }) {
   return (
     <>
-      <VisGraph status={status} data={data.graph} />
+      <VisGraph status={status} data={data} />
     </>
   );
 }
@@ -26,12 +25,11 @@ export const getServerSideProps = withServerSideAuth(
     const token = await getToken();
 
     // Backend data to populate graph
-    const { status, data } = await brickgraphRequest(token).get(
-      "test/graph_test"
-    );
-    const testResponse = await brickgraphRequest(token).get("test");
-    const testGraphData = testResponse.data;
+    const { status, data } = await brickgraphRequest(token).get("test");
+    //const testResponse = await brickgraphRequest(token).get("test");
+    //const testGraphStatus = testResponse.status;
+    //const testGraphData = testResponse.data;
 
-    return { props: { user, status, data, testGraphData } };
+    return { props: { user, status, data } };
   }
 );
