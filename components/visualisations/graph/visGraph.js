@@ -149,10 +149,10 @@ const VisGraph = ({ status, data }) => {
         <h1 className="text-lg text-orange-800 text-bold">Details</h1>
         <ul>
           {nodeSelected
-            ? Object.keys(nodeSelected).map((key, index) => {
+            ? Object.keys(nodeSelected).map((key) => {
                 return (
                   <>
-                    <li>
+                    <li key={key}>
                       <p className="text-md">
                         <span className="text-bold text-orange-900">{key}</span>
                         : {nodeSelected[key]}
