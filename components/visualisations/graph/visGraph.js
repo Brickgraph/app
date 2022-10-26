@@ -47,6 +47,12 @@ export const GraphVisual = ({
       physics: false,
     },
     interaction: { hover: true },
+    physics: {
+      barnesHut: {
+        springConstant: 0.5,
+        avoidOverlap: 0.1,
+      },
+    },
   };
 
   if (dataLoading !== true) {
@@ -73,7 +79,7 @@ export const GraphVisual = ({
             onClick={changeFormat}
             className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
           >
-            {hierarchical ? "View: Network" : "View: Hierarchy"}
+            {hierarchical ? "View: Hierarchy" : "View: Network"}
           </button>
         </div>
         <Graph
@@ -82,7 +88,6 @@ export const GraphVisual = ({
           events={events}
           style={{ height: height, width: width }}
           clusterThreshold={100}
-          physics={{ enabled: true, solver: "forceAtlas2Based" }}
         />
       </div>
     </>
