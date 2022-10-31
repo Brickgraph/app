@@ -94,7 +94,7 @@ export const GraphVisual = ({
   );
 };
 
-const VisGraph = ({ status, data }) => {
+export const VisGraph = ({ status, data }) => {
   const [responseStatus, setResponseStatus] = useState(status);
   if (responseStatus !== 200) {
     return (
@@ -157,12 +157,16 @@ const VisGraph = ({ status, data }) => {
             ? Object.keys(nodeSelected).map((key) => {
                 return (
                   <>
-                    <li key={key}>
-                      <p className="text-md">
-                        <span className="text-bold text-orange-900">{key}</span>
-                        : {nodeSelected[key]}
-                      </p>
-                    </li>
+                    <div>
+                      <li key={nodeSelected.id}>
+                        <p className="text-md">
+                          <span className="text-bold text-orange-900">
+                            {key}
+                          </span>
+                          : {nodeSelected[key]}
+                        </p>
+                      </li>
+                    </div>
                   </>
                 );
               })
@@ -173,4 +177,4 @@ const VisGraph = ({ status, data }) => {
   );
 };
 
-export default VisGraph;
+//export default VisGraph;
