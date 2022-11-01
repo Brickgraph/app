@@ -30,6 +30,24 @@ export const GraphVisual = ({
     };
   });
 
+  const [graphData, setGraphData] = useState(data);
+
+  const clearFilters = () => {
+    setGraphData(data);
+  };
+
+  const handleFilter = (value) => {
+    clearFilters();
+    const nodes = data.nodes.filter((item) => item.group === value);
+    setGraphData({ nodes: nodes, edges: data.edges });
+    setIsDataLoading((current) => !current);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    setGraphData(graphData);
+  }, [graphData]);
+
   const [hierarchical, setHierachical] = useState(false);
   const changeFormat = () => {
     setHierachical((current) => !current);
@@ -65,6 +83,15 @@ export const GraphVisual = ({
 
   return (
     <>
+      <div>
+        <button onClick={() => handleFilter("Sector")}>Sector</button>
+      </div>
+      <div>
+        <button onClick={() => handleFilter("Property")}>Property</button>
+      </div>
+      <div>
+        <button onClick={() => clearFilters()}>Clear</button>
+      </div>
       <div className="relative h-full">
         <div className="absolute top-1 right-1 transform z-10">
           <button
@@ -83,7 +110,7 @@ export const GraphVisual = ({
           </button>
         </div>
         <Graph
-          graph={data}
+          graph={graphData}
           options={options}
           events={events}
           style={{ height: height, width: width }}

@@ -2,6 +2,7 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById } from "../utils/users";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/visGraph";
+import { useEffect, useState } from "react";
 
 export default function Home({ user, status, data }) {
   return (
