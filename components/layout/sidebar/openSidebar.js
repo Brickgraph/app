@@ -1,55 +1,11 @@
-import {
-  BellIcon,
-  PresentationChartBarIcon,
-  HomeIcon,
-  ViewGridAddIcon,
-  MenuAlt2Icon,
-  UserGroupIcon,
-  XIcon,
-  DatabaseIcon,
-  LightningBoltIcon,
-  CogIcon,
-  BeakerIcon,
-} from "@heroicons/react/outline";
-import SidebarLogo from "./sidebarLogo";
-
-const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon },
-  {
-    name: "Integrations",
-    href: "/integrations",
-    icon: DatabaseIcon,
-  },
-  {
-    name: "Connections",
-    href: "/connections",
-    icon: LightningBoltIcon,
-  },
-  { name: "Groups", href: "/groups", icon: UserGroupIcon },
-  { name: "API Docs", href: "#", icon: BeakerIcon },
-  /* {
-    name: "Marketplace - coming soon",
-    href: "#",
-    icon: ViewGridAddIcon,
-  },
-  {
-    name: "Reports - coming soon",
-    href: "#",
-    icon: PresentationChartBarIcon,
-  }, */
-  { name: "Settings", href: "/settings", icon: CogIcon },
-];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Account", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+import { navigationItems } from "./navigationItems";
+import { SidebarLogo } from "./sidebarLogo";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Sidebar(props) {
+export default function SidebarOpen(props) {
   return (
     <>
       <div className="flex items-center">
@@ -58,7 +14,7 @@ export default function Sidebar(props) {
 
       <div className="mt-5 flex-1 h-0 overflow-y-auto">
         <nav className="px-2 space-y-1">
-          {navigation.map((item) => (
+          {navigationItems.map((item) => (
             <a
               key={item.name}
               href={item.href}

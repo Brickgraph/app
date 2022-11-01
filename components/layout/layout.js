@@ -2,11 +2,8 @@ import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import { Dialog, Transition } from "@headlessui/react";
 import { MenuAlt2Icon, XIcon } from "@heroicons/react/outline";
-import Sidebar from "./sidebar/sidebar";
-/* import LoginButton from "../ui/buttons/login-button";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import Router from "next/router"; */
+import SidebarOpen from "./sidebar/openSidebar";
+import SidebarToggle from "./sidebar/sidebarToggle";
 import ProfileDropdown from "./topbar/profileMenu";
 import SearchBar from "./topbar/searchBar";
 
@@ -75,7 +72,7 @@ export default function Layout(props) {
                       </button>
                     </div>
                   </Transition.Child>
-                  <Sidebar path={formattedPath} />
+                  <SidebarOpen path={formattedPath} />
                 </Dialog.Panel>
               </Transition.Child>
               <div className="flex-shrink-0 w-14" aria-hidden="true">
@@ -85,31 +82,31 @@ export default function Layout(props) {
           </Dialog>
         </Transition.Root>
 
-        {/* Static sidebar for desktop */}
-        <div className="hidden md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 py-5 bg-gray-800">
-          <div className="flex-1 flex flex-col min-h-0 items-stretch">
-            <Sidebar path={formattedPath} />
+        <div className="flex h-full">
+          <div className="flex-1">
+            <SidebarToggle path={formattedPath} />
           </div>
-        </div>
-
-        <div className="md:pl-72 flex flex-col">
-          <div className="sticky top-0 z-40 flex-shrink-0 flex h-16 bg-white shadow">
-            <button
-              type="button"
-              className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <span className="sr-only">Open sidebar</span>
-              <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-            <div className="flex-1 px-4 flex justify-between">
-              <SearchBar />
-              <ProfileDropdown />
+          <div className="grow md:pl-72">
+            <div className="flex flex-col">
+              <div className="sticky top-0 z-40 flex-shrink-0 flex h-16 bg-white shadow">
+                <button
+                  type="button"
+                  className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <span className="sr-only">Open sidebar</span>
+                  <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
+                </button>
+                <div className="flex-1 px-4 flex justify-between">
+                  <SearchBar />
+                  <ProfileDropdown />
+                </div>
+              </div>
+              <Fragment>
+                <main>{props.children}</main>
+              </Fragment>
             </div>
           </div>
-          <Fragment>
-            <main>{props.children}</main>
-          </Fragment>
         </div>
       </div>
     </>
