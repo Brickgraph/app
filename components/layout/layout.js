@@ -82,7 +82,7 @@ export default function Layout(props) {
           </Dialog>
         </Transition.Root>
 
-        <div className="flex h-full">
+        <div className="flex">
           <div className="flex-1">
             <SidebarToggle path={formattedPath} />
           </div>

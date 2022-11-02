@@ -8,6 +8,7 @@ export const GraphVisual = ({
   data,
   height = "100%",
   width = "100%",
+  filterSelections,
 }) => {
   const [dataLoading, setIsDataLoading] = useState(true);
   const resetData = () => {
@@ -36,9 +37,11 @@ export const GraphVisual = ({
     setGraphData(data);
   };
 
-  const handleFilter = (value) => {
+  const handleNodeFilter = (selections) => {
     clearFilters();
-    const nodes = data.nodes.filter((item) => item.group === value);
+    const nodes = data.nodes.filter((item) =>
+      filterSelections.includes(item.group)
+    );
     setGraphData({ nodes: nodes, edges: data.edges });
     setIsDataLoading((current) => !current);
     console.log(data);
@@ -83,15 +86,6 @@ export const GraphVisual = ({
 
   return (
     <>
-      <div>
-        <button onClick={() => handleFilter("Sector")}>Sector</button>
-      </div>
-      <div>
-        <button onClick={() => handleFilter("Property")}>Property</button>
-      </div>
-      <div>
-        <button onClick={() => clearFilters()}>Clear</button>
-      </div>
       <div className="relative h-full">
         <div className="absolute top-1 right-1 transform z-10">
           <button
