@@ -1,121 +1,15 @@
-import Graph from "react-graph-vis";
 import React, { useState, useEffect } from "react";
 import ModalBase from "../../modals/modalBase";
-import { nodesDictFunc } from "./toDictFunctions";
+import { nodesDictFunc } from "../../../utils/toDictFunctions";
+import GraphVisual from "./GraphVisual";
 
-export const GraphVisual = ({
-  events,
+export const VisGraph = ({
+  status,
   data,
-  height = "100%",
-  width = "100%",
-  filterSelections,
+  nodeSelections,
+  filterClear,
+  openFilterMenu,
 }) => {
-  const [dataLoading, setIsDataLoading] = useState(true);
-  const resetData = () => {
-    setIsDataLoading((current) => !current);
-  };
-
-  // Refreshes graph when button is clicked, or data is changed
-  useEffect(() => {
-    setIsDataLoading(true);
-  }, [dataLoading]);
-
-  // Refreshes graph when window is resized
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDataLoading(false);
-    };
-    window.addEventListener("resize", handleResize);
-    return (_) => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
-
-  const [graphData, setGraphData] = useState(data);
-
-  const clearFilters = () => {
-    setGraphData(data);
-  };
-
-  const handleNodeFilter = (selections) => {
-    clearFilters();
-    const nodes = data.nodes.filter((item) =>
-      filterSelections.includes(item.group)
-    );
-    setGraphData({ nodes: nodes, edges: data.edges });
-    setIsDataLoading((current) => !current);
-    console.log(data);
-  };
-
-  useEffect(() => {
-    setGraphData(graphData);
-  }, [graphData]);
-
-  const [hierarchical, setHierachical] = useState(false);
-  const changeFormat = () => {
-    setHierachical((current) => !current);
-  };
-  const options = {
-    layout: {
-      hierarchical: hierarchical,
-    },
-    nodes: {
-      shape: "circle",
-      size: 12,
-    },
-    edges: {
-      color: "orange",
-      physics: false,
-    },
-    interaction: { hover: true },
-    physics: {
-      barnesHut: {
-        springConstant: 0.5,
-        avoidOverlap: 0.1,
-      },
-    },
-  };
-
-  if (dataLoading !== true) {
-    return (
-      <>
-        <div>Loading...</div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <div className="relative h-full">
-        <div className="absolute top-1 right-1 transform z-10">
-          <button
-            onClick={resetData}
-            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-          >
-            Refresh
-          </button>
-        </div>
-        <div className="absolute top-1 left-1 transform z-10">
-          <button
-            onClick={changeFormat}
-            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-          >
-            {hierarchical ? "View: Hierarchy" : "View: Network"}
-          </button>
-        </div>
-        <Graph
-          graph={graphData}
-          options={options}
-          events={events}
-          style={{ height: height, width: width }}
-          clusterThreshold={100}
-        />
-      </div>
-    </>
-  );
-};
-
-export const VisGraph = ({ status, data }) => {
   const [responseStatus, setResponseStatus] = useState(status);
   if (responseStatus !== 200) {
     return (
@@ -152,6 +46,7 @@ export const VisGraph = ({ status, data }) => {
   );
 
   const { graph, events } = state;
+
   return (
     <div className="flex flex-col p-4 overflow-auto">
       <div className="h-[calc(100vh-100px)] border-grey-300 border-2">
@@ -160,6 +55,9 @@ export const VisGraph = ({ status, data }) => {
           data={graph}
           height={"100%"}
           width={"100%"}
+          nodeFilterSelections={nodeSelections}
+          filterClear={filterClear}
+          openFilterMenu={openFilterMenu}
         />
       </div>
 
@@ -197,5 +95,3 @@ export const VisGraph = ({ status, data }) => {
     </div>
   );
 };
-
-//export default VisGraph;

@@ -1,25 +1,35 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById } from "../utils/users";
 import { brickgraphRequest } from "../services/brickgraph-api";
-import { VisGraph } from "../components/visualisations/graph/visGraph";
-import ComboBox from "../components/forms/inputs/comboBox";
+import { VisGraph } from "../components/visualisations/graph/VisGraph";
+import FilterMenu from "../components/modals/filterMenu";
+import { useState } from "react";
 
 export default function Home({ user, status, data }) {
-  const options = [
-    { id: 1, label: "Property", value: "Property" },
-    { id: 2, label: "Sector", value: "Sector" },
-    { id: 3, label: "Organisation", value: "Organisation" },
-    { id: 4, label: "Property Unit", value: "PropertyUnit" },
-    { id: 5, label: "Users", value: "Users" },
-  ];
+  const [filterMenu, setFilterMenu] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+
+  const handleFilterMenu = () => {
+    setFilterMenu((current) => !current);
+    console.log(selectedFilters);
+  };
 
   return (
     <>
       <div className="flex flex-col p-4 overflow-auto">
-        <div className="z-20">
-          <ComboBox options={options} />
-        </div>
-        <VisGraph status={status} data={data} />
+        <FilterMenu
+          isOpen={filterMenu}
+          handleClose={handleFilterMenu}
+          handleNodeSelections={setSelectedFilters}
+          currentSelections={selectedFilters}
+        />
+        <VisGraph
+          status={status}
+          data={data}
+          nodeSelections={selectedFilters}
+          filterClear={() => setSelectedFilters([])}
+          openFilterMenu={handleFilterMenu}
+        />
       </div>
     </>
   );

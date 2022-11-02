@@ -1,15 +1,18 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import {
-  ChevronRightIcon,
-  ChevronLeftIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/outline";
+import { ChevronDownIcon, CheckIcon } from "@heroicons/react/outline";
 
-export default function ComboBox({ options }) {
-  const [selected, setSelected] = useState([]);
+export default function ComboBox({
+  options,
+  handleSelections,
+  currentSelections,
+}) {
+  const [selected, setSelected] = useState(currentSelections);
   const [query, setQuery] = useState("");
-  console.log(selected);
+
+  useEffect(() => {
+    handleSelections(selected);
+  }, [selected]);
 
   const filteredOptions =
     query === ""
@@ -22,7 +25,7 @@ export default function ComboBox({ options }) {
         );
 
   return (
-    <div className="fixed top-16 w-72">
+    <div>
       <Combobox value={selected} onChange={setSelected} multiple>
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -32,7 +35,7 @@ export default function ComboBox({ options }) {
               onChange={(event) => setQuery(event.target.value)}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronRightIcon
+              <ChevronDownIcon
                 className="h-5 w-5 text-gray-400"
                 aria-hidden="true"
               />
@@ -56,7 +59,7 @@ export default function ComboBox({ options }) {
                     key={option.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-teal-600 text-white" : "text-gray-900"
+                        active ? "bg-orange-400 text-white" : "text-gray-900"
                       }`
                     }
                     value={option.value}
@@ -73,13 +76,10 @@ export default function ComboBox({ options }) {
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "text-teal-600"
+                              active ? "text-white" : "text-orange-400"
                             }`}
                           >
-                            <CheckCircleIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
                           </span>
                         ) : null}
                       </>
