@@ -52,7 +52,6 @@ const GraphVisual = ({
     );
     setGraphData({ nodes: nodes, edges: data.edges });
     setIsDataLoading((current) => !current);
-    console.log(data);
   };
 
   useEffect(() => {

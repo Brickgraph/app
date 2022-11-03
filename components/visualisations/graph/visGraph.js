@@ -2,14 +2,10 @@ import React, { useState, useEffect } from "react";
 import ModalBase from "../../modals/modalBase";
 import { nodesDictFunc } from "../../../utils/toDictFunctions";
 import GraphVisual from "./GraphVisual";
+import FilterMenu from "../../modals/filterMenu";
+import TableStickyHeaders from "../../dataDisplays/tables/stickyHeaders";
 
-export const VisGraph = ({
-  status,
-  data,
-  nodeSelections,
-  filterClear,
-  openFilterMenu,
-}) => {
+export const VisGraph = ({ status, data }) => {
   const [responseStatus, setResponseStatus] = useState(status);
   if (responseStatus !== 200) {
     return (
@@ -24,6 +20,15 @@ export const VisGraph = ({
   const [nodeHovered, setNodeHovered] = useState(null);
   const [nodeSelected, setNodeSelected] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [filterMenu, setFilterMenu] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [view, setView] = useState("table");
+
+  const nodeModal = (nodeId) => {
+    var node = nodesDict[nodeId];
+    setNodeSelected(node);
+    setIsModalVisible(true);
+  };
 
   const [state, setState] = useState(
     {
@@ -45,20 +50,48 @@ export const VisGraph = ({
     []
   );
 
+  const handleFilterMenu = () => {
+    setFilterMenu((current) => !current);
+  };
+
+  // iterate over nodesGroup list and create a dict with id, label and value
+  let uniqueNodeGroups = [...new Set(data.nodes.map((item) => item.group))];
+  const nodeGroupsDict = uniqueNodeGroups.map((item) => {
+    return { id: item, label: item, value: item };
+  });
+
   const { graph, events } = state;
 
   return (
-    <div className="flex flex-col p-4 overflow-auto">
+    <div className="flex flex-col p-4 overflow-auto w-auto">
+      <button onClick={() => setView("table")}>Table</button>
+      <button onClick={() => setView("graph")}>Graph</button>
       <div className="h-[calc(100vh-100px)] border-grey-300 border-2">
-        <GraphVisual
-          events={events}
-          data={graph}
-          height={"100%"}
-          width={"100%"}
-          nodeFilterSelections={nodeSelections}
-          filterClear={filterClear}
-          openFilterMenu={openFilterMenu}
-        />
+        {(() => {
+          switch (view) {
+            case "table":
+              return (
+                <TableStickyHeaders
+                  data={graph.nodes}
+                  filterSelections={selectedFilters}
+                  openFilterMenu={handleFilterMenu}
+                  editAction={nodeModal}
+                />
+              );
+            case "graph":
+              return (
+                <GraphVisual
+                  events={events}
+                  data={graph}
+                  height={"100%"}
+                  width={"100%"}
+                  nodeFilterSelections={selectedFilters}
+                  filterClear={() => setSelectedFilters([])}
+                  openFilterMenu={handleFilterMenu}
+                />
+              );
+          }
+        })()}
       </div>
 
       <ModalBase
@@ -92,6 +125,13 @@ export const VisGraph = ({
             : ""}
         </ul>
       </ModalBase>
+      <FilterMenu
+        isOpen={filterMenu}
+        handleClose={handleFilterMenu}
+        handleNodeSelections={setSelectedFilters}
+        currentSelections={selectedFilters}
+        filterOptions={nodeGroupsDict}
+      />
     </div>
   );
 };

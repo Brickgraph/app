@@ -2,34 +2,21 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById } from "../utils/users";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/VisGraph";
-import FilterMenu from "../components/modals/filterMenu";
+import CommandPalette from "../components/layout/search/commandPalette";
 import { useState } from "react";
 
 export default function Home({ user, status, data }) {
-  const [filterMenu, setFilterMenu] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState([]);
-
-  const handleFilterMenu = () => {
-    setFilterMenu((current) => !current);
-    console.log(selectedFilters);
+  const [paletteOpen, setPaletteOpen] = useState(true);
+  console.log(paletteOpen);
+  const handlePalette = () => {
+    setPaletteOpen((current) => !current);
   };
-
   return (
     <>
+      <button onClick={handlePalette}>Open Palette</button>
+      <CommandPalette isOpen={paletteOpen} onClose={handlePalette} />
       <div className="flex flex-col p-4 overflow-auto">
-        <FilterMenu
-          isOpen={filterMenu}
-          handleClose={handleFilterMenu}
-          handleNodeSelections={setSelectedFilters}
-          currentSelections={selectedFilters}
-        />
-        <VisGraph
-          status={status}
-          data={data}
-          nodeSelections={selectedFilters}
-          filterClear={() => setSelectedFilters([])}
-          openFilterMenu={handleFilterMenu}
-        />
+        <VisGraph status={status} data={data} />
       </div>
     </>
   );

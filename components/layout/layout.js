@@ -97,10 +97,10 @@ export default function Layout(props) {
                   <span className="sr-only">Open sidebar</span>
                   <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
-                <div className="flex-1 px-4 flex justify-between">
+                {/* <div className="flex-1 px-4 flex justify-between">
                   <SearchBar />
                   <ProfileDropdown />
-                </div>
+                </div> */}
               </div>
               <Fragment>
                 <main>{props.children}</main>

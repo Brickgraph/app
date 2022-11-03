@@ -1,21 +1,13 @@
 import SlideOverRight from "./slideOver";
 import ComboBox from "../forms/inputs/comboBox";
-import { useState, useEffect } from "react";
 
 export default function FilterMenu({
   isOpen,
   handleClose,
   handleNodeSelections,
   currentSelections,
+  filterOptions,
 }) {
-  const options = [
-    { id: 1, label: "Property", value: "Property" },
-    { id: 2, label: "Sector", value: "Sector" },
-    { id: 3, label: "Organisation", value: "Organisation" },
-    { id: 4, label: "Property Unit", value: "PropertyUnit" },
-    { id: 5, label: "Users", value: "Users" },
-  ];
-
   return (
     <SlideOverRight
       isOpen={isOpen}
@@ -30,7 +22,7 @@ export default function FilterMenu({
         <div id="combobox-filter-properties">
           Nodes:{" "}
           <ComboBox
-            options={options}
+            options={filterOptions}
             handleSelections={handleNodeSelections}
             currentSelections={currentSelections}
           />
