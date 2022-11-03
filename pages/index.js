@@ -3,14 +3,32 @@ import { getUserById } from "../utils/users";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/VisGraph";
 import CommandPalette from "../components/layout/search/commandPalette";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export default function Home({ user, status, data }) {
-  const [paletteOpen, setPaletteOpen] = useState(true);
+  const [paletteOpen, setPaletteOpen] = useState(false);
   console.log(paletteOpen);
   const handlePalette = () => {
     setPaletteOpen((current) => !current);
   };
+
+  // handle what happens on key press
+  const handleKeyPress = useCallback((event) => {
+    if (event.metaKey === true && event.key === "k") {
+      handlePalette();
+    }
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener("keydown", handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   return (
     <>
       <button onClick={handlePalette}>Open Palette</button>
