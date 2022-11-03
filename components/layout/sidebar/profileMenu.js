@@ -4,49 +4,24 @@ import { BellIcon } from "@heroicons/react/outline";
 // import LoginButton from "../ui/buttons/login-button";
 import { useClerk, RedirectToSignIn, UserProfile } from "@clerk/clerk-react";
 import { useUser } from "@clerk/nextjs";
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProfileDropdown() {
+export default function ProfileDropdown({ children }) {
   const { user } = useUser();
   const { signOut } = useClerk();
-  const [isAccountOpen, setAccountIsOpen] = useState(false);
 
   return (
     <div className="ml-4 flex items-center md:ml-6">
       {!user && <RedirectToSignIn />}
       <>
-        <button
-          type="button"
-          className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-400"
-        >
-          <span className="sr-only">View notifications</span>
-          <BellIcon className="h-6 w-6" aria-hidden="true" />
-        </button>
-        <Menu as="div" className="ml-3 relative">
+        <Menu as="div">
           <div>
-            <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-400">
-              <span className="sr-only">Open user menu</span>
-              <Image
-                className="h-8 w-8 rounded-full"
-                src={
-                  user.profileImageUrl.includes(
-                    "https://www.gravatar.com/avatar"
-                  )
-                    ? "/images/profiles/giraffe-close-up.png"
-                    : `${user.profileImageUrl}`
-                }
-                alt=""
-                width={32}
-                height={32}
-              />
-            </Menu.Button>
+            <Menu.Button>{children}</Menu.Button>
           </div>
+
           <Transition
             as={Fragment}
             enter="transition ease-out duration-100"
@@ -56,7 +31,7 @@ export default function ProfileDropdown() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="origin-top-right absolute left-2 bottom-16 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
               <Menu.Item key="profile">
                 {({ active }) => (
                   <button

@@ -7,10 +7,10 @@ import { useState, useCallback, useEffect } from "react";
 
 export default function Home({ user, status, data }) {
   const [paletteOpen, setPaletteOpen] = useState(false);
-  console.log(paletteOpen);
   const handlePalette = () => {
     setPaletteOpen((current) => !current);
   };
+  console.log(data.nodes);
 
   // handle what happens on key press
   const handleKeyPress = useCallback((event) => {
@@ -31,8 +31,11 @@ export default function Home({ user, status, data }) {
 
   return (
     <>
-      <button onClick={handlePalette}>Open Palette</button>
-      <CommandPalette isOpen={paletteOpen} onClose={handlePalette} />
+      <CommandPalette
+        data={data.nodes}
+        isOpen={paletteOpen}
+        onClose={handlePalette}
+      />
       <div className="flex flex-col p-4 overflow-auto">
         <VisGraph status={status} data={data} />
       </div>

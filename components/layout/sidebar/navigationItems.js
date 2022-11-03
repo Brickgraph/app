@@ -1,7 +1,6 @@
 import {
   HomeIcon,
   UserGroupIcon,
-  DatabaseIcon,
   LightningBoltIcon,
   CogIcon,
   BeakerIcon,

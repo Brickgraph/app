@@ -27,7 +27,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function CommandPalette({ isOpen, onClose }) {
+export default function CommandPalette({ data, isOpen, onClose }) {
   const [query, setQuery] = useState("");
 
   //const [open, setOpen] = useState(isOpen);
@@ -35,8 +35,8 @@ export default function CommandPalette({ isOpen, onClose }) {
   const filteredPeople =
     query === ""
       ? []
-      : people.filter((person) => {
-          return person.name.toLowerCase().includes(query.toLowerCase());
+      : data.filter((item) => {
+          return item.label.toLowerCase().includes(query.toLowerCase());
         });
 
   return (
@@ -70,7 +70,7 @@ export default function CommandPalette({ isOpen, onClose }) {
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-              <Combobox onChange={(person) => (window.location = person.url)}>
+              <Combobox onChange={(data) => (window.location = "/")}>
                 <div className="relative">
                   <SearchIcon
                     className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
@@ -88,10 +88,10 @@ export default function CommandPalette({ isOpen, onClose }) {
                     static
                     className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
                   >
-                    {filteredPeople.map((person) => (
+                    {filteredPeople.map((item) => (
                       <Combobox.Option
-                        key={person.id}
-                        value={person}
+                        key={item.id}
+                        value={item.label}
                         className={({ active }) =>
                           classNames(
                             "cursor-default select-none px-4 py-2",
@@ -99,14 +99,14 @@ export default function CommandPalette({ isOpen, onClose }) {
                           )
                         }
                       >
-                        {person.name}
+                        {item.label}
                       </Combobox.Option>
                     ))}
                   </Combobox.Options>
                 )}
 
                 {query !== "" && filteredPeople.length === 0 && (
-                  <p className="p-4 text-sm text-gray-500">No people found.</p>
+                  <p className="p-4 text-sm text-gray-500">No results found.</p>
                 )}
               </Combobox>
             </Dialog.Panel>
