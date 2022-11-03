@@ -1,6 +1,6 @@
 import Graph from "react-graph-vis";
 import React, { useState, useEffect } from "react";
-import { FilterIcon, TrashIcon } from "@heroicons/react/outline";
+import { FilterIcon, TrashIcon, TableIcon } from "@heroicons/react/outline";
 import { Tooltip } from "../../ui/tooltip";
 
 const GraphVisual = ({
@@ -11,6 +11,7 @@ const GraphVisual = ({
   nodeFilterSelections,
   filterClear,
   openFilterMenu,
+  switchView,
 }) => {
   const [dataLoading, setIsDataLoading] = useState(true);
   const resetData = () => {
@@ -108,6 +109,16 @@ const GraphVisual = ({
             <span>Refresh</span>
           </div>
         </div>
+        <div className="absolute top-1 right-24 transform z-10">
+          <button
+            data-bs-toggle="tooltip"
+            title="Switch to Table View"
+            onClick={switchView}
+            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+          >
+            <TableIcon className="h-5 w-5 " aria-hidden="true" />
+          </button>
+        </div>
         <div className="absolute top-1 right-12 transform z-10">
           <button
             data-bs-toggle="tooltip"
@@ -118,7 +129,7 @@ const GraphVisual = ({
             <FilterIcon className="h-5 w-5 " aria-hidden="true" />
           </button>
         </div>
-        <div className="absolute top-1 right-1 transform z-10">
+        <div className="absolute top-1 right-0 transform z-10">
           <button
             data-bs-toggle="tooltip"
             title="Clear all filters"

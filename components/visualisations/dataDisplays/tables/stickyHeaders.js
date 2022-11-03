@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { FilterIcon, TrashIcon } from "@heroicons/react/outline";
+import { FilterIcon, TrashIcon, GlobeAltIcon } from "@heroicons/react/outline";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,6 +9,8 @@ export default function TableStickyHeaders({
   filterSelections,
   openFilterMenu,
   editAction,
+  filterClear,
+  switchView,
 }) {
   const items =
     filterSelections.length === 0
@@ -29,22 +30,36 @@ export default function TableStickyHeaders({
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
-            <button
-              data-bs-toggle="tooltip"
-              title="Open the filter menu"
-              onClick={openFilterMenu}
-              className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-            >
-              <FilterIcon className="h-5 w-5 " aria-hidden="true" />
-            </button>
-          </div>
-          <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
-            <button
-              type="button"
-              className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-            >
-              Add
-            </button>
+            <div className="absolute top-1 right-24 transform z-10">
+              <button
+                data-bs-toggle="tooltip"
+                title="Switch to Graph View"
+                onClick={switchView}
+                className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+              >
+                <GlobeAltIcon className="h-5 w-5 " aria-hidden="true" />
+              </button>
+            </div>
+            <div className="absolute top-1 right-12 transform z-10">
+              <button
+                data-bs-toggle="tooltip"
+                title="Open the filter menu"
+                onClick={openFilterMenu}
+                className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+              >
+                <FilterIcon className="h-5 w-5 " aria-hidden="true" />
+              </button>
+            </div>
+            <div className="absolute top-1 right-0 transform z-10">
+              <button
+                data-bs-toggle="tooltip"
+                title="Clear all filters"
+                onClick={filterClear}
+                className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+              >
+                <TrashIcon className="h-5 w-5 " aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
         <div className="mt-8 flex flex-col">
@@ -59,19 +74,19 @@ export default function TableStickyHeaders({
                     <tr>
                       <th
                         scope="col"
-                        className="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
+                        className="sticky -top-5 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
                       >
                         Label
                       </th>
                       <th
                         scope="col"
-                        className="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell"
+                        className="sticky -top-5 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell"
                       >
                         Group
                       </th>
                       <th
                         scope="col"
-                        className="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
+                        className="sticky -top-5 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
                       >
                         <span className="sr-only">Edit</span>
                       </th>

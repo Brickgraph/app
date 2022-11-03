@@ -10,7 +10,6 @@ export default function Home({ user, status, data }) {
   const handlePalette = () => {
     setPaletteOpen((current) => !current);
   };
-  console.log(data.nodes);
 
   // handle what happens on key press
   const handleKeyPress = useCallback((event) => {

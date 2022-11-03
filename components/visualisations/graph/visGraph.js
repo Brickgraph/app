@@ -3,7 +3,7 @@ import ModalBase from "../../modals/modalBase";
 import { nodesDictFunc } from "../../../utils/toDictFunctions";
 import GraphVisual from "./GraphVisual";
 import FilterMenu from "../../modals/filterMenu";
-import TableStickyHeaders from "../../dataDisplays/tables/stickyHeaders";
+import TableStickyHeaders from "../dataDisplays/tables/stickyHeaders";
 
 export const VisGraph = ({ status, data }) => {
   const [responseStatus, setResponseStatus] = useState(status);
@@ -64,9 +64,7 @@ export const VisGraph = ({ status, data }) => {
 
   return (
     <div className="flex flex-col p-4 overflow-auto w-auto">
-      <button onClick={() => setView("table")}>Table</button>
-      <button onClick={() => setView("graph")}>Graph</button>
-      <div className="h-[calc(100vh-100px)] border-grey-300 border-2">
+      <div className="h-[calc(100vh-100px)]">
         {(() => {
           switch (view) {
             case "table":
@@ -76,6 +74,8 @@ export const VisGraph = ({ status, data }) => {
                   filterSelections={selectedFilters}
                   openFilterMenu={handleFilterMenu}
                   editAction={nodeModal}
+                  filterClear={() => setSelectedFilters([])}
+                  switchView={() => setView("graph")}
                 />
               );
             case "graph":
@@ -88,6 +88,7 @@ export const VisGraph = ({ status, data }) => {
                   nodeFilterSelections={selectedFilters}
                   filterClear={() => setSelectedFilters([])}
                   openFilterMenu={handleFilterMenu}
+                  switchView={() => setView("table")}
                 />
               );
           }

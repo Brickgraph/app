@@ -33,12 +33,12 @@ export default function SidebarAvatar() {
               />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                {user.full_name}
+              <p className="text-md font-medium text-gray-700 group-hover:text-gray-900">
+                {user.firstName}
               </p>
-              <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                View profile
-              </p>
+              {/* <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                Profile Menu
+              </p> */}
             </div>
           </div>
         </a>
