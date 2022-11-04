@@ -84,7 +84,7 @@ export default function Layout({ children }) {
                           height={60}
                           width={180}
                           src="/images/logos/bg-logo-with-title.png"
-                          alt="Your Company"
+                          alt="Brickgraph Limited Logo"
                         />
                       </button>
                     </div>

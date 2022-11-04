@@ -12,6 +12,7 @@ export default function ComboBox({
 
   useEffect(() => {
     handleSelections(selected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   const filteredOptions =

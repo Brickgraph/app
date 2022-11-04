@@ -61,6 +61,7 @@ const GraphVisual = ({
 
   useEffect(() => {
     handleNodeFilter(nodeFilterSelections);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeFilterSelections]);
 
   const [hierarchical, setHierachical] = useState(false);

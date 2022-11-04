@@ -31,16 +31,18 @@ export default function SlideOverRight({
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
                           <Dialog.Title className="text-lg font-medium text-gray-900">
-                            Panel title
+                            Filters
                           </Dialog.Title>
-                          <div className="ml-3 flex h-7 items-center">
+                          <div className="relative bg-white p-4 object-cover rounded border-orange-500 border-1">
                             <button
-                              type="button"
-                              className="rounded-md bg-black bg-opacity-25 backdrop-blur-sm text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                               onClick={() => handleClose()}
+                              className="absolute top-1 right-1 text-black text-xl text-bold place-self-end"
                             >
                               <span className="sr-only">Close panel</span>
-                              <XIcon className="h-6 w-6" aria-hidden="true" />
+                              <XIcon
+                                className="h-8 w-8 text-black hover:text-orange-700 rounded hover:bg-gray-100 p-1"
+                                aria-hidden="true"
+                              />
                             </button>
                           </div>
                         </div>

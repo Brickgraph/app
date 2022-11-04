@@ -4,31 +4,17 @@ import { nodesDictFunc } from "../../../utils/toDictFunctions";
 import GraphVisual from "./GraphVisual";
 import FilterMenu from "../../modals/filterMenu";
 import TableStickyHeaders from "../dataDisplays/tables/stickyHeaders";
+import { NodeDetailsModal } from "../../modals/nodeDetails";
 
 export const VisGraph = ({ status, data }) => {
   const [responseStatus, setResponseStatus] = useState(status);
-  if (responseStatus !== 200) {
-    return (
-      <div>
-        No Data available right now... Please try again later. Looks like a{" "}
-        {responseStatus} error.
-      </div>
-    );
-  }
-
-  const nodesDict = nodesDictFunc(data);
-  const [nodeHovered, setNodeHovered] = useState(null);
-  const [nodeSelected, setNodeSelected] = useState(null);
+  const [view, setView] = useState("table");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [filterMenu, setFilterMenu] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [view, setView] = useState("table");
-
-  const nodeModal = (nodeId) => {
-    var node = nodesDict[nodeId];
-    setNodeSelected(node);
-    setIsModalVisible(true);
-  };
+  const nodesDict = nodesDictFunc(data);
+  const [nodeHovered, setNodeHovered] = useState(null);
+  const [nodeSelected, setNodeSelected] = useState(null);
 
   const [state, setState] = useState(
     {
@@ -50,6 +36,18 @@ export const VisGraph = ({ status, data }) => {
     []
   );
 
+  const nodeModal = (nodeId) => {
+    var node = nodesDict[nodeId];
+    setNodeSelected(node);
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+    setNodeSelected(null);
+    setNodeHovered(null);
+  };
+
   const handleFilterMenu = () => {
     setFilterMenu((current) => !current);
   };
@@ -61,6 +59,15 @@ export const VisGraph = ({ status, data }) => {
   });
 
   const { graph, events } = state;
+
+  if (responseStatus !== 200) {
+    return (
+      <div>
+        No Data available right now... Please try again later. Looks like a{" "}
+        {responseStatus} error.
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col p-4 overflow-auto w-auto">
@@ -94,38 +101,11 @@ export const VisGraph = ({ status, data }) => {
           }
         })()}
       </div>
-
-      <ModalBase
-        isVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-      >
-        <h1 className="text-xl text-orange-700 text-bold">
-          {nodeSelected ? nodeSelected.group : ""}:{" "}
-          {nodeSelected ? nodeSelected.label : ""}
-        </h1>
-        <br />
-        <h1 className="text-lg text-orange-800 text-bold">Details</h1>
-        <ul>
-          {nodeSelected
-            ? Object.keys(nodeSelected).map((key) => {
-                return (
-                  <>
-                    <div>
-                      <li key={nodeSelected.id}>
-                        <p className="text-md">
-                          <span className="text-bold text-orange-900">
-                            {key}
-                          </span>
-                          : {nodeSelected[key]}
-                        </p>
-                      </li>
-                    </div>
-                  </>
-                );
-              })
-            : ""}
-        </ul>
-      </ModalBase>
+      <NodeDetailsModal
+        node={nodeSelected}
+        show={isModalVisible}
+        onClose={() => handleModalClose()}
+      />
       <FilterMenu
         isOpen={filterMenu}
         handleClose={handleFilterMenu}

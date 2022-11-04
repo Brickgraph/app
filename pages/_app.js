@@ -15,7 +15,7 @@ import Layout from "../components/layout/layout";
 
 const publicPages = [];
 
-function SetAxiosAuthHeader() {
+/* function SetAxiosAuthHeader() {
   const { session } = useSession();
 
   const setAuthFromSession = async () => {
@@ -32,7 +32,7 @@ function SetAxiosAuthHeader() {
   }, [session]);
 
   return <></>;
-}
+} */
 
 function MyApp({ Component, pageProps }) {
   // Get the pathname
@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
       ) : (
         <>
           <SignedIn>
-            <SetAxiosAuthHeader />
+            {/* <SetAxiosAuthHeader /> */}
             <Layout>
               <Head>
                 <title>{appDetails.appName}</title>
