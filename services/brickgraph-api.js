@@ -1,4 +1,7 @@
 import Axios from "axios";
+import { useSession } from "@clerk/nextjs";
+
+//const { getToken } = useSession().session;
 
 export const brickgraph = Axios.create({
   headers: { "Content-Type": "application/json" },

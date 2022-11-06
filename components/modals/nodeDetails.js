@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import ModalBase from "./modalBase";
-import { DefaultInput } from "../forms/inputs/utils/Input";
-import { FormBase } from "../forms/layouts/formBase";
 import { CustomForm } from "../forms/layouts/customForm";
+import { useSession } from "@clerk/nextjs";
+import { brickgraphRequest } from "../../services/brickgraph-api";
 
 export const NodeDetailsModal = ({ node, onClose, show }) => {
   const [nodeDetails, setNodeDetails] = useState(node);
@@ -19,18 +19,56 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
       };
     });
   }
-
-  const handleSubmit = (e) => {
+  const { getToken } = useSession().session;
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("FORM SUBMITTED", nodeDetails);
+    const token = await getToken();
+    const formData = nodeDetails;
+    const { id } = nodeDetails;
+    console.log(token);
+    try {
+      const { status, data } = await brickgraphRequest(token).put(
+        "/test/update_node?node_id=" + id,
+        { node_properties: formData }
+      );
+      if (status === 200) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     onClose();
   };
 
-  /* switch (nodeDetails.group) {
-    case "Property":
-        const formFields = ["label", "city", "access"];
-    case "Sector":
-        const formFields = ['label','access'] */
+  const switchForm = () => {
+    if (nodeDetails !== null) {
+      const group = nodeDetails.group;
+      switch (group) {
+        case "Property": {
+          let formKeys = ["label", "city", "access"];
+          return formKeys;
+        }
+        case "Sector": {
+          let formKeys = ["label", "access"];
+          return formKeys;
+        }
+        case "Organisation": {
+          let formKeys = ["name", "subscription", "access"];
+          return formKeys;
+        }
+        default: {
+          let formKeys = ["label", "access"];
+          return formKeys;
+        }
+      }
+    } else {
+      let formKeys = ["label", "access"];
+    }
+  };
+
+  useEffect(() => {
+    switchForm(nodeDetails);
+  }, [nodeDetails]);
 
   return (
     <>
@@ -45,7 +83,7 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
         </div>
         <CustomForm
           dictItem={nodeDetails}
-          formKeys={["label", "city", "access"]}
+          formKeys={switchForm(nodeDetails)}
           changeHandler={inputChangeHandler}
           cancelAction={onClose}
           submitAction={handleSubmit}

@@ -9,7 +9,7 @@ export const CustomForm = ({
   submitAction,
 }) => {
   const [loaded, setLoaded] = useState(false);
-  //const propertyKeys = ["label", "city", "access"];
+
   let formItem = {};
 
   useEffect(() => {
