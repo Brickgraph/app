@@ -26,16 +26,27 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     const formData = nodeDetails;
     const { id } = nodeDetails;
     console.log(token);
-    try {
-      const { status, data } = await brickgraphRequest(token).put(
-        "/test/update_node?node_id=" + id,
-        { node_properties: formData }
-      );
-      if (status === 200) {
-        console.log(data);
-      }
-    } catch (error) {
-      console.log(error);
+    const { status, response } = await brickgraphRequest(token)
+      .put(`test/node/update/${id}`, formData)
+      .then((res) => {
+        return { response: res.data, status: res.status };
+      })
+      .catch((err) => {
+        return {
+          response: err.response.data,
+          status: err.response.status,
+        };
+      });
+    switch (status) {
+      case 201:
+        console.log("Node updated");
+        console.log(response);
+        break;
+      case 422:
+        console.log("You do not have permission to update this node");
+        break;
+      default:
+        console.log("Something went wrong: " + status);
     }
     onClose();
   };
