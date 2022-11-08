@@ -3,12 +3,24 @@ import ModalBase from "./modalBase";
 import { CustomForm } from "../forms/layouts/customForm";
 import { useSession } from "@clerk/nextjs";
 import { brickgraphRequest } from "../../services/brickgraph-api";
+import {
+  UpdateNodeSuccessful,
+  UpdateNodeFailed,
+} from "../ui/notifications/updateNode";
+import { ModalChangesLoading } from "../ui/loading/modalChanges";
 
 export const NodeDetailsModal = ({ node, onClose, show }) => {
+  console.log("NODE", node);
   const [nodeDetails, setNodeDetails] = useState(node);
+  const [updatedNode, setUpdatedNode] = useState(null);
+  const [showUpdateNotification, setShowUpdateNotification] = useState(false);
+  const [showUpdateFailedNotification, setShowUpdateFailedNotification] =
+    useState(false);
+  const [loadingChanges, setLoadingChanges] = useState(false);
 
   useEffect(() => {
     setNodeDetails(node);
+    console.log("SET NODE", nodeDetails);
   }, [show]);
 
   function inputChangeHandler(event) {
@@ -26,6 +38,7 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     const formData = nodeDetails;
     const { id } = nodeDetails;
     console.log(token);
+    setLoadingChanges(true);
     const { status, response } = await brickgraphRequest(token)
       .put(`test/node/update/${id}`, formData)
       .then((res) => {
@@ -39,16 +52,24 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
       });
     switch (status) {
       case 201:
-        console.log("Node updated");
         console.log(response);
+        setUpdatedNode(response);
+        setLoadingChanges(false);
+        onClose();
+        setShowUpdateNotification(true);
         break;
       case 422:
         console.log("You do not have permission to update this node");
+        setUpdatedNode(nodeDetails);
+        setLoadingChanges(false);
+        setShowUpdateFailedNotification(true);
         break;
       default:
         console.log("Something went wrong: " + status);
+        setUpdatedNode(nodeDetails);
+        setLoadingChanges(false);
+        setShowUpdateFailedNotification(true);
     }
-    onClose();
   };
 
   const switchForm = () => {
@@ -81,6 +102,18 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     switchForm(nodeDetails);
   }, [nodeDetails]);
 
+  if (loadingChanges) {
+    return (
+      <>
+        <ModalBase show={show} onClose={onClose}>
+          <div className="w-fill h-[400px] flex flex-col justify-center items-center">
+            <ModalChangesLoading />
+          </div>
+        </ModalBase>
+      </>
+    );
+  }
+
   return (
     <>
       <ModalBase show={show} onClose={onClose}>
@@ -100,6 +133,16 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
           submitAction={handleSubmit}
         />
       </ModalBase>
+      <UpdateNodeSuccessful
+        isVisible={showUpdateNotification}
+        node={updatedNode}
+        onClose={() => setShowUpdateNotification(false)}
+      />
+      <UpdateNodeFailed
+        isVisible={showUpdateFailedNotification}
+        node={updatedNode}
+        onClose={() => setShowUpdateFailedNotification(false)}
+      />
     </>
   );
 };

@@ -8,6 +8,7 @@ export const CustomForm = ({
   cancelAction,
   submitAction,
 }) => {
+  console.log("FORM Items", dictItem);
   const [loaded, setLoaded] = useState(false);
 
   let formItem = {};
