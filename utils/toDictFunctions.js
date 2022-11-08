@@ -10,9 +10,14 @@ export function nodesDictFunc(data) {
 }
 
 // Need to build similar function for Edge data
-/* export function visNodesDictFunc(data) {
-return data.reduce((acc, node) => {
-    acc[node.id] = node;
+export function edgesDictFunc(data) {
+  if (data.edges === null) {
+    return null;
+  }
+
+  const edgeDict = data.edges.reduce((acc, edge) => {
+    acc[edge.id] = edge;
     return acc;
-}, {});
-} */
+  }, {});
+  return edgeDict;
+}

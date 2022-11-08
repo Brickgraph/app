@@ -60,7 +60,7 @@ export const UpdateNodeSuccessful = ({ isVisible, node, onClose }) => {
   );
 };
 
-export const UpdateNodeFailed = ({ isVisible, node, onClose }) => {
+export const UpdateNodeFailed = ({ isVisible, node, message, onClose }) => {
   return (
     <>
       {/* Global notification live region, render this permanently at the end of the document */}
@@ -91,8 +91,7 @@ export const UpdateNodeFailed = ({ isVisible, node, onClose }) => {
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">
-                      {node?.label} could not be updated. You do not have
-                      permission.
+                      {node?.label} could not be updated. {message}
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
                       Click here to see more details.

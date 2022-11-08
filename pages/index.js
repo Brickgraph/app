@@ -36,7 +36,7 @@ export default function Home({ user, status, data }) {
         onClose={handlePalette}
       />
       <div className="flex flex-col p-4 overflow-auto">
-        <VisGraph status={status} data={data} />
+        <VisGraph status={status} data={data} defaultView={"table"} />
       </div>
     </>
   );
@@ -48,7 +48,7 @@ export const getServerSideProps = withServerSideAuth(
 
     if (!sessionId) {
       return {
-        redirect: { destination: "/sign-in?redirect_url=" + resolvedUrl },
+        redirect: { destination: "/?redirect_url=" + resolvedUrl },
       };
     }
 

@@ -8,12 +8,13 @@ import {
   UpdateNodeFailed,
 } from "../ui/notifications/updateNode";
 import { ModalChangesLoading } from "../ui/loading/modalChanges";
+import Link from "next/link";
 
 export const NodeDetailsModal = ({ node, onClose, show }) => {
-  console.log("NODE", node);
   const [nodeDetails, setNodeDetails] = useState(node);
   const [updatedNode, setUpdatedNode] = useState(null);
   const [showUpdateNotification, setShowUpdateNotification] = useState(false);
+  const [errorMessage, setErrorMesage] = useState("");
   const [showUpdateFailedNotification, setShowUpdateFailedNotification] =
     useState(false);
   const [loadingChanges, setLoadingChanges] = useState(false);
@@ -39,35 +40,35 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     const { id } = nodeDetails;
     console.log(token);
     setLoadingChanges(true);
-    const { status, response } = await brickgraphRequest(token)
+    const { status, data } = await brickgraphRequest(token)
       .put(`test/node/update/${id}`, formData)
       .then((res) => {
-        return { response: res.data, status: res.status };
+        return { data: res.data, status: res.status };
       })
       .catch((err) => {
         return {
-          response: err.response.data,
+          data: err.response.data,
           status: err.response.status,
         };
       });
     switch (status) {
       case 201:
-        console.log(response);
-        setUpdatedNode(response);
+        console.log(data);
+        setUpdatedNode(data);
         setLoadingChanges(false);
         onClose();
         setShowUpdateNotification(true);
         break;
       case 422:
-        console.log("You do not have permission to update this node");
         setUpdatedNode(nodeDetails);
         setLoadingChanges(false);
+        setErrorMesage("You do not have permission.");
         setShowUpdateFailedNotification(true);
         break;
       default:
-        console.log("Something went wrong: " + status);
         setUpdatedNode(nodeDetails);
         setLoadingChanges(false);
+        setErrorMesage("Something went wrong.");
         setShowUpdateFailedNotification(true);
     }
   };
@@ -122,7 +123,9 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
             {node ? node.group : ""}
           </h1>
           <h1 className="text-lg md:text-xl text-black text-bold">
-            {node ? node.label : ""}
+            <Link href={node ? `/nodes/${node.id}` : ""}>
+              {node ? node.label : ""}
+            </Link>
           </h1>
         </div>
         <CustomForm
@@ -142,6 +145,7 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
         isVisible={showUpdateFailedNotification}
         node={updatedNode}
         onClose={() => setShowUpdateFailedNotification(false)}
+        message={errorMessage}
       />
     </>
   );

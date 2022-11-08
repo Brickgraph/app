@@ -1,7 +1,6 @@
 import Graph from "react-graph-vis";
 import React, { useState, useEffect } from "react";
 import { FilterIcon, TrashIcon, TableIcon } from "@heroicons/react/outline";
-import { Tooltip } from "../../ui/tooltip";
 
 const GraphVisual = ({
   events,
@@ -75,12 +74,26 @@ const GraphVisual = ({
     nodes: {
       shape: "circle",
       size: 12,
+      scaling: {
+        min: 20,
+        max: 20,
+        label: { enabled: false },
+      },
     },
     edges: {
       color: "orange",
       physics: false,
+      font: {
+        size: 10,
+      },
     },
-    interaction: { hover: true },
+    interaction: {
+      hover: true,
+      navigationButtons: true,
+      hoverConnectedEdges: true,
+      hideEdgesOnDrag: false,
+      hideNodesOnDrag: false,
+    },
     physics: {
       barnesHut: {
         springConstant: 0.5,

@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
-import ModalBase from "../../modals/modalBase";
-import { nodesDictFunc } from "../../../utils/toDictFunctions";
+import { nodesDictFunc, edgesDictFunc } from "../../../utils/toDictFunctions";
 import GraphVisual from "./GraphVisual";
 import FilterMenu from "../../modals/filterMenu";
 import TableStickyHeaders from "../dataDisplays/tables/stickyHeaders";
 import { NodeDetailsModal } from "../../modals/nodeDetails";
 
-export const VisGraph = ({ status, data }) => {
+export const VisGraph = ({ status, data, defaultView }) => {
+  const nodesDict = nodesDictFunc(data);
+  const edgesDict = edgesDictFunc(data);
   const [responseStatus, setResponseStatus] = useState(status);
-  const [view, setView] = useState("table");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [view, setView] = useState(defaultView);
+  const [isNodeModalVisible, setIsNodeModalVisible] = useState(false);
+  const [isEdgeModalVisible, setIsEdgeModalVisible] = useState(false);
   const [filterMenu, setFilterMenu] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const nodesDict = nodesDictFunc(data);
   const [nodeHovered, setNodeHovered] = useState(null);
   const [nodeSelected, setNodeSelected] = useState(null);
+  const [edgeSelected, setEdgeSelected] = useState(null);
 
   const [state, setState] = useState(
     {
@@ -22,14 +24,21 @@ export const VisGraph = ({ status, data }) => {
       graph: data,
       events: {
         selectNode: function (e) {
-          var { nodes, edges } = e;
+          var { nodes } = e;
           var nodeId = nodes;
           var node = nodesDict[nodeId];
           setNodeSelected(node);
-          setIsModalVisible(true);
+          setIsNodeModalVisible(true);
         },
         hoverNode: ({ node }) => {
           setNodeHovered(node);
+        },
+        selectEdge: function (e) {
+          var { edges } = e;
+          var edgeId = edges;
+          var edge = edgesDict[edgeId];
+          setEdgeSelected(edge);
+          setIsEdgeModalVisible(true);
         },
       },
     },
@@ -39,12 +48,14 @@ export const VisGraph = ({ status, data }) => {
   const nodeModal = (nodeId) => {
     var node = nodesDict[nodeId];
     setNodeSelected(node);
-    setIsModalVisible(true);
+    setIsNodeModalVisible(true);
   };
 
   const handleModalClose = () => {
-    setIsModalVisible(false);
+    setIsNodeModalVisible(false);
+    setIsEdgeModalVisible(false);
     setNodeSelected(null);
+    setEdgeSelected(null);
     setNodeHovered(null);
   };
 
@@ -103,7 +114,7 @@ export const VisGraph = ({ status, data }) => {
       </div>
       <NodeDetailsModal
         node={nodeSelected}
-        show={isModalVisible}
+        show={isNodeModalVisible}
         onClose={() => handleModalClose()}
       />
       <FilterMenu
