@@ -31,12 +31,10 @@ const ModalBase = ({ show, children, onClose }) => {
         >
           <div className="md:w-[600px] w-[90%] flex flex-col rounded-xl pt-18">
             <div className="relative bg-white p-4 object-cover rounded border-orange-500 border-1">
-              <button
-                onClick={onClose}
-                className="absolute top-2 right-2 text-black text-xl text-bold place-self-end"
-              >
+              <button className="absolute top-2 right-2 place-self-end">
                 <XIcon
-                  className="h-10 w-10 text-black hover:text-orange-700 rounded hover:bg-gray-100 p-1"
+                  onClick={onClose}
+                  className="h-6 w-6 md:h-8 md:w-8 text-black hover:text-orange-400"
                   aria-hidden="true"
                 />
               </button>

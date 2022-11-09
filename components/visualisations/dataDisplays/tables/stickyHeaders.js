@@ -1,4 +1,5 @@
 import { FilterIcon, TrashIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import Router from "next/router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -25,9 +26,6 @@ export default function TableStickyHeaders({
             <h1 className="text-xl font-semibold text-gray-900">
               Data Entities
             </h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all the data entities that you have access to.
-            </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-8 sm:flex-none">
             <div className="absolute top-1 right-24 transform z-10">
@@ -129,9 +127,9 @@ export default function TableStickyHeaders({
                         >
                           <button
                             onClick={() => editAction(item.id)}
-                            className="text-indigo-600 hover:text-indigo-900"
+                            className="p-2 rounded bg-orange-400 text-white hover:text-orange-900 hover:bg-orange-200"
                           >
-                            Edit<span className="sr-only">, {item.name}</span>
+                            View<span className="sr-only">, {item.name}</span>
                           </button>
                         </td>
                       </tr>

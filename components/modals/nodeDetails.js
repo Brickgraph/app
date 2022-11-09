@@ -7,8 +7,8 @@ import {
   UpdateNodeSuccessful,
   UpdateNodeFailed,
 } from "../ui/notifications/updateNode";
-import { ModalChangesLoading } from "../ui/loading/modalChanges";
 import Link from "next/link";
+import { LoadingNotification } from "../ui/notifications/loadingNotification";
 
 export const NodeDetailsModal = ({ node, onClose, show }) => {
   const [nodeDetails, setNodeDetails] = useState(node);
@@ -94,8 +94,6 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
           return formKeys;
         }
       }
-    } else {
-      let formKeys = ["label", "access"];
     }
   };
 
@@ -103,30 +101,22 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     switchForm(nodeDetails);
   }, [nodeDetails]);
 
-  if (loadingChanges) {
-    return (
-      <>
-        <ModalBase show={show} onClose={onClose}>
-          <div className="w-fill h-[400px] flex flex-col justify-center items-center">
-            <ModalChangesLoading />
-          </div>
-        </ModalBase>
-      </>
-    );
-  }
-
   return (
     <>
       <ModalBase show={show} onClose={onClose}>
         <div className="grid justify-items-center py-4">
-          <h1 className="text-md md:text-lg text-black font-mono text-bold">
-            {node ? node.group : ""}
-          </h1>
-          <h1 className="text-lg md:text-xl text-black text-bold">
+          <button
+            onClick={() => setLoadingChanges(true)}
+            className="border border-1 border-orange-400 hover:bg-orange-200 p-2 rounded"
+          >
             <Link href={node ? `/nodes/${node.id}` : ""}>
-              {node ? node.label : ""}
+              <div>
+                <h1 className="text-lg md:text-xl text-black text-bold ">
+                  {node ? node.label : ""}
+                </h1>
+              </div>
             </Link>
-          </h1>
+          </button>
         </div>
         <CustomForm
           dictItem={nodeDetails}
@@ -147,6 +137,7 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
         onClose={() => setShowUpdateFailedNotification(false)}
         message={errorMessage}
       />
+      <LoadingNotification isVisible={loadingChanges} message={"Loading..."} />
     </>
   );
 };

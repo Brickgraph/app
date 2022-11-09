@@ -5,7 +5,7 @@ import Router from "next/router";
 
 export default function NodePage({ nodeID, status, data }) {
   console.log(data);
-  if (status !== 200) {
+  if (data.nodes.length === 0 || status !== 200) {
     Router.push("/");
     return (
       <div>

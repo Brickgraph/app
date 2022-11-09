@@ -1,27 +1,8 @@
-/*
-  This example requires Tailwind CSS v3.0+
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { Fragment, useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
-
-const people = [
-  { id: 1, name: "Leslie Alexander", url: "#" },
-  // More people...
-];
+import { useEffect } from "react";
+import Router from "next/router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,15 +10,32 @@ function classNames(...classes) {
 
 export default function CommandPalette({ data, isOpen, onClose }) {
   const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
-  //const [open, setOpen] = useState(isOpen);
-
-  const filteredPeople =
+  const filteredItems =
     query === ""
       ? []
       : data.filter((item) => {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
+
+  /* useEffect(() => {
+    const itemDetails = data.filter((item) => {
+      return item.label === selected;
+    });
+    setSelectedNode(itemDetails ? itemDetails[0] : null);
+  }, [selected]); */
+
+  const handleSelection = (selection) => {
+    console.log(selection);
+    const node = data.filter((item) => {
+      return item.label === selection;
+    });
+    const nodeID = node[0].id;
+    //setSelectedNode(node);
+    Router.push(`/nodes/${nodeID}`);
+  };
 
   return (
     <Transition.Root
@@ -70,7 +68,7 @@ export default function CommandPalette({ data, isOpen, onClose }) {
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-              <Combobox onChange={(data) => (window.location = "/")}>
+              <Combobox onChange={(selection) => handleSelection(selection)}>
                 <div className="relative">
                   <SearchIcon
                     className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-orange-500"
@@ -78,24 +76,24 @@ export default function CommandPalette({ data, isOpen, onClose }) {
                   />
                   <Combobox.Input
                     className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder-gray-400 focus:ring-0 text-sm sm:text-lg"
-                    placeholder="Search..."
+                    placeholder="Search Brickgraph..."
                     onChange={(event) => setQuery(event.target.value)}
                   />
                 </div>
 
-                {filteredPeople.length > 0 && (
+                {filteredItems.length > 0 && (
                   <Combobox.Options
                     static
-                    className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
+                    className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-md text-gray-800"
                   >
-                    {filteredPeople.map((item) => (
+                    {filteredItems.map((item) => (
                       <Combobox.Option
                         key={item.id}
                         value={item.label}
                         className={({ active }) =>
                           classNames(
                             "cursor-default select-none px-4 py-2",
-                            active && "bg-indigo-600 text-white"
+                            active && "bg-orange-400 text-white"
                           )
                         }
                       >
@@ -105,7 +103,7 @@ export default function CommandPalette({ data, isOpen, onClose }) {
                   </Combobox.Options>
                 )}
 
-                {query !== "" && filteredPeople.length === 0 && (
+                {query !== "" && filteredItems.length === 0 && (
                   <p className="p-4 text-sm text-gray-500">No results found.</p>
                 )}
               </Combobox>

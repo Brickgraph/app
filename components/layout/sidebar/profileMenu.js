@@ -66,7 +66,7 @@ export default function ProfileDropdown({ children }) {
                 {({ active }) => (
                   <button
                     className={classNames(
-                      active ? "bg-orange-100" : "",
+                      active ? "bg-orange-100 text-white" : "",
                       "block px-4 py-2 text-sm text-gray-700 w-full text-left"
                     )}
                     onClick={signOut}

@@ -5,6 +5,7 @@ import { navigationItems } from "./sideBar/navigationItems";
 import SidebarAvatar from "./sidebar/sidebarAvatar";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import SearchBar from "./search/searchBar";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -95,16 +96,16 @@ export default function Layout({ children }) {
                           href={item.href}
                           className={classNames(
                             item.href === formattedPath
-                              ? "bg-orange-200 text-black"
-                              : "text-gray-600 hover:bg-orange-200 hover:text-black",
+                              ? "bg-orange-400 text-white"
+                              : "text-gray-800 hover:bg-orange-400 hover:text-white",
                             "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                           )}
                         >
                           <item.icon
                             className={classNames(
                               item.href === formattedPath
-                                ? "bg-orange-200 text-black"
-                                : "text-gray-400 group-hover:text-gray-500",
+                                ? "bg-orange-400 text-white"
+                                : "text-gray-400 group-hover:text-gray-800",
                               "mr-4 flex-shrink-0 h-6 w-6"
                             )}
                             aria-hidden="true"
@@ -157,16 +158,16 @@ export default function Layout({ children }) {
                     href={item.href}
                     className={classNames(
                       item.href === formattedPath
-                        ? "bg-orange-200 text-black"
-                        : "text-gray-600 hover:bg-orange-200 hover:text-black",
+                        ? "bg-orange-400 text-white"
+                        : "text-gray-800 hover:bg-orange-400 hover:text-white",
                       "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                     )}
                   >
                     <item.icon
                       className={classNames(
                         item.href === formattedPath
-                          ? "bg-orange-200 text-black"
-                          : "text-gray-400 group-hover:text-gray-500",
+                          ? "bg-orange-400 text-white"
+                          : "text-gray-800 group-hover:text-white",
                         "mr-3 flex-shrink-0 h-6 w-6"
                       )}
                       aria-hidden="true"
@@ -195,8 +196,14 @@ export default function Layout({ children }) {
               <span className="sr-only">Open sidebar</span>
               <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
             </button>
+            <div className="p-4">
+              <SearchBar />
+            </div>
           </div>
           <main className="flex-1">
+            <div className="sticky top-0 p-2 bg-white hidden md:flex border border-l-0 border-r-0 border-2 border-gray-100">
+              <SearchBar />
+            </div>
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
           </main>
         </div>
