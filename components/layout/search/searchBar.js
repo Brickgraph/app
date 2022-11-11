@@ -1,6 +1,6 @@
 import { SearchIcon, BellIcon } from "@heroicons/react/outline";
 import { useState } from "react";
-import { Combobox, Dialog, Transition } from "@headlessui/react";
+import Link from "next/link";
 
 export default function SearchBar({ data }) {
   const [query, setQuery] = useState("");
@@ -12,68 +12,48 @@ export default function SearchBar({ data }) {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
   return (
-    <div className="flex flex-1 justify-between bg-white z-20">
-      <div className="flex flex-1">
-        <form className="flex w-full md:ml-0" action="#" method="GET">
-          <label htmlFor="mobile-search-field" className="sr-only">
-            Search
-          </label>
-          <label htmlFor="desktop-search-field" className="sr-only">
-            Search
-          </label>
-          <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-            <Combobox onChange={(data) => (window.location = "/")}>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
-                  <SearchIcon
-                    className="h-5 w-5 flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                </div>
-                <Combobox.Input
-                  className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder-gray-400 focus:ring-0 text-sm sm:text-lg"
-                  placeholder="Search..."
-                  onChange={(event) => setQuery(event.target.value)}
+    <div className="relative flex items-center justify-between bg-white z-20 w-full">
+      <div
+        className="flex flex-1 justify-center px-1 lg:ml-6 lg:justify-end"
+        onClick={() => {
+          console.log("Clicked");
+        }}
+      >
+        <div className="w-full max-w-lg lg:max-w-xs inset-y-0 left-0">
+          <button className="w-full">
+            <label htmlFor="search" className="sr-only">
+              Search
+            </label>
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <SearchIcon
+                  className="h-5 w-5 text-gray-700"
+                  aria-hidden="true"
                 />
               </div>
-
-              {filteredItems.length > 0 && (
-                <Combobox.Options
-                  static
-                  className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-md text-gray-800"
-                >
-                  {filteredItems.map((item) => (
-                    <Combobox.Option
-                      key={item.id}
-                      value={item.label}
-                      className={({ active }) =>
-                        classNames(
-                          "cursor-default select-none px-4 py-2",
-                          active && "bg-orange-400 text-white"
-                        )
-                      }
-                    >
-                      {item.label}
-                    </Combobox.Option>
-                  ))}
-                </Combobox.Options>
-              )}
-
-              {query !== "" && filteredItems.length === 0 && (
-                <p className="p-4 text-sm text-gray-500">No results found.</p>
-              )}
-            </Combobox>
-          </div>
-        </form>
+              <span
+                id="search"
+                name="search"
+                className="block w-full left-0 rounded-md border border-transparent bg-gray-100 py-2 pl-10 pr-3 leading-5 text-gray-700 placeholder-gray-700 focus:border-white focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-white sm:text-sm"
+                type="search"
+              >
+                Search (⌘K)
+              </span>
+            </div>
+          </button>
+        </div>
       </div>
-      <div className="ml-4 flex items-center md:ml-6">
-        <button
-          type="button"
-          className="rounded-full bg-white p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-        >
-          <BellIcon className="h-6 w-6" aria-hidden="true" />
-          <span className="sr-only">View notifications</span>
-        </button>
+
+      <div>
+        <Link href="/notifications">
+          <div>
+            <BellIcon
+              className="h-8 hover:bg-orange-500 rounded-full p-1 text-gray-500 hover:text-white"
+              aria-hidden="true"
+            />
+            <span className="sr-only">View notifications</span>
+          </div>
+        </Link>
       </div>
     </div>
   );

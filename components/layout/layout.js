@@ -196,9 +196,6 @@ export default function Layout({ children }) {
               <span className="sr-only">Open sidebar</span>
               <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
             </button>
-            <div className="p-4">
-              <SearchBar />
-            </div>
           </div>
           <main className="flex-1">
             <div className="sticky top-0 p-2 bg-white hidden md:flex border border-l-0 border-r-0 border-2 border-gray-100">

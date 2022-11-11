@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { nodesDictFunc, edgesDictFunc } from "../../../utils/toDictFunctions";
 import GraphVisual from "./GraphVisual";
 import FilterMenu from "../../modals/filterMenu";
-import TableStickyHeaders from "../dataDisplays/tables/stickyHeaders";
+import TableStickyHeaders from "../tables/stickyHeaders";
 import { NodeDetailsModal } from "../../modals/nodeDetails";
 
 export const VisGraph = ({ status, data, defaultView }) => {

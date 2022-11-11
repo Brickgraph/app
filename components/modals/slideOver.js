@@ -40,7 +40,7 @@ export default function SlideOverRight({
                             >
                               <span className="sr-only">Close panel</span>
                               <XIcon
-                                className="h-8 w-8 text-black hover:text-orange-700 rounded hover:bg-gray-100 p-1"
+                                className="h-8 w-8 text-black hover:text-orange-700 rounded p-1"
                                 aria-hidden="true"
                               />
                             </button>

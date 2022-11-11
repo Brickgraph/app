@@ -1,8 +1,6 @@
 import { Fragment } from "react";
 import { Transition, Menu } from "@headlessui/react";
-import { BellIcon } from "@heroicons/react/outline";
-// import LoginButton from "../ui/buttons/login-button";
-import { useClerk, RedirectToSignIn, UserProfile } from "@clerk/clerk-react";
+import { useClerk, RedirectToSignIn } from "@clerk/clerk-react";
 import { useUser } from "@clerk/nextjs";
 
 function classNames(...classes) {
