@@ -2,7 +2,7 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../../../services/brickgraph-api";
 import Router from "next/router";
 import { useState } from "react";
-import { TabHeader } from "../../../components/layout/nodePage/tabHeader";
+import { NodePageLayout } from "../../../components/layout/nodePage/layout";
 
 const tabs = [
   { name: "Details", href: "#", current: true },
@@ -21,11 +21,11 @@ export default function NodePage({ nodeID, status, data }) {
   const section = () => {
     switch (tabSelected) {
       case "Details":
-        return <div>{data.label}</div>;
+        return <div>{data.label} Details</div>;
       case "Connections":
         return <div>GRAPH GOES HERE</div>;
       case "Logs":
-        return <div>Logs</div>;
+        return <div>{data.group} Logs</div>;
       case "Permissions":
         return <div>{data.label} Permissions</div>;
       default:
@@ -42,14 +42,13 @@ export default function NodePage({ nodeID, status, data }) {
   }
   return (
     <>
-      <TabHeader
+      <NodePageLayout
         data={data}
         selectedTab={tabSelected}
         handleSection={setTabSelected}
-      />
-      <div className="mt-4 p-2">
-        <h1>{section()}</h1>
-      </div>
+      >
+        {section()}
+      </NodePageLayout>
     </>
   );
 }
