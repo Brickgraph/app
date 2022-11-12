@@ -5,10 +5,10 @@ function classNames(...classes) {
 }
 
 const tabs = [
-  { name: "Details", href: "#", current: true },
-  { name: "Connections", href: "#", current: false },
-  { name: "Logs", href: "#", current: false },
-  { name: "Permissions", href: "#", current: false },
+  { name: "Details" },
+  { name: "Connections" },
+  { name: "Logs" },
+  { name: "Access" },
 ];
 
 export const NodePageLayout = ({
@@ -37,7 +37,7 @@ export const NodePageLayout = ({
               id="current-tab"
               name="current-tab"
               className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-              defaultValue={tabs.find((tab) => tab.current).name}
+              defaultValue={selectedTab}
             >
               {tabs.map((tab) => (
                 <option key={tab.name}>{tab.name}</option>

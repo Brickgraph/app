@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ModalBase from "./modalBase";
 import { CustomForm } from "../forms/layouts/customForm";
+import { FormBase } from "../forms/layouts/formBase";
 import { useSession } from "@clerk/nextjs";
 import { brickgraphRequest } from "../../services/brickgraph-api";
 import {
@@ -9,6 +10,7 @@ import {
 } from "../ui/notifications/updateNode";
 import Link from "next/link";
 import { LoadingNotification } from "../ui/notifications/loadingNotification";
+import { switchNodeForm } from "../forms/config/handleNodeFormFields";
 
 export const NodeDetailsModal = ({ node, onClose, show }) => {
   const [nodeDetails, setNodeDetails] = useState(node);
@@ -21,7 +23,6 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
 
   useEffect(() => {
     setNodeDetails(node);
-    console.log("SET NODE", nodeDetails);
   }, [show]);
 
   function inputChangeHandler(event) {
@@ -73,32 +74,11 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     }
   };
 
-  const switchForm = () => {
-    if (nodeDetails !== null) {
-      const group = nodeDetails.group;
-      switch (group) {
-        case "Property": {
-          let formKeys = ["label", "city", "access"];
-          return formKeys;
-        }
-        case "Sector": {
-          let formKeys = ["label", "access"];
-          return formKeys;
-        }
-        case "Organisation": {
-          let formKeys = ["name", "subscription", "access"];
-          return formKeys;
-        }
-        default: {
-          let formKeys = ["label", "access"];
-          return formKeys;
-        }
-      }
-    }
-  };
+  const formFields = switchNodeForm(nodeDetails);
+  //console.log("FORM FIELDS", formFields);
 
   useEffect(() => {
-    switchForm(nodeDetails);
+    switchNodeForm(nodeDetails);
   }, [nodeDetails]);
 
   return (
@@ -120,7 +100,7 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
         </div>
         <CustomForm
           dictItem={nodeDetails}
-          formKeys={switchForm(nodeDetails)}
+          formFields={formFields}
           changeHandler={inputChangeHandler}
           cancelAction={onClose}
           submitAction={handleSubmit}

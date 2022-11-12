@@ -3,42 +3,46 @@ import { useState, useEffect } from "react";
 
 export const CustomForm = ({
   dictItem,
-  formKeys,
+  formFields,
   changeHandler,
   cancelAction,
   submitAction,
 }) => {
-  console.log("FORM Items", dictItem);
   const [loaded, setLoaded] = useState(false);
 
-  let formItem = {};
+  let formFieldItems = {};
 
   useEffect(() => {
     if (dictItem !== null) {
-      formKeys.forEach((key) => {
-        formItem[key] = dictItem[key];
+      formFields.map((field) => {
+        const isInDict = field.id in dictItem;
+        if (isInDict) {
+          console.log("TEST", dictItem[field.id]);
+          console.log("TEST", field.id);
+          const defaultValue = dictItem[field.id];
+          const formField = formFields.filter(
+            (item) => item.id === field.id
+          )[0];
+          formField["defaultValue"] = defaultValue;
+          console.log("FORM FIELD", formField);
+          //formFields[field]["defaultValue"] = dictItem[field.id];
+        }
+        //console.log("formFields", formFields);
       });
       setLoaded(true);
     } else {
       setLoaded(false);
     }
-  }, [dictItem, formItem, loaded]);
+  }, [dictItem, formFieldItems, loaded]);
 
-  if (loaded === true) {
-    return (
-      <>
-        <FormBase
-          dictItem={formItem}
-          changeHandler={changeHandler}
-          cancelAction={cancelAction}
-          submitAction={submitAction}
-        />
-      </>
-    );
-  }
   return (
     <>
-      <div>Loading...</div>
+      <FormBase
+        fields={formFields}
+        changeHandler={changeHandler}
+        cancelAction={cancelAction}
+        submitAction={submitAction}
+      />
     </>
   );
 };

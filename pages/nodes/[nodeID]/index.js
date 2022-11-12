@@ -16,7 +16,7 @@ function classNames(...classes) {
 }
 
 export default function NodePage({ nodeID, status, data }) {
-  const [tabSelected, setTabSelected] = useState(0);
+  const [tabSelected, setTabSelected] = useState("Details");
   console.log("TAB", tabSelected);
   const section = () => {
     switch (tabSelected) {

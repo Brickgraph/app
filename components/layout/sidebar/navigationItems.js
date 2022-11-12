@@ -4,26 +4,37 @@ import {
   LightningBoltIcon,
   CogIcon,
   BeakerIcon,
+  ViewGridAddIcon,
+  PresentationChartBarIcon,
 } from "@heroicons/react/outline";
 
 export const navigationItems = [
   { name: "Home", href: "/", icon: HomeIcon },
   {
-    name: "Connections",
-    href: "/connections",
+    name: "Integrations",
+    href: "/integrations",
     icon: LightningBoltIcon,
+    disabled: false,
   },
-  { name: "Groups", href: "/groups", icon: UserGroupIcon },
-  { name: "API Docs", href: "http://127.0.0.1:8000/redoc", icon: BeakerIcon },
-  /* {
-      name: "Marketplace - coming soon",
-      href: "#",
-      icon: ViewGridAddIcon,
-    },
-    {
-      name: "Reports - coming soon",
-      href: "#",
-      icon: PresentationChartBarIcon,
-    }, */
-  { name: "Settings", href: "/settings", icon: CogIcon },
+  { name: "Access and Groups", href: "/groups", icon: UserGroupIcon },
+
+  {
+    name: "Marketplace - coming soon",
+    href: "#",
+    icon: ViewGridAddIcon,
+    disabled: true,
+  },
+  {
+    name: "Reports - coming soon",
+    href: "#",
+    icon: PresentationChartBarIcon,
+    disabled: true,
+  },
+  {
+    name: "API Docs",
+    href: "http://127.0.0.1:8000/redoc",
+    icon: BeakerIcon,
+    disabled: false,
+  },
+  { name: "Settings", href: "/settings", icon: CogIcon, disabled: false },
 ];

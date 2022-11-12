@@ -6,6 +6,7 @@ import SidebarAvatar from "./sidebar/sidebarAvatar";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import SearchBar from "./search/searchBar";
+import { SearchButton } from "./search/searchButton";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -88,6 +89,11 @@ export default function Layout({ children }) {
                           alt="Brickgraph Limited Logo"
                         />
                       </button>
+                    </div>
+                    <div className="px-2">
+                      <SearchButton
+                        onClick={() => console.log("Search clicked")}
+                      />
                     </div>
                     <nav className="mt-5 space-y-1 px-2">
                       {navigationItems.map((item) => (

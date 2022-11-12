@@ -2,36 +2,40 @@ import { DefaultInput } from "../inputs/utils/Input";
 import { useState, useEffect } from "react";
 
 export const FormBase = ({
-  dictItem,
+  fields,
   changeHandler,
   cancelAction,
   submitAction,
 }) => {
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [fieldData, setFieldData] = useState(false);
   useEffect(() => {
-    setDataLoaded(dictItem);
-  }, [dictItem]);
+    setFieldData(fields);
+  }, [fields]);
 
   return (
     <>
       <form onSubmit={submitAction}>
         <div>
           <ul>
-            {dataLoaded
-              ? Object.keys(dataLoaded).map((key) => {
+            {fieldData
+              ? fieldData.map((field) => {
+                  //console.log("FORM fieldS", field);
                   return (
                     <>
                       <div className="py-2 px-6">
-                        <li key={key}>
+                        <li key={field.id}>
                           <DefaultInput
-                            name={key}
-                            type="text"
-                            defaultValue={dataLoaded[key]}
-                            labelText={key}
-                            labelFor={key}
-                            id={key}
-                            isRequired={false}
+                            name={field.label}
+                            type={field.type}
+                            defaultValue={
+                              field.defaultValue ? field.defaultValue : null
+                            }
+                            labelText={field.label}
+                            labelFor={field.label}
+                            id={field.id}
+                            isRequired={field.required}
                             onChangeHandler={changeHandler}
+                            disable={field.disable}
                           />
                         </li>
                       </div>
