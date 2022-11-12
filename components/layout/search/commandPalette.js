@@ -10,8 +10,6 @@ function classNames(...classes) {
 
 export default function CommandPalette({ data, isOpen, onClose }) {
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState(null);
-  const [selectedNode, setSelectedNode] = useState(null);
 
   const filteredItems =
     query === ""
@@ -20,20 +18,12 @@ export default function CommandPalette({ data, isOpen, onClose }) {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
 
-  /* useEffect(() => {
-    const itemDetails = data.filter((item) => {
-      return item.label === selected;
-    });
-    setSelectedNode(itemDetails ? itemDetails[0] : null);
-  }, [selected]); */
-
   const handleSelection = (selection) => {
     console.log(selection);
     const node = data.filter((item) => {
       return item.label === selection;
     });
     const nodeID = node[0].id;
-    //setSelectedNode(node);
     Router.push(`/nodes/${nodeID}`);
   };
 

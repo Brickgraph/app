@@ -46,7 +46,7 @@ export const propertyFields = [
     id: "sqft",
     label: "Square Feet",
     type: "number",
-    defaultValue: 100,
+    defaultValue: 1,
     required: false,
   },
   {

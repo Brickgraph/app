@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import ModalBase from "./modalBase";
 import { CustomForm } from "../forms/layouts/customForm";
-import { FormBase } from "../forms/layouts/formBase";
 import { useSession } from "@clerk/nextjs";
 import { brickgraphRequest } from "../../services/brickgraph-api";
 import {
@@ -11,6 +10,7 @@ import {
 import Link from "next/link";
 import { LoadingNotification } from "../ui/notifications/loadingNotification";
 import { switchNodeForm } from "../forms/config/handleNodeFormFields";
+import { ExternalLinkIcon } from "@heroicons/react/outline";
 
 export const NodeDetailsModal = ({ node, onClose, show }) => {
   const [nodeDetails, setNodeDetails] = useState(node);
@@ -87,13 +87,15 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
         <div className="grid justify-items-center py-4">
           <button
             onClick={() => setLoadingChanges(true)}
-            className="border border-1 border-orange-400 hover:bg-orange-200 p-2 rounded"
+            className="hover:bg-orange-200 p-2 rounded"
           >
             <Link href={node ? `/nodes/${node.id}` : ""}>
-              <div>
-                <h1 className="text-lg md:text-xl text-black text-bold ">
+              <div className="flex items-center">
+                <h1 className="text-lg md:text-xl text-black font-bold font-sans">
                   {node ? node.label : ""}
                 </h1>
+                <span> {"   "}</span>
+                <ExternalLinkIcon className="h-5 w-5 text-gray-500" />
               </div>
             </Link>
           </button>

@@ -19,7 +19,6 @@ export const FormBase = ({
           <ul>
             {fieldData
               ? fieldData.map((field) => {
-                  //console.log("FORM fieldS", field);
                   return (
                     <>
                       <div className="py-2 px-6">
