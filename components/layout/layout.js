@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import SearchBar from "./search/searchBar";
 import { SearchButton } from "./search/searchButton";
+import { CommandPalette } from "./search/commandPalette";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -17,6 +18,8 @@ export default function Layout({ children }) {
   const { asPath } = useRouter();
   const path = asPath.substring(1) + "/";
   const formattedPath = "/" + path.substring(0, path.indexOf("/"));
+
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   return (
     <>
