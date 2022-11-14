@@ -5,36 +5,9 @@ import { VisGraph } from "../components/visualisations/graph/VisGraph";
 import CommandPalette from "../components/layout/search/commandPalette";
 import { useState, useCallback, useEffect } from "react";
 
-export default function Home({ user, status, data }) {
-  const [paletteOpen, setPaletteOpen] = useState(false);
-  const handlePalette = () => {
-    setPaletteOpen((current) => !current);
-  };
-
-  // handle what happens on key press
-  const handleKeyPress = useCallback((event) => {
-    if (event.metaKey === true && event.key === "k") {
-      handlePalette();
-    }
-  }, []);
-
-  useEffect(() => {
-    // attach the event listener
-    document.addEventListener("keydown", handleKeyPress);
-
-    // remove the event listener
-    return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [handleKeyPress]);
-
+export default function Home({ status, data }) {
   return (
     <>
-      <CommandPalette
-        data={data.nodes}
-        isOpen={paletteOpen}
-        onClose={handlePalette}
-      />
       <div className="flex flex-col p-4 overflow-auto">
         <VisGraph status={status} data={data} defaultView={"table"} />
       </div>
@@ -52,7 +25,6 @@ export const getServerSideProps = withServerSideAuth(
       };
     }
 
-    const user = await getUserById(userId);
     const token = await getToken();
 
     // Backend data to populate graph
@@ -60,6 +32,6 @@ export const getServerSideProps = withServerSideAuth(
       "test/subgraph"
     );
 
-    return { props: { user, status, data } };
+    return { props: { status, data } };
   }
 );

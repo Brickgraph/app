@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useCallback } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MenuAlt2Icon, XIcon } from "@heroicons/react/outline";
 import { navigationItems } from "./sideBar/navigationItems";
@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import SearchBar from "./search/searchBar";
 import { SearchButton } from "./search/searchButton";
-import { CommandPalette } from "./search/commandPalette";
+import CommandPalette from "./search/commandPalette";
+import { withServerSideAuth } from "@clerk/nextjs/ssr";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,8 +22,34 @@ export default function Layout({ children }) {
 
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
+  const handlePalette = () => {
+    setCommandPaletteOpen((current) => !current);
+  };
+
+  // handle what happens on key press
+  const handleKeyPress = useCallback((event) => {
+    if (event.metaKey === true && event.key === "k") {
+      handlePalette();
+    }
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener("keydown", handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   return (
     <>
+      <CommandPalette
+        data={["a", "b", "c"]}
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+      />
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -95,7 +122,7 @@ export default function Layout({ children }) {
                     </div>
                     <div className="px-2">
                       <SearchButton
-                        onClick={() => console.log("Search clicked")}
+                        onClick={() => setCommandPaletteOpen(true)}
                       />
                     </div>
                     <nav className="mt-5 space-y-1 px-2">
@@ -208,7 +235,10 @@ export default function Layout({ children }) {
           </div>
           <main className="flex-1">
             <div className="sticky top-0 p-2 bg-white hidden md:flex border border-l-0 border-r-0 border-2 border-gray-100">
-              <SearchBar />
+              <SearchBar
+                data={[]}
+                buttonOnClick={() => setCommandPaletteOpen(true)}
+              />
             </div>
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
           </main>

@@ -1,7 +1,6 @@
 import { Fragment, useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
-import { useEffect } from "react";
 import Router from "next/router";
 
 function classNames(...classes) {

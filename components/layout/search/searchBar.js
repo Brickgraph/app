@@ -4,12 +4,12 @@ import Link from "next/link";
 import { SearchButton } from "./searchButton";
 import { BellNotification } from "../../ui/notifications/bell";
 
-export default function SearchBar({ data }) {
+export default function SearchBar({ data, buttonOnClick }) {
   const [query, setQuery] = useState("");
 
-  const handleClick = (e) => {
+  /* const handleClick = (e) => {
     console.log(e);
-  };
+  }; */
 
   const filteredItems =
     query === ""
@@ -20,7 +20,7 @@ export default function SearchBar({ data }) {
   return (
     <div className="relative flex items-center justify-between bg-white w-full">
       <div className="flex flex-1 px-1 ml-6 justify-start">
-        <SearchButton onClick={() => handleClick("Search")} />
+        <SearchButton onClick={buttonOnClick} />
       </div>
       <div className="mr-6 justify-end">
         <BellNotification
