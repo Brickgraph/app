@@ -8,22 +8,29 @@ import Image from "next/image";
 import SearchBar from "./search/searchBar";
 import { SearchButton } from "./search/searchButton";
 import CommandPalette from "./search/commandPalette";
-import { withServerSideAuth } from "@clerk/nextjs/ssr";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Layout({ children }) {
+  const testData = [
+    { label: "Brickgraph Holdings", id: 1 },
+    { label: "Buckingham", id: 10 },
+  ];
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { asPath } = useRouter();
   const path = asPath.substring(1) + "/";
   const formattedPath = "/" + path.substring(0, path.indexOf("/"));
 
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-
   const handlePalette = () => {
     setCommandPaletteOpen((current) => !current);
+  };
+
+  const handleSidebarSearch = () => {
+    setCommandPaletteOpen(true);
+    setSidebarOpen(false);
   };
 
   // handle what happens on key press
@@ -46,7 +53,7 @@ export default function Layout({ children }) {
   return (
     <>
       <CommandPalette
-        data={["a", "b", "c"]}
+        data={testData}
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
       />
@@ -121,9 +128,7 @@ export default function Layout({ children }) {
                       </button>
                     </div>
                     <div className="px-2">
-                      <SearchButton
-                        onClick={() => setCommandPaletteOpen(true)}
-                      />
+                      <SearchButton onClick={() => handleSidebarSearch()} />
                     </div>
                     <nav className="mt-5 space-y-1 px-2">
                       {navigationItems.map((item) => (

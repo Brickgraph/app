@@ -3,36 +3,14 @@ import {
   SignedIn,
   SignedOut,
   RedirectToSignIn,
-  useSession,
 } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import "../styles/globals.css";
-import { setAuthorizationHeader } from "../services/auth";
-import { useEffect } from "react";
 import Head from "next/head";
 import { appDetails } from "../config";
 import Layout from "../components/layout/layout";
 
-const publicPages = [];
-
-/* function SetAxiosAuthHeader() {
-  const { session } = useSession();
-
-  const setAuthFromSession = async () => {
-    const token = await session.getToken();
-    // console.log(token);
-
-    setAuthorizationHeader(token);
-  };
-
-  useEffect(() => {
-    if (session) {
-      setAuthFromSession();
-    }
-  }, [session]);
-
-  return <></>;
-} */
+const publicPages = ["login", "signup", "forgot-password", "verify-email"];
 
 function MyApp({ Component, pageProps }) {
   // Get the pathname
@@ -48,7 +26,6 @@ function MyApp({ Component, pageProps }) {
       ) : (
         <>
           <SignedIn>
-            {/* <SetAxiosAuthHeader /> */}
             <Layout>
               <Head>
                 <title>{appDetails.appName}</title>

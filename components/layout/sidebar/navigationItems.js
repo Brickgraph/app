@@ -18,12 +18,12 @@ export const navigationItems = [
   },
   { name: "Access and Groups", href: "/groups", icon: UserGroupIcon },
 
-  {
+  /* {
     name: "Marketplace - coming soon",
     href: "#",
     icon: ViewGridAddIcon,
     disabled: true,
-  },
+  }, */
   {
     name: "Reports - coming soon",
     href: "#",

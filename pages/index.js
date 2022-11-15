@@ -1,9 +1,6 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { getUserById } from "../utils/users";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/VisGraph";
-import CommandPalette from "../components/layout/search/commandPalette";
-import { useState, useCallback, useEffect } from "react";
 
 export default function Home({ status, data }) {
   return (
@@ -17,7 +14,7 @@ export default function Home({ status, data }) {
 
 export const getServerSideProps = withServerSideAuth(
   async ({ req, resolvedUrl }) => {
-    const { userId, sessionId, getToken } = req.auth;
+    const { sessionId, getToken } = req.auth;
 
     if (!sessionId) {
       return {
@@ -26,8 +23,6 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const token = await getToken();
-
-    // Backend data to populate graph
     const { status, data } = await brickgraphRequest(token).get(
       "test/subgraph"
     );

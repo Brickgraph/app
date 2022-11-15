@@ -23,6 +23,7 @@ export default function CommandPalette({ data, isOpen, onClose }) {
       return item.label === selection;
     });
     const nodeID = node[0].id;
+    onClose();
     Router.push(`/nodes/${nodeID}`);
   };
 
