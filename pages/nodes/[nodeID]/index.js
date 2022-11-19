@@ -15,9 +15,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NodePage({ nodeID, status, data }) {
+export default function NodePage({ status, data, accessData }) {
   const [tabSelected, setTabSelected] = useState("Details");
-  console.log("TAB", tabSelected);
+  console.log("DATA", accessData);
   const section = () => {
     switch (tabSelected) {
       case "Details":
@@ -80,8 +80,20 @@ export const getServerSideProps = withServerSideAuth(
         };
       });
 
+    const { accessStatus, accessData } = await brickgraphRequest(token)
+      .get("test/node_permission?node_id=" + nodeID)
+      .then((res) => {
+        return { accessData: res.data, accessStatus: res.status };
+      })
+      .catch((err) => {
+        return {
+          accessData: err.response.data,
+          accessStatus: err.response.status,
+        };
+      });
+
     return {
-      props: { nodeID, status, data },
+      props: { status, data, accessData },
     };
   }
 );
