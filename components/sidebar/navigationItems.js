@@ -6,17 +6,29 @@ import {
   BeakerIcon,
   ViewGridAddIcon,
   PresentationChartBarIcon,
+  DocumentSearchIcon,
 } from "@heroicons/react/outline";
 
 export const navigationItems = [
   { name: "Home", href: "/", icon: HomeIcon },
+  {
+    name: "Actions",
+    href: "/actions",
+    icon: BeakerIcon,
+    disabled: false,
+  },
   {
     name: "Integrations",
     href: "/integrations",
     icon: LightningBoltIcon,
     disabled: false,
   },
-  { name: "Access and Groups", href: "/groups", icon: UserGroupIcon },
+  {
+    name: "Access and Groups",
+    href: "/groups",
+    icon: UserGroupIcon,
+    disable: false,
+  },
 
   /* {
     name: "Marketplace - coming soon",
@@ -33,7 +45,7 @@ export const navigationItems = [
   {
     name: "API Docs",
     href: "http://127.0.0.1:8000/redoc",
-    icon: BeakerIcon,
+    icon: DocumentSearchIcon,
     disabled: false,
   },
   { name: "Settings", href: "/settings", icon: CogIcon, disabled: false },

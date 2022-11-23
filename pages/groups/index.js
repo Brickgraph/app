@@ -1,13 +1,27 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../../services/brickgraph-api";
+import StandardTable from "../../components/visualisations/tables/standardTable";
+import Router from "next/router";
 
-export default function GroupsPage({ response, nodeLabels }) {
-  console.log(response);
-  console.log(nodeLabels);
+export default function GroupsPage({ status, data }) {
+  console.log(data);
+  const handleSelection = (selected) => {
+    console.log(selected);
+    Router.push("/groups/" + selected);
+  };
   return (
-    <div>
-      <h1>Groups Page Placeholder</h1>
-    </div>
+    <>
+      <div>
+        <h1>Groups Page Placeholder</h1>
+      </div>
+      <div>
+        <StandardTable
+          data={data}
+          columnHeaders={["Group Name", "Group Type"]}
+          editAction={handleSelection}
+        />
+      </div>
+    </>
   );
 }
 
@@ -25,13 +39,13 @@ export const getServerSideProps = withServerSideAuth(
     const token = await getToken();
 
     // Retrieve the subgraph of this selected node
-    const nodeLabels = JSON.parse(
-      JSON.stringify(["Organisation", "UserGroup"])
-    );
-    const response = await brickgraphRequest(token)
+    const nodeLabels = ["Organisation", "UserGroup"];
+
+    const labels = `${nodeLabels}`;
+    const { status, data } = await brickgraphRequest(token)
       .get("test/node_labels", {
         params: {
-          node_labels: nodeLabels,
+          labels: labels,
           order_by: "name",
           limit: 20,
           offset: 0,
@@ -48,7 +62,7 @@ export const getServerSideProps = withServerSideAuth(
       });
 
     return {
-      props: { response, nodeLabels },
+      props: { status, data },
     };
   }
 );

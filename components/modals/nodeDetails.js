@@ -75,7 +75,6 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
   };
 
   const formFields = switchNodeForm(nodeDetails);
-  //console.log("FORM FIELDS", formFields);
 
   useEffect(() => {
     switchNodeForm(nodeDetails);

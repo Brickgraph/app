@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState, useCallback } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MenuAlt2Icon, XIcon } from "@heroicons/react/outline";
-import { navigationItems } from "./sideBar/navigationItems";
+import { navigationItems } from "./sidebar/navigationItems";
 import SidebarAvatar from "./sidebar/sidebarAvatar";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -245,7 +245,9 @@ export default function Layout({ children }) {
                 buttonOnClick={() => setCommandPaletteOpen(true)}
               />
             </div>
-            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-2">
+              {children}
+            </div>
           </main>
         </div>
       </div>

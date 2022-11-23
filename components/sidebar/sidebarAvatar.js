@@ -1,6 +1,3 @@
-import { Fragment } from "react";
-import { Transition, Menu, Disclosure } from "@headlessui/react";
-import { useClerk, RedirectToSignIn, UserProfile } from "@clerk/clerk-react";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import ProfileDropdown from "./profileMenu";
@@ -17,12 +14,14 @@ export default function SidebarAvatar() {
   return (
     <>
       <ProfileDropdown>
-        <div className="flex items-center group block flex-shrink-0">
-          <div onClick={() => setAccountIsOpen(true)}>
+        <div className="flex items-center justify-center group block">
+          <div
+            className="p-1 rounded-full border-2 hover:border hover:border-2 hover:border-orange-400"
+            onClick={() => setAccountIsOpen(true)}
+          >
             <Image
-              className="rounded-full border-orange-500"
-              height={48}
-              width={48}
+              height={36}
+              width={36}
               src={
                 user.profileImageUrl.includes("https://www.gravatar.com/avatar")
                   ? "/images/profiles/giraffe-close-up.png"

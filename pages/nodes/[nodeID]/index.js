@@ -2,18 +2,7 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../../../services/brickgraph-api";
 import Router from "next/router";
 import { useState } from "react";
-import { NodePageLayout } from "../../../components/layout/nodePage/layout";
-
-const tabs = [
-  { name: "Details", href: "#", current: true },
-  { name: "Connections", href: "#", current: false },
-  { name: "Logs", href: "#", current: false },
-  { name: "Permissions", href: "#", current: false },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { NodePageLayout } from "../../../components/pageLayouts/nodePage/layout";
 
 export default function NodePage({ status, data, accessData }) {
   const [tabSelected, setTabSelected] = useState("Details");

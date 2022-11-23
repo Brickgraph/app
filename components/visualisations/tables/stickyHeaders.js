@@ -1,5 +1,4 @@
 import { FilterIcon, TrashIcon, GlobeAltIcon } from "@heroicons/react/outline";
-import Router from "next/router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

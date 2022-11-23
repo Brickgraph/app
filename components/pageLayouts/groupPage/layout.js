@@ -1,14 +1,8 @@
-import ActionFullMenu from "./actionsDropdown";
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const tabs = [
-  { name: "Your Groups" },
-  { name: "User Network" },
-  { name: "Permissions" },
-];
+const tabs = [{ name: "Details" }, { name: "Users" }, { name: "Permissions" }];
 
 export const GroupPageLayout = ({
   data,
@@ -23,9 +17,6 @@ export const GroupPageLayout = ({
           <h3 className="text-lg font-medium leading-6 text-gray-900">
             {data.label}
           </h3>
-          <div className="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
-            <ActionFullMenu />
-          </div>
         </div>
         <div className="mt-4">
           <div className="sm:hidden">

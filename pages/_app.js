@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import Head from "next/head";
 import { appDetails } from "../config";
-import Layout from "../components/layout/layout";
+import Layout from "../components/layout";
 
 const publicPages = ["login", "signup", "forgot-password", "verify-email"];
 

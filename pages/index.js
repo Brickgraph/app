@@ -2,11 +2,12 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/VisGraph";
 
-export default function Home({ status, data }) {
+export default function Home({ token, status, data }) {
+  console.log(token);
   return (
     <>
       <div className="flex flex-col p-4 overflow-auto">
-        <VisGraph status={status} data={data} defaultView={"table"} />
+        <VisGraph status={status} data={data} defaultView={"graph"} />
       </div>
     </>
   );
@@ -27,6 +28,6 @@ export const getServerSideProps = withServerSideAuth(
       "test/subgraph"
     );
 
-    return { props: { status, data } };
+    return { props: { token, status, data } };
   }
 );
