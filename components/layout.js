@@ -239,12 +239,10 @@ export default function Layout({ children }) {
             </button>
           </div>
           <main className="flex-1">
-            <div className="sticky top-0 p-2 bg-white hidden md:flex border border-l-0 border-r-0 border-2 border-gray-100">
-              <SearchBar
-                data={[]}
-                buttonOnClick={() => setCommandPaletteOpen(true)}
-              />
-            </div>
+            <SearchBar
+              data={[]}
+              buttonOnClick={() => setCommandPaletteOpen(true)}
+            />
             <div className="mx-auto max-w-7xl px-4 sm:px-6 py-2">
               {children}
             </div>

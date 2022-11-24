@@ -3,7 +3,7 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 
 export default function ProfilePage() {
   return (
-    <div>
+    <div className="relative mx-auto max-w-4xl md:px-4">
       <UserProfile />
     </div>
   );

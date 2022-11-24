@@ -2,15 +2,35 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../../services/brickgraph-api";
 import StandardTable from "../../components/visualisations/tables/standardTable";
 import Router from "next/router";
+import EmptyEntityState from "../../components/ui/empty/emptyState";
 
 export default function NodesPage({ status, data, label }) {
+  console.log(data);
   const handleSelection = (selected) => {
     console.log(selected);
     Router.push("/nodes/" + selected);
   };
 
-  if (status !== 200) {
+  /* if (status !== 200) {
     Router.push("/");
+  } */
+
+  const createNewItem = () => {
+    console.log("Create new item");
+  };
+
+  if (data.length === 0) {
+    return (
+      <>
+        <div className="p-2 md:p-8 border-dotted border-2 border-orange-400">
+          <EmptyEntityState
+            itemName={label}
+            description={`Nothing here. Shall we create a new ${label}?`}
+            createAction={createNewItem}
+          />
+        </div>
+      </>
+    );
   }
 
   return (
@@ -21,8 +41,13 @@ export default function NodesPage({ status, data, label }) {
       <div className="p-4">
         <StandardTable
           data={data}
-          columnHeaders={["Label", "Type"]}
+          columnHeaders={[
+            { label: "Label", field: "label" },
+            { label: "Type", field: "group" },
+          ]}
           editAction={handleSelection}
+          sort={true}
+          sortBy="name"
         />
       </div>
     </>
@@ -41,13 +66,13 @@ export const getServerSideProps = withServerSideAuth(
 
     //const user = await getUserById(userId);
     const token = await getToken();
-    const { label } = query;
+
+    const label = query?.label ? query.label : "";
 
     const { status, data } = await brickgraphRequest(token)
       .get("test/node_labels", {
         params: {
           labels: label,
-          order_by: "name",
           limit: 20,
           offset: 0,
         },
@@ -63,7 +88,7 @@ export const getServerSideProps = withServerSideAuth(
       });
 
     return {
-      props: { status, data, label },
+      props: { status, data, label: `${label}` },
     };
   }
 );

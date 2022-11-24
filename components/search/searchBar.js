@@ -18,15 +18,17 @@ export default function SearchBar({ data, buttonOnClick }) {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
   return (
-    <div className="relative flex items-center justify-between bg-white w-full">
-      <div className="flex flex-1 px-1 ml-6 justify-start">
-        <SearchButton onClick={buttonOnClick} />
-      </div>
-      <div className="mr-6 justify-end">
-        <BellNotification
-          active={true}
-          onClick={() => handleClick("Notification")}
-        />
+    <div className="sticky top-0 p-2 bg-white hidden md:flex border border-l-0 border-r-0 border-2 border-gray-100 z-20">
+      <div className="relative flex items-center justify-between bg-white w-full">
+        <div className="flex flex-1 px-1 ml-6 justify-start">
+          <SearchButton onClick={buttonOnClick} />
+        </div>
+        <div className="mr-6 justify-end">
+          <BellNotification
+            active={true}
+            onClick={() => handleClick("Notification")}
+          />
+        </div>
       </div>
     </div>
   );

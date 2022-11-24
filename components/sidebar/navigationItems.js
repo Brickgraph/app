@@ -18,16 +18,16 @@ export const navigationItems = [
     disabled: false,
   },
   {
-    name: "Integrations",
-    href: "/integrations",
-    icon: LightningBoltIcon,
-    disabled: false,
-  },
-  {
     name: "Access and Groups",
     href: "/groups",
     icon: UserGroupIcon,
     disable: false,
+  },
+  {
+    name: "Integrations - coming soon",
+    href: "/integrations",
+    icon: LightningBoltIcon,
+    disabled: false,
   },
 
   /* {

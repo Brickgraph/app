@@ -4,7 +4,6 @@ import StandardTable from "../../components/visualisations/tables/standardTable"
 import Router from "next/router";
 
 export default function GroupsPage({ status, data }) {
-  console.log(data);
   const handleSelection = (selected) => {
     console.log(selected);
     Router.push("/groups/" + selected);
