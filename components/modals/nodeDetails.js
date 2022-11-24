@@ -90,10 +90,10 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
           >
             <Link href={node ? `/nodes/${node.id}` : ""}>
               <div className="flex items-center">
-                <h1 className="text-lg md:text-xl text-black font-bold font-sans">
+                <h1 className="text-lg md:text-xl text-black">
                   {node ? node.label : ""}
                 </h1>
-                <span> {"   "}</span>
+                <span className="w-2"> {"   "}</span>
                 <ExternalLinkIcon className="h-5 w-5 text-gray-500" />
               </div>
             </Link>

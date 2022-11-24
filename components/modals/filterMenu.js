@@ -23,14 +23,6 @@ export default function FilterMenu({
             currentSelections={currentSelections}
           />
         </div>
-        {/* <div id="combobox-filter-properties">
-          Properties:{" "}
-          <ComboBox
-            options={options}
-            handleSelections={handleNodeSelections}
-            currentSelections={currentSelections}
-          />
-        </div> */}
       </div>
     </SlideOverRight>
   );
