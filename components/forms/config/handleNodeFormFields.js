@@ -3,12 +3,13 @@ import {
   sectorFields,
   organisationFields,
   propertyUnitFields,
+  investorFields,
   defaultFields,
 } from "./nodeFields";
 
-export const switchNodeForm = (node) => {
-  if (node !== null) {
-    const group = node.group;
+export const switchNodeForm = (nodeGroup) => {
+  if (nodeGroup !== null) {
+    const group = nodeGroup;
     switch (group) {
       case "Property": {
         return propertyFields;
@@ -21,6 +22,9 @@ export const switchNodeForm = (node) => {
       }
       case "Property Unit": {
         return propertyUnitFields;
+      }
+      case "Investor": {
+        return investorFields;
       }
       default: {
         return defaultFields;

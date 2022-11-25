@@ -56,7 +56,7 @@ export const getServerSideProps = withServerSideAuth(
     //const user = await getUserById(userId);
     const token = await getToken();
 
-    // Retrieve the subgraph of this selected node
+    // Retrieve the details of this selected node
     const { status, data } = await brickgraphRequest(token)
       .get("nodes/" + nodeID)
       .then((res) => {

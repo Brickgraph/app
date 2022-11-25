@@ -105,6 +105,10 @@ export const propertyUnitFields = [
   },
 ];
 
+export const investorFields = [
+  { id: "name", label: "Name", type: "text", required: true },
+];
+
 export const defaultFields = [
   { id: "label", label: "Label", type: "text", required: true },
   {

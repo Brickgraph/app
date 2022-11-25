@@ -11,9 +11,15 @@ import Link from "next/link";
 import { LoadingNotification } from "../ui/notifications/loadingNotification";
 import { switchNodeForm } from "../forms/config/handleNodeFormFields";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
+import { getNodeDetails } from "../../services/nodes/getNodeID";
+import { LoadingSpinner } from "../ui/loading/loadingSpinner";
+import { Tabs } from "../ui/tabs/pageTabs";
 
-export const NodeDetailsModal = ({ node, onClose, show }) => {
-  const [nodeDetails, setNodeDetails] = useState(node);
+export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
+  const [nodeDetails, setNodeDetails] = useState(null);
+  const [permissionDetails, setPermissionDetails] = useState(null);
+  const [tabs, setTabs] = useState(null);
+  const [tabSelected, setTabSelected] = useState(null);
   const [updatedNode, setUpdatedNode] = useState(null);
   const [showUpdateNotification, setShowUpdateNotification] = useState(false);
   const [errorMessage, setErrorMesage] = useState("");
@@ -21,8 +27,38 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     useState(false);
   const [loadingChanges, setLoadingChanges] = useState(false);
 
+  const { session } = useSession();
+
+  const nodeApiCall = async () => {
+    const { getToken } = session;
+    const token = await getToken();
+    const { status, data, accessStatus, accessData } = await getNodeDetails(
+      nodeID,
+      token
+    );
+    console.log("DATA", data);
+    if (status === 200) {
+      tabs = data.group.split(", ");
+      setNodeDetails(data);
+      setTabs(tabs);
+      setTabSelected(tabs[0]);
+      console.log("Group", data.group.split(", "));
+    }
+    if (accessStatus === 200) {
+      setPermissionDetails(accessData);
+      console.log("Access Data", accessData);
+    }
+    return { status, data };
+  };
+
   useEffect(() => {
-    setNodeDetails(node);
+    if (show) {
+      nodeApiCall();
+    } else {
+      setNodeDetails(null);
+      setTabs(null);
+      setTabSelected(null);
+    }
   }, [show]);
 
   function inputChangeHandler(event) {
@@ -73,11 +109,11 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     }
   };
 
-  const formFields = switchNodeForm(nodeDetails);
+  const formFields = switchNodeForm(tabSelected);
 
   useEffect(() => {
-    switchNodeForm(nodeDetails);
-  }, [nodeDetails]);
+    switchNodeForm(tabSelected);
+  }, [tabSelected]);
 
   return (
     <>
@@ -87,10 +123,14 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
             onClick={() => setLoadingChanges(true)}
             className="hover:bg-orange-200 p-2 rounded"
           >
-            <Link href={node ? `/nodes/${node.id}` : ""}>
+            <Link href={nodeID ? `/nodes/${nodeID}` : ""}>
               <div className="flex items-center">
                 <h1 className="text-lg md:text-xl text-black">
-                  {node ? node.label : ""}
+                  {nodeDetails ? (
+                    nodeDetails.label
+                  ) : (
+                    <LoadingSpinner message={"Loading..."} />
+                  )}
                 </h1>
                 <span className="w-2"> {"   "}</span>
                 <ExternalLinkIcon className="h-5 w-5 text-gray-500" />
@@ -98,13 +138,15 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
             </Link>
           </button>
         </div>
-        <CustomForm
-          dictItem={nodeDetails}
-          formFields={formFields}
-          changeHandler={inputChangeHandler}
-          cancelAction={onClose}
-          submitAction={handleSubmit}
-        />
+        <Tabs tabs={tabs} onSelect={setTabSelected}>
+          <CustomForm
+            dictItem={nodeDetails}
+            formFields={formFields}
+            changeHandler={inputChangeHandler}
+            cancelAction={onClose}
+            submitAction={handleSubmit}
+          />
+        </Tabs>
       </ModalBase>
       <UpdateNodeSuccessful
         isVisible={showUpdateNotification}

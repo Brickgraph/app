@@ -113,7 +113,7 @@ export const VisGraph = ({ status, data, defaultView }) => {
         })()}
       </div>
       <NodeDetailsModal
-        node={nodeSelected}
+        nodeID={nodeSelected ? nodeSelected.id : null}
         show={isNodeModalVisible}
         onClose={() => handleModalClose()}
       />
