@@ -39,10 +39,9 @@ export const NodeDetailsModal = ({ node, onClose, show }) => {
     const token = await getToken();
     const formData = nodeDetails;
     const { id } = nodeDetails;
-    console.log(token);
     setLoadingChanges(true);
     const { status, data } = await brickgraphRequest(token)
-      .put(`test/node/update/${id}`, formData)
+      .put(`nodes/${id}/update/`, formData)
       .then((res) => {
         return { data: res.data, status: res.status };
       })

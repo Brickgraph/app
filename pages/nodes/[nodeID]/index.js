@@ -58,7 +58,7 @@ export const getServerSideProps = withServerSideAuth(
 
     // Retrieve the subgraph of this selected node
     const { status, data } = await brickgraphRequest(token)
-      .get("test/node_id?node_id=" + nodeID)
+      .get("nodes/" + nodeID)
       .then((res) => {
         return { data: res.data, status: res.status };
       })
@@ -70,7 +70,7 @@ export const getServerSideProps = withServerSideAuth(
       });
 
     const { accessStatus, accessData } = await brickgraphRequest(token)
-      .get("test/node_permission?node_id=" + nodeID)
+      .get(`nodes/${nodeID}/permission`)
       .then((res) => {
         return { accessData: res.data, accessStatus: res.status };
       })

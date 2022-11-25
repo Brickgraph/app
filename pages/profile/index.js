@@ -1,12 +1,13 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById } from "../../utils/users";
+import { useRef } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function ProfilePage({ user }) {
-  console.log(user);
+  const ref = useRef(null);
 
   return (
     <>
@@ -62,7 +63,7 @@ export default function ProfilePage({ user }) {
                           <span className="ml-4 flex flex-shrink-0 items-start space-x-4">
                             <button
                               type="button"
-                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                             >
                               Update
                             </button>
@@ -71,7 +72,7 @@ export default function ProfilePage({ user }) {
                             </span>
                             <button
                               type="button"
-                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                             >
                               Remove
                             </button>
@@ -89,9 +90,38 @@ export default function ProfilePage({ user }) {
                           <span className="ml-4 flex-shrink-0">
                             <button
                               type="button"
-                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                             >
                               Update
+                            </button>
+                          </span>
+                        </dd>
+                      </div>
+                      <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:pt-5">
+                        <dt className="text-sm font-medium text-gray-500">
+                          API Key
+                        </dt>
+                        <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                          <p
+                            className="flex-grow"
+                            id="api-key"
+                            ref={ref}
+                            disabled
+                          >
+                            {user.email_addresses[0].email_address}
+                          </p>
+                          <span className="ml-4 flex-shrink-0">
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  ref.current.innerText
+                                );
+                                alert(`API Key copied to your clipboard.`);
+                              }}
+                              type="button"
+                              className="rounded-md bg-white font-medium text-orange-500 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                            >
+                              Copy to Clipboard
                             </button>
                           </span>
                         </dd>

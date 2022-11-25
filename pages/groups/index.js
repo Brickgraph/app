@@ -11,7 +11,7 @@ export default function GroupsPage({ status, data }) {
   return (
     <>
       <div>
-        <h1>Groups Page Placeholder</h1>
+        <h1>Your Groups</h1>
       </div>
       <div>
         <StandardTable
@@ -42,7 +42,7 @@ export const getServerSideProps = withServerSideAuth(
 
     const labels = `${nodeLabels}`;
     const { status, data } = await brickgraphRequest(token)
-      .get("test/node_labels", {
+      .get("nodes", {
         params: {
           labels: labels,
           order_by: "name",

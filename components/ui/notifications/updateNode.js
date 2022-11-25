@@ -2,17 +2,16 @@ import { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/outline";
+import Link from "next/link";
 
 export const UpdateNodeSuccessful = ({ isVisible, node, onClose }) => {
   return (
     <>
-      {/* Global notification live region, render this permanently at the end of the document */}
       <div
         aria-live="assertive"
         className="z-50 pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6"
       >
         <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
-          {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
           <Transition
             show={isVisible}
             as={Fragment}
@@ -37,7 +36,10 @@ export const UpdateNodeSuccessful = ({ isVisible, node, onClose }) => {
                       {node?.label} was successfully updated!
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
-                      Click here to see more details.
+                      <span className="hover:text-orange-400">
+                        <Link href={`nodes/${node?.id}`}>Click here</Link>
+                      </span>{" "}
+                      to see more details.
                     </p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
@@ -92,9 +94,6 @@ export const UpdateNodeFailed = ({ isVisible, node, message, onClose }) => {
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">
                       {node?.label} could not be updated. {message}
-                    </p>
-                    <p className="mt-1 text-sm text-gray-500">
-                      Click here to see more details.
                     </p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">

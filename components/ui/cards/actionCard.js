@@ -43,7 +43,6 @@ const CardDefault = ({ item }) => {
 };
 
 const CardHover = ({ item, viewAction, createAction }) => {
-  console.log(item.href);
   return (
     <>
       <div className="p-4">

@@ -3,7 +3,7 @@ import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/VisGraph";
 
 export default function Home({ token, status, data }) {
-  console.log(token);
+  console.log(data);
   return (
     <>
       <div className="flex flex-col p-4 overflow-auto">
@@ -24,9 +24,7 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const token = await getToken();
-    const { status, data } = await brickgraphRequest(token).get(
-      "test/subgraph"
-    );
+    const { status, data } = await brickgraphRequest(token).get("subgraph");
 
     return { props: { token, status, data } };
   }

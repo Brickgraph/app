@@ -5,15 +5,15 @@ import Router from "next/router";
 import EmptyEntityState from "../../components/ui/empty/emptyState";
 
 export default function NodesPage({ status, data, label }) {
-  console.log(data);
   const handleSelection = (selected) => {
     console.log(selected);
     Router.push("/nodes/" + selected);
   };
 
-  /* if (status !== 200) {
+  if (status !== 200) {
+    console.log(data);
     Router.push("/");
-  } */
+  }
 
   const createNewItem = () => {
     console.log("Create new item");
@@ -70,7 +70,7 @@ export const getServerSideProps = withServerSideAuth(
     const label = query?.label ? query.label : "";
 
     const { status, data } = await brickgraphRequest(token)
-      .get("test/node_labels", {
+      .get("nodes/", {
         params: {
           labels: label,
           limit: 20,

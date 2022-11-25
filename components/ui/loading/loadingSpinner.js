@@ -19,7 +19,7 @@ export const LoadingSpinner = ({ message }) => {
           fill="currentFill"
         />
       </svg>
-      <span class="sr-only">{message}</span>
+      <span className="sr-only">{message}</span>
     </div>
   );
 };

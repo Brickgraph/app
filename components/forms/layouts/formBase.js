@@ -20,25 +20,23 @@ export const FormBase = ({
             {fieldData
               ? fieldData.map((field) => {
                   return (
-                    <>
-                      <div className="py-2 px-6">
-                        <li key={field.id}>
-                          <DefaultInput
-                            name={field.label}
-                            type={field.type}
-                            defaultValue={
-                              field.defaultValue ? field.defaultValue : null
-                            }
-                            labelText={field.label}
-                            labelFor={field.label}
-                            id={field.id}
-                            isRequired={field.required}
-                            onChangeHandler={changeHandler}
-                            disable={field.disable}
-                          />
-                        </li>
-                      </div>
-                    </>
+                    <div key={field.id} className="py-2 px-6">
+                      <li>
+                        <DefaultInput
+                          name={field.id}
+                          type={field.type}
+                          defaultValue={
+                            field.defaultValue ? field.defaultValue : null
+                          }
+                          labelText={field.label}
+                          labelFor={field.label}
+                          id={field.id}
+                          isRequired={field.required}
+                          onChangeHandler={changeHandler}
+                          disable={field.disable}
+                        />
+                      </li>
+                    </div>
                   );
                 })
               : ""}
