@@ -81,7 +81,7 @@ export const VisGraph = ({ status, data, defaultView }) => {
   }
 
   return (
-    <div className="flex flex-col p-4 overflow-auto w-auto">
+    <div className="flex flex-col overflow-auto w-auto">
       <div className="h-[calc(100vh-100px)]">
         {(() => {
           switch (view) {
