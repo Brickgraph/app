@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Link from "next/link";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
 
 function classNames(...classes) {
@@ -10,12 +9,14 @@ export default function StandardTable({
   data,
   columnHeaders,
   filterSelections = [],
-  editAction = null,
-  sort = false,
+  buttonAction = null,
+  sort = true,
   sortBy = null,
+  buttonText = "Edit",
 }) {
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [sortValue, setSortValue] = useState(sortBy);
+  const [sortValue, setSortValue] = useState(
+    sortBy ? sortBy : columnHeaders[0].field
+  );
   const [sortDescending, setSortDescending] = useState(true);
   const items =
     filterSelections.length === 0
@@ -74,7 +75,7 @@ export default function StandardTable({
                     scope="col"
                     className="sticky z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
                   >
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">{buttonText}</span>
                   </th>
                 </tr>
               </thead>
@@ -110,10 +111,11 @@ export default function StandardTable({
                       )}
                     >
                       <button
-                        onClick={() => editAction(item.id)}
-                        className="p-2 rounded bg-orange-200 border-orange-200 border-1 text-gray-700 hover:bg-orange-400"
+                        onClick={() => buttonAction(item.id)}
+                        className="p-2 text-sm rounded bg-orange-200 border-orange-200 border-1 text-gray-700 hover:bg-orange-400"
                       >
-                        View<span className="sr-only">{item.name}</span>
+                        {buttonText}
+                        <span className="sr-only">{item.name}</span>
                       </button>
                     </td>
                   </tr>

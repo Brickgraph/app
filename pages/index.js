@@ -1,31 +1,71 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { VisGraph } from "../components/visualisations/graph/VisGraph";
-import {
-  mainPageTabs,
-  MainPageHeader,
-} from "../components/pageLayouts/mainPage/mainPageHeader";
-import { useState } from "react";
+import { MainPageLayout } from "../components/pageLayouts/mainPage/layout";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
+import StandardTable from "../components/visualisations/tables/standardTable";
+import GraphVisual from "../components/visualisations/graph/GraphVisual";
+import FilterMenu from "../components/modals/filterMenu";
+import { NodeDetailsModal } from "../components/modals/nodeDetails";
 
 export default function Home({ token, status, data }) {
   const [selectedTab, setSelectedTab] = useState("Graph");
+  const [nodeModalVisible, setNodeModalVisible] = useState(false);
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedNodeID, setSelectedNodeID] = useState(null);
+  const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
-  console.log(selectedTab.toLowerCase());
 
-  const switchView = (view) => {
-    switch (view) {
+  let uniqueNodeGroups = [...new Set(data.nodes.map((item) => item.group))];
+  const nodeGroupsDict = uniqueNodeGroups.map((item) => {
+    return { id: item, label: item, value: item };
+  });
+
+  const handleFilterMenu = () => {
+    setFilterMenuVisible((current) => !current);
+  };
+
+  const handleNewItemMenu = () => {
+    console.log("Create something new.");
+  };
+
+  const view = () => {
+    switch (selectedTab) {
       case "Graph":
         return (
-          <>
-            <p>Graph View</p>
-          </>
+          <GraphVisual
+            data={data}
+            height={"100%"}
+            width={"100%"}
+            nodeFilterSelections={selectedFilters}
+            nodeSelectAction={(nodeId) => {
+              setSelectedNodeID(nodeId);
+              setNodeModalVisible(true);
+            }}
+            edgeSelectAction={(edgeId) => {
+              setSelectedEdgeID(edgeId);
+            }}
+          />
         );
       case "Table":
         return (
-          <>
-            <p>Table View</p>
-          </>
+          <div className="px-6">
+            <StandardTable
+              data={data.nodes}
+              columnHeaders={[
+                { label: "Label", field: "label" },
+                { label: "Type", field: "group" },
+              ]}
+              filterSelections={selectedFilters}
+              buttonText="View"
+              buttonAction={(nodeId) => {
+                setSelectedNodeID(nodeId);
+                setNodeModalVisible(true);
+              }}
+            />
+          </div>
         );
       default:
         return (
@@ -35,24 +75,35 @@ export default function Home({ token, status, data }) {
         );
     }
   };
+
   return (
     <>
-      <MainPageHeader
+      <MainPageLayout
         title={`Welcome, ${userName}`}
-        tabs={mainPageTabs}
         selectedTab={selectedTab}
         onSelect={setSelectedTab}
-      />
-      {/* {switchView(selectedTab)} */}
-      <div className="pt-2">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 border border-1 border-gray-200">
-          <VisGraph
-            status={status}
-            data={data}
-            defaultView={selectedTab.toLowerCase()}
-          />
+        filterButtonAction={() => handleFilterMenu()}
+        newButtonAction={() => handleNewItemMenu()}
+      >
+        <div className="mx-auto max-w-7xl border border-1 border-gray-200">
+          {view()}
         </div>
-      </div>
+      </MainPageLayout>
+      <FilterMenu
+        isOpen={filterMenuVisible}
+        handleClose={handleFilterMenu}
+        handleNodeSelections={setSelectedFilters}
+        currentSelections={selectedFilters}
+        filterOptions={nodeGroupsDict}
+      />
+      <NodeDetailsModal
+        nodeID={selectedNodeID ? selectedNodeID : null}
+        show={nodeModalVisible}
+        onClose={() => {
+          setSelectedNodeID(null);
+          setNodeModalVisible(false);
+        }}
+      />
     </>
   );
 }

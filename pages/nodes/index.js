@@ -3,15 +3,14 @@ import { brickgraphRequest } from "../../services/brickgraph-api";
 import StandardTable from "../../components/visualisations/tables/standardTable";
 import Router from "next/router";
 import EmptyEntityState from "../../components/ui/empty/emptyState";
+import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 
 export default function NodesPage({ status, data, label }) {
   const handleSelection = (selected) => {
-    console.log(selected);
     Router.push("/nodes/" + selected);
   };
 
   if (status !== 200) {
-    console.log(data);
     Router.push("/");
   }
 
@@ -35,9 +34,7 @@ export default function NodesPage({ status, data, label }) {
 
   return (
     <>
-      <div>
-        <h1>{label}</h1>
-      </div>
+      <PageTitleHeader title={label} />
       <div className="p-4">
         <StandardTable
           data={data}
@@ -45,9 +42,10 @@ export default function NodesPage({ status, data, label }) {
             { label: "Label", field: "label" },
             { label: "Type", field: "group" },
           ]}
-          editAction={handleSelection}
+          buttonAction={handleSelection}
           sort={true}
           sortBy="name"
+          buttonText="Details"
         />
       </div>
     </>
@@ -64,7 +62,6 @@ export const getServerSideProps = withServerSideAuth(
       };
     }
 
-    //const user = await getUserById(userId);
     const token = await getToken();
 
     const label = query?.label ? query.label : "";

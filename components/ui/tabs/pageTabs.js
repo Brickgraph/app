@@ -24,9 +24,9 @@ export const Tabs = ({ children, tabs, onSelect, selectedTab = null }) => {
     );
   }
 
-  if (tabs.length === 1) {
+  /* if (tabs.length === 1) {
     return <>{children}</>;
-  }
+  } */
 
   return (
     <>

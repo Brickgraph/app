@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/outline";
 import Router from "next/router";
 import { useState } from "react";
+import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 
 const cards = [
   {
@@ -52,6 +53,7 @@ export default function SettingsPage() {
 
   return (
     <>
+      <PageTitleHeader title={"Actions"} />
       <div className="relative">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
           {cards.map((item) => (

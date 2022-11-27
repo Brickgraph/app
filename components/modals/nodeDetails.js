@@ -36,17 +36,14 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
       nodeID,
       token
     );
-    console.log("DATA", data);
     if (status === 200) {
       tabs = data.group.split(", ");
       setNodeDetails(data);
       setTabs(tabs);
       setTabSelected(tabs[0]);
-      console.log("Group", data.group.split(", "));
     }
     if (accessStatus === 200) {
       setPermissionDetails(accessData);
-      console.log("Access Data", accessData);
     }
     return { status, data };
   };
@@ -121,7 +118,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
         <div className="grid justify-items-center py-4">
           <button
             onClick={() => setLoadingChanges(true)}
-            className="hover:bg-orange-200 p-2 rounded"
+            className="hover:bg-orange-200 px-4 py-2 rounded"
           >
             <Link href={nodeID ? `/nodes/${nodeID}` : ""}>
               <div className="flex items-center">

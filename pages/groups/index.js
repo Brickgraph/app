@@ -2,22 +2,24 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../../services/brickgraph-api";
 import StandardTable from "../../components/visualisations/tables/standardTable";
 import Router from "next/router";
+import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 
 export default function GroupsPage({ status, data }) {
   const handleSelection = (selected) => {
-    console.log(selected);
     Router.push("/groups/" + selected);
   };
   return (
     <>
-      <div>
-        <h1>Your Groups</h1>
-      </div>
-      <div>
+      <PageTitleHeader title={"Groups"} />
+      <div className="px-2 md:px-4 py-2">
         <StandardTable
           data={data}
-          columnHeaders={["Group Name", "Group Type"]}
-          editAction={handleSelection}
+          columnHeaders={[
+            { label: "Name", field: "label" },
+            { label: "Group Type", field: "group" },
+          ]}
+          buttonAction={handleSelection}
+          buttonText="View"
         />
       </div>
     </>

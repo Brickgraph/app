@@ -1,18 +1,43 @@
 import Graph from "react-graph-vis";
 import React, { useState, useEffect } from "react";
-import { FilterIcon, TrashIcon, TableIcon } from "@heroicons/react/outline";
+import {
+  RefreshIcon,
+  GlobeAltIcon,
+  ViewGridIcon,
+} from "@heroicons/react/outline";
 
-const GraphVisual = ({
-  events,
+export default function GraphVisual({
   data,
   height = "100%",
   width = "100%",
-  nodeFilterSelections,
-  filterClear,
-  openFilterMenu,
-  switchView,
-}) => {
+  nodeFilterSelections = [],
+  nodeSelectAction = null,
+  edgeSelectAction = null,
+}) {
   const [dataLoading, setIsDataLoading] = useState(true);
+  const [graphData, setGraphData] = useState(data);
+  const [graphState, setGraphState] = useState(
+    {
+      graph: data,
+      events: {
+        selectNode: (e) => {
+          var { nodes } = e;
+          var nodeId = nodes[0];
+          nodeSelectAction(nodeId);
+        },
+        /* hoverNode: ({ node }) => {
+          setNodeHovered(node);
+        }, */
+        selectEdge: (e) => {
+          var { edges } = e;
+          var edgeId = edges[0];
+          edgeSelectAction(edgeId);
+        },
+      },
+    },
+    []
+  );
+
   const resetData = () => {
     setIsDataLoading((current) => !current);
   };
@@ -32,8 +57,6 @@ const GraphVisual = ({
       window.removeEventListener("resize", handleResize);
     };
   });
-
-  const [graphData, setGraphData] = useState(data);
 
   const clearFilters = () => {
     setGraphData(data);
@@ -60,7 +83,6 @@ const GraphVisual = ({
 
   useEffect(() => {
     handleNodeFilter(nodeFilterSelections);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeFilterSelections]);
 
   const [hierarchical, setHierachical] = useState(false);
@@ -79,6 +101,7 @@ const GraphVisual = ({
         max: 20,
         label: { enabled: false },
       },
+      widthConstraint: 100,
     },
     edges: {
       color: "orange",
@@ -95,12 +118,25 @@ const GraphVisual = ({
       hideNodesOnDrag: false,
     },
     physics: {
-      barnesHut: {
-        springConstant: 0.5,
-        avoidOverlap: 0.1,
+      forceAtlas2Based: {
+        gravitationalConstant: -50,
+        centralGravity: 0.005,
+        springLength: 100,
+        springConstant: 1,
+        avoidOverlap: 1.25,
+      },
+      maxVelocity: 250,
+      solver: "forceAtlas2Based",
+      timestep: 0.35,
+      stabilization: {
+        enabled: true,
+        iterations: 1000,
+        updateInterval: 25,
       },
     },
   };
+
+  const { events } = graphState;
 
   if (dataLoading !== true) {
     return (
@@ -112,55 +148,27 @@ const GraphVisual = ({
 
   return (
     <>
-      <div className="relative h-full">
-        <div className="absolute bottom-1 right-1 transform z-10">
-          <div
-            data-bs-toggle="tooltip"
-            title="Reset the visualisation"
-            onClick={resetData}
-            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-          >
-            <span>Refresh</span>
-          </div>
-        </div>
-        <div className="absolute top-1 right-24 transform z-10">
-          <button
-            data-bs-toggle="tooltip"
-            title="Switch to Table View"
-            onClick={switchView}
-            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-          >
-            <TableIcon className="h-5 w-5 " aria-hidden="true" />
-          </button>
-        </div>
-        <div className="absolute top-1 right-12 transform z-10">
-          <button
-            data-bs-toggle="tooltip"
-            title="Open the filter menu"
-            onClick={openFilterMenu}
-            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-          >
-            <FilterIcon className="h-5 w-5 " aria-hidden="true" />
-          </button>
-        </div>
-        <div className="absolute top-1 right-0 transform z-10">
-          <button
-            data-bs-toggle="tooltip"
-            title="Clear all filters"
-            onClick={filterClear}
-            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
-          >
-            <TrashIcon className="h-5 w-5 " aria-hidden="true" />
-          </button>
-        </div>
-        <div className="absolute top-1 left-1 transform z-10">
+      <div className="relative h-[calc(100vh-100px)]">
+        <div className="absolute flex flex cols-2 top-4 right-4 gap-2 transform z-10">
           <button
             data-bs-toggle="tooltip"
             title="Change the layout of the graph"
             onClick={changeFormat}
             className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
           >
-            {hierarchical ? "View: Hierarchy" : "View: Network"}
+            {hierarchical ? (
+              <GlobeAltIcon className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <ViewGridIcon className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
+          <button
+            data-bs-toggle="tooltip"
+            title="Clear all filters"
+            onClick={resetData}
+            className="text-sm text-bold rounded border-slate-500 border-2 p-2 bg-slate-100 hover:bg-orange-500 hover:border-orange-500 text-grey-800 hover:text-white"
+          >
+            <RefreshIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
         <Graph
@@ -173,6 +181,4 @@ const GraphVisual = ({
       </div>
     </>
   );
-};
-
-export default GraphVisual;
+}

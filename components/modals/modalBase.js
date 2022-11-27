@@ -15,8 +15,8 @@ const ModalBase = ({ show, children, onClose }) => {
     <>
       <div
         id="wrapper"
-        className="fixed inset-0 p-10 h-full bg-black bg-opacity-25 
-                 backdrop-blur-sm flex justify-center items-center z-50 overflow-y-auto pt-28"
+        className="fixed absolute inset-0 p-6 md:p-12 h-full bg-black bg-opacity-25 
+                 backdrop-blur-sm flex justify-center items-start z-50 overflow-y-auto p-20"
         onClick={handleClose}
       >
         <Transition
@@ -29,12 +29,12 @@ const ModalBase = ({ show, children, onClose }) => {
           leaveFrom="opacity-100 rotate-0 scale-100 "
           leaveTo="opacity-0 scale-95 "
         >
-          <div className="md:w-[600px] w-[90%] flex flex-col rounded-xl pt-18">
+          <div className="md:w-[600px] sm:w-[90%] flex flex-col rounded-xl pt-1">
             <div className="relative bg-white p-4 object-cover rounded border-orange-500 border-1">
-              <button className="absolute top-2 right-2 place-self-end">
+              <button className="absolute top-4 right-4 place-self-end">
                 <XIcon
                   onClick={onClose}
-                  className="h-6 w-6 md:h-8 md:w-8 text-black hover:text-orange-400"
+                  className="h-5 w-5 md:h-6 md:w-6 text-black hover:text-orange-400"
                   aria-hidden="true"
                 />
               </button>
