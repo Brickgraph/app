@@ -15,7 +15,7 @@ export default function NodesPage({ status, data, label }) {
   }
 
   const createNewItem = () => {
-    console.log("Create new item");
+    Router.push("/create?label=" + label);
   };
 
   if (data.length === 0) {

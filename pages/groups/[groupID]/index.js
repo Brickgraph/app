@@ -13,10 +13,10 @@ export default function GroupPage({ status, data }) {
         return <GroupDetailsLayout data={data} />;
       case "Users":
         return <div>{data.label} Users</div>;
-      case "Permissions":
-        return <div>{data.label} Permissions</div>;
+      case "Manage":
+        return <div>{data.label} Manage</div>;
       default:
-        return <div>Details</div>;
+        return <GroupDetailsLayout data={data} />;
     }
   };
   if (status !== 200) {

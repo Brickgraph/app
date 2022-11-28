@@ -20,7 +20,7 @@ export const FormBase = ({
             {fieldData
               ? fieldData.map((field) => {
                   return (
-                    <div key={field.id} className="py-2 px-6">
+                    <div key={field.id} className="py-2 px-6 max-w-[80%]">
                       <li>
                         <DefaultInput
                           name={field.id}

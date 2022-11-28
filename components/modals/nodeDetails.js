@@ -28,6 +28,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   const [loadingChanges, setLoadingChanges] = useState(false);
 
   const { session } = useSession();
+  const { getToken } = useSession().session;
 
   const nodeApiCall = async () => {
     const { getToken } = session;
@@ -66,7 +67,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
       };
     });
   }
-  const { getToken } = useSession().session;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getToken();
@@ -86,7 +87,6 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
       });
     switch (status) {
       case 201:
-        console.log(data);
         setUpdatedNode(data);
         setLoadingChanges(false);
         onClose();
