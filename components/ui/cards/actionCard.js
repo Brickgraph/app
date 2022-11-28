@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import { Transition, Fragment } from "@headlessui/react";
-import Router from "next/router";
-import Link from "next/link";
+import { useState } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ActionButton = ({ title, action }) => {
+const ActionButton = ({ title, action, actionDisabled = false }) => {
   return (
     <>
-      <button
-        onClick={action}
-        className="flex p-1 border border-1 border-gray-300 w-[50%] justify-center rounded-lg hover:border-orange-500 hover:bg-orange-400 hover:text-white"
+      <div
+        className={classNames(
+          actionDisabled
+            ? "flex border border-1 border-gray-300 w-[80%] md:w-[50%] justify-center rounded-lg bg-gray-100"
+            : "flex border border-1 border-gray-300 w-[80%] md:w-[50%] justify-center rounded-lg hover:border-orange-500 hover:bg-orange-400 hover:text-white"
+        )}
       >
-        <div>
-          <h1 className="text-xs lg:text-md">{title}</h1>
-        </div>
-      </button>
+        <button onClick={action} disabled={actionDisabled}>
+          <h1 className="text-xs lg:text-md p-1 md:p-2">{title}</h1>
+        </button>
+      </div>
     </>
   );
 };
@@ -42,7 +42,7 @@ const CardDefault = ({ item }) => {
   );
 };
 
-const CardHover = ({ item, viewAction, createAction }) => {
+const CardHover = ({ item, viewAction, createAction, createDisabled }) => {
   return (
     <>
       <div className="p-4">
@@ -58,14 +58,23 @@ const CardHover = ({ item, viewAction, createAction }) => {
             </h1>
           </div>
           <ActionButton title={"View Collection"} action={viewAction} />
-          <ActionButton title={"Create New"} action={createAction} />
+          <ActionButton
+            title={"Create New"}
+            action={createAction}
+            actionDisabled={createDisabled}
+          />
         </div>
       </div>
     </>
   );
 };
 
-export const ActionCard = ({ item, viewAction, createAction }) => {
+export const ActionCard = ({
+  item,
+  viewAction,
+  createAction,
+  createDisabled = false,
+}) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -83,6 +92,7 @@ export const ActionCard = ({ item, viewAction, createAction }) => {
             isShowing={hovered}
             viewAction={viewAction}
             createAction={createAction}
+            createDisabled={createDisabled}
           />
         ) : (
           <CardDefault item={item} isShowing={hovered} />

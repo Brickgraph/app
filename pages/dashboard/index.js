@@ -13,25 +13,63 @@ import {
 import Router from "next/router";
 import { useState } from "react";
 import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
+import { EmptyCard } from "../../components/ui/cards/emptyCard";
 
 const cards = [
   {
     title: "Properties & Units",
     icon: OfficeBuildingIcon,
     param: "Property,PropertyUnit",
+    createNewDisabled: false,
   },
-  { title: "Deals", icon: BriefcaseIcon, param: "Deal" },
+  {
+    title: "Deals",
+    icon: BriefcaseIcon,
+    param: "Deal",
+    createNewDisabled: false,
+  },
   {
     title: "Users & Groups",
     icon: UsersIcon,
     param: "Organisation,UserGroup,User",
+    createNewDisabled: false,
   },
-  { title: "Funds", icon: CollectionIcon, param: "Fund" },
-  { title: "Leases", icon: ClipboardListIcon, param: "Lease" },
-  { title: "Tenants", icon: KeyIcon, param: "Tenant" },
-  { title: "Sectors", icon: BriefcaseIcon, param: "Sector" },
-  { title: "Geographies", icon: GlobeIcon, param: "Geography" },
-  { title: "Investors", icon: CashIcon, param: "Investor" },
+  {
+    title: "Funds",
+    icon: CollectionIcon,
+    param: "Fund",
+    createNewDisabled: false,
+  },
+  {
+    title: "Leases",
+    icon: ClipboardListIcon,
+    param: "Lease",
+    createNewDisabled: false,
+  },
+  {
+    title: "Tenants",
+    icon: KeyIcon,
+    param: "Tenant",
+    createNewDisabled: false,
+  },
+  {
+    title: "Sectors",
+    icon: BriefcaseIcon,
+    param: "Sector",
+    createNewDisabled: true,
+  },
+  {
+    title: "Geographies",
+    icon: GlobeIcon,
+    param: "Geography",
+    createNewDisabled: true,
+  },
+  {
+    title: "Investors",
+    icon: CashIcon,
+    param: "Investor",
+    createNewDisabled: false,
+  },
 ];
 
 export default function SettingsPage() {
@@ -53,16 +91,20 @@ export default function SettingsPage() {
 
   return (
     <>
-      <PageTitleHeader title={"Actions"} />
+      <PageTitleHeader title={"Dashboard"} />
       <div className="relative">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
           {cards.map((item) => (
-            <ActionCard
-              item={item}
-              viewAction={() => handleView(item.param)}
-              createAction={() => handleCreate()}
-            />
+            <div key={item.title}>
+              <ActionCard
+                item={item}
+                viewAction={() => handleView(item.param)}
+                createAction={() => handleCreate()}
+                createDisabled={item.createNewDisabled}
+              />
+            </div>
           ))}
+          <EmptyCard />
         </div>
       </div>
     </>

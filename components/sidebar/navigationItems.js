@@ -12,9 +12,9 @@ import {
 export const navigationItems = [
   { name: "Home", href: "/", icon: HomeIcon },
   {
-    name: "Actions",
-    href: "/actions",
-    icon: BeakerIcon,
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: ViewGridAddIcon,
     disabled: false,
   },
   {
