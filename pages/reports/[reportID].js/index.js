@@ -1,9 +1,9 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 
-export default function IntegrationsPage() {
+export default function ReportIDPage() {
   return (
     <div>
-      <h1>Integration Detail Page Placeholder</h1>
+      <h1>Report ID Page Placeholder</h1>
     </div>
   );
 }

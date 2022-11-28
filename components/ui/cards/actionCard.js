@@ -10,8 +10,9 @@ const ActionButton = ({ title, action, actionDisabled = false }) => {
       <div
         className={classNames(
           actionDisabled
-            ? "flex border border-1 border-gray-300 w-[80%] md:w-[50%] justify-center rounded-lg bg-gray-100"
-            : "flex border border-1 border-gray-300 w-[80%] md:w-[50%] justify-center rounded-lg hover:border-orange-500 hover:bg-orange-400 hover:text-white"
+            ? "bg-gray-100"
+            : "hover:border-orange-500 hover:bg-orange-400 hover:text-white",
+          "flex border border-1 border-gray-300 w-[60%] md:w-[50%] justify-center rounded-lg"
         )}
       >
         <button onClick={action} disabled={actionDisabled}>
@@ -57,7 +58,11 @@ const CardHover = ({ item, viewAction, createAction, createDisabled }) => {
               {item.title}
             </h1>
           </div>
-          <ActionButton title={"View Collection"} action={viewAction} />
+          <ActionButton
+            title={"View Collection"}
+            action={viewAction}
+            actionDisabled={false}
+          />
           <ActionButton
             title={"Create New"}
             action={createAction}

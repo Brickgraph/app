@@ -138,6 +138,8 @@ export default function Layout({ children }) {
                           className={classNames(
                             item.href === formattedPath
                               ? "bg-orange-400 text-white"
+                              : item.disabled
+                              ? "text-gray-600"
                               : "text-gray-800 hover:bg-orange-400 hover:text-white",
                             "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                           )}
@@ -146,7 +148,9 @@ export default function Layout({ children }) {
                             className={classNames(
                               item.href === formattedPath
                                 ? "bg-orange-400 text-white"
-                                : "text-gray-400 group-hover:text-gray-800",
+                                : item.disabled
+                                ? "text-gray-600"
+                                : "text-gray-800 hover:bg-orange-400 group-hover:text-white",
                               "mr-4 flex-shrink-0 h-6 w-6"
                             )}
                             aria-hidden="true"
@@ -200,16 +204,20 @@ export default function Layout({ children }) {
                     className={classNames(
                       item.href === formattedPath
                         ? "bg-orange-400 text-white"
+                        : item.disabled
+                        ? "text-gray-600"
                         : "text-gray-800 hover:bg-orange-400 hover:text-white",
-                      "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                      "group flex items-center px-2 py-2 text-base font-medium rounded-md text-sm lg:text-md"
                     )}
                   >
                     <item.icon
                       className={classNames(
                         item.href === formattedPath
                           ? "bg-orange-400 text-white"
-                          : "text-gray-800 group-hover:text-white",
-                        "mr-3 flex-shrink-0 h-6 w-6"
+                          : item.disabled
+                          ? "text-gray-600"
+                          : "text-gray-800 hover:bg-orange-400 group-hover:text-white",
+                        "mr-4 flex-shrink-0 h-6 w-6"
                       )}
                       aria-hidden="true"
                     />

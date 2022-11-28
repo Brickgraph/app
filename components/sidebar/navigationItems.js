@@ -25,9 +25,9 @@ export const navigationItems = [
   },
   {
     name: "Integrations - coming soon",
-    href: "/integrations",
+    href: "#",
     icon: LightningBoltIcon,
-    disabled: false,
+    disabled: true,
   },
 
   /* {
