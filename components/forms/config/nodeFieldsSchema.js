@@ -4,8 +4,21 @@ import {
   sectorFields,
   investorFields,
   propertyUnitFields,
+  fundFields,
   defaultFields,
 } from "./nodeFields";
+
+import {
+  BriefcaseIcon,
+  OfficeBuildingIcon,
+  UsersIcon,
+  CurrencyPoundIcon,
+  ClipboardListIcon,
+  GlobeIcon,
+  KeyIcon,
+  CashIcon,
+  CollectionIcon,
+} from "@heroicons/react/outline";
 
 export const nodeSchema = [
   {
@@ -14,6 +27,15 @@ export const nodeSchema = [
     label: "Property",
     editable: true,
     value: "Property",
+    showInActions: true,
+  },
+  {
+    id: "Deal",
+    fields: defaultFields,
+    label: "Deal",
+    editable: true,
+    value: "Deal",
+    showInActions: true,
   },
   {
     id: "Organisation",
@@ -21,6 +43,7 @@ export const nodeSchema = [
     label: "Organisation",
     editable: true,
     value: "Organisation",
+    showInActions: true,
   },
   {
     id: "Sector",
@@ -28,6 +51,8 @@ export const nodeSchema = [
     label: "Sector",
     editable: false,
     value: "Sector",
+
+    showInActions: true,
   },
   {
     id: "Investor",
@@ -35,6 +60,7 @@ export const nodeSchema = [
     label: "Investor",
     editable: true,
     value: "Investor",
+    showInActions: true,
   },
   {
     id: "PropertyUnit",
@@ -42,6 +68,15 @@ export const nodeSchema = [
     label: "Property Unit",
     editable: true,
     value: "PropertyUnit",
+    showInActions: true,
+  },
+  {
+    id: "Fund",
+    fields: fundFields,
+    label: "Fund",
+    editable: true,
+    value: "Fund",
+    showInActions: true,
   },
   {
     id: "Default",
@@ -49,5 +84,6 @@ export const nodeSchema = [
     label: "Default",
     editable: false,
     value: "Default",
+    showInActions: false,
   },
 ];

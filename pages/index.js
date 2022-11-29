@@ -1,13 +1,18 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../services/brickgraph-api";
-import { VisGraph } from "../components/visualisations/graph/VisGraph";
 import { MainPageLayout } from "../components/pageLayouts/mainPage/layout";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import StandardTable from "../components/visualisations/tables/standardTable";
 import GraphVisual from "../components/visualisations/graph/GraphVisual";
+import GoogleMap from "../components/visualisations/maps/googleMap";
 import FilterMenu from "../components/modals/filterMenu";
 import { NodeDetailsModal } from "../components/modals/nodeDetails";
+import {
+  OfficeBuildingIcon,
+  HomeIcon,
+  CurrencyPoundIcon,
+} from "@heroicons/react/outline";
 
 export default function Home({ token, status, data }) {
   const [selectedTab, setSelectedTab] = useState("Graph");
@@ -23,7 +28,6 @@ export default function Home({ token, status, data }) {
     const splitItem = item.split(", ");
     return { id: item, label: item, value: item };
   });
-  console.log(nodeGroupsDict);
 
   const handleFilterMenu = () => {
     setFilterMenuVisible((current) => !current);
@@ -65,6 +69,45 @@ export default function Home({ token, status, data }) {
             />
           </div>
         );
+      case "Map":
+        const markers = [
+          { id: 14, lat: 51.5, lng: 0.09, label: "Resi", icon: HomeIcon },
+          {
+            id: 16,
+            lat: 52.6,
+            lng: 1.09,
+            label: "Industrial",
+            icon: OfficeBuildingIcon,
+          },
+          {
+            id: 10,
+            lat: 50.9,
+            lng: 0.2,
+            label: "Retail",
+            icon: CurrencyPoundIcon,
+          },
+          {
+            id: 12,
+            lat: 51.7,
+            lng: -1.09,
+            label: "Office",
+            icon: OfficeBuildingIcon,
+          },
+        ];
+        const onClickAction = (marker) => {
+          console.log(marker);
+          setSelectedNodeID(marker.id);
+          setNodeModalVisible(true);
+        };
+        return (
+          <div>
+            <GoogleMap
+              markers={markers}
+              selectedMarker={(e) => onClickAction(e)}
+            />
+          </div>
+        );
+
       default:
         return (
           <>

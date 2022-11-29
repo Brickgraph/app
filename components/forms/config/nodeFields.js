@@ -113,6 +113,31 @@ export const propertyUnitFields = [
 
 export const investorFields = [
   { id: "name", label: "Name", type: "text", required: true },
+  { id: "formal_name", label: "Formal Name", type: "text", required: false },
+  { id: "manager", label: "Asset Manager", type: "text", required: false },
+  {
+    id: "registered_addess",
+    label: "Registered Address",
+    type: "address",
+    required: true,
+  },
+];
+
+export const fundFields = [
+  { id: "name", label: "Name", type: "text", required: true },
+  { id: "formal_name", label: "Formal Name", type: "text", required: false },
+  {
+    id: "companies_house_id",
+    label: "Companies House Number",
+    type: "text",
+    required: true,
+  },
+  {
+    id: "registered_addess",
+    label: "Registered Address",
+    type: "address",
+    required: false,
+  },
 ];
 
 export const defaultFields = [

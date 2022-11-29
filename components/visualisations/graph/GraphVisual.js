@@ -109,6 +109,8 @@ export default function GraphVisual({
       font: {
         size: 10,
       },
+      shadow: { enabled: false, size: 3 },
+      smooth: { enabled: false },
     },
     interaction: {
       hover: true,
@@ -119,11 +121,11 @@ export default function GraphVisual({
     },
     physics: {
       forceAtlas2Based: {
-        gravitationalConstant: -50,
-        centralGravity: 0.005,
-        springLength: 100,
-        springConstant: 1,
-        avoidOverlap: 1.25,
+        gravitationalConstant: -40,
+        centralGravity: 0.003,
+        springLength: 1,
+        springConstant: 1000,
+        avoidOverlap: 1.2,
       },
       maxVelocity: 250,
       solver: "forceAtlas2Based",

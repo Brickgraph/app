@@ -12,7 +12,7 @@ import {
 } from "../components/ui/notifications/createNode";
 import ComboBox from "../components/forms/inputs/comboBox";
 
-export default function CreatePage({ label, editableLabels }) {
+export default function CreatePage({ label, comboBoxOptions }) {
   const [createLabel, setCreateLabel] = useState(label);
   const [formData, setFormData] = useState(null);
   const [loadingChanges, setLoadingChanges] = useState(false);
@@ -93,7 +93,7 @@ export default function CreatePage({ label, editableLabels }) {
         }`}
       />
       <ComboBox
-        options={editableLabels}
+        options={comboBoxOptions}
         handleSelections={setCreateLabel}
         currentSelections={createLabel}
         selectMultiple={false}
@@ -148,8 +148,10 @@ export const getServerSideProps = withServerSideAuth(
       };
     }
 
+    const comboBoxOptions = editableLabels;
+
     return {
-      props: { label, editableLabels },
+      props: { label, comboBoxOptions },
     };
   }
 );

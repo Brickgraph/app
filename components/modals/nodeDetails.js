@@ -91,6 +91,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
         setLoadingChanges(false);
         onClose();
         setShowUpdateNotification(true);
+        setNodeDetails(null);
         break;
       case 422:
         setUpdatedNode(nodeDetails);
