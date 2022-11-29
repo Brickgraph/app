@@ -83,6 +83,12 @@ export const propertyUnitFields = [
     required: true,
   },
   {
+    id: "unit_number",
+    label: "Unit Number",
+    type: "text",
+    required: true,
+  },
+  {
     id: "description",
     label: "Description",
     type: "textarea",
@@ -93,7 +99,7 @@ export const propertyUnitFields = [
     label: "Square Feet",
     type: "number",
     required: true,
-    disable: true,
+    disable: false,
     defaultValue: 0,
   },
   {

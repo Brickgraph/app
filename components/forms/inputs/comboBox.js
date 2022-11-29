@@ -6,6 +6,7 @@ export default function ComboBox({
   options,
   handleSelections,
   currentSelections,
+  selectMultiple = true,
 }) {
   const [selected, setSelected] = useState(currentSelections);
   const [query, setQuery] = useState("");
@@ -26,7 +27,11 @@ export default function ComboBox({
 
   return (
     <div>
-      <Combobox value={selected} onChange={setSelected} multiple>
+      <Combobox
+        value={selected}
+        onChange={setSelected}
+        multiple={selectMultiple}
+      >
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input

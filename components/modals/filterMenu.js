@@ -16,11 +16,12 @@ export default function FilterMenu({
     >
       <div className="flex min-h-full flex-col justify-center">
         <div id="combobox-filter-properties">
-          Nodes:{" "}
+          Node Labels:{" "}
           <ComboBox
             options={filterOptions}
             handleSelections={handleNodeSelections}
             currentSelections={currentSelections}
+            selectMultiple={true}
           />
         </div>
       </div>

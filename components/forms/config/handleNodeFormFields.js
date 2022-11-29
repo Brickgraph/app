@@ -20,7 +20,7 @@ export const switchNodeForm = (nodeGroup) => {
       case "Organisation": {
         return organisationFields;
       }
-      case "Property Unit": {
+      case "PropertyUnit": {
         return propertyUnitFields;
       }
       case "Investor": {

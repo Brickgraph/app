@@ -6,6 +6,9 @@ export const FormBase = ({
   changeHandler,
   cancelAction,
   submitAction,
+  formId = "form",
+  cancelButtonText = "Cancel",
+  submitButtonText = "Save",
 }) => {
   const [fieldData, setFieldData] = useState(false);
   useEffect(() => {
@@ -14,13 +17,13 @@ export const FormBase = ({
 
   return (
     <>
-      <form onSubmit={submitAction}>
+      <form onSubmit={submitAction} id={`${formId}`}>
         <div>
           <ul>
             {fieldData
               ? fieldData.map((field) => {
                   return (
-                    <div key={field.id} className="py-2 px-6 max-w-[80%]">
+                    <div key={field.id} className="py-2 px-6">
                       <li>
                         <DefaultInput
                           name={field.id}
@@ -49,13 +52,13 @@ export const FormBase = ({
               type="button"
               className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
             >
-              Cancel
+              {cancelButtonText}
             </button>
             <button
               type="submit"
               className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
             >
-              Save
+              {submitButtonText}
             </button>
           </div>
         </div>

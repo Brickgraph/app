@@ -20,15 +20,13 @@ export default function Home({ token, status, data }) {
 
   let uniqueNodeGroups = [...new Set(data.nodes.map((item) => item.group))];
   const nodeGroupsDict = uniqueNodeGroups.map((item) => {
+    const splitItem = item.split(", ");
     return { id: item, label: item, value: item };
   });
+  console.log(nodeGroupsDict);
 
   const handleFilterMenu = () => {
     setFilterMenuVisible((current) => !current);
-  };
-
-  const handleNewItemMenu = () => {
-    console.log("Create something new.");
   };
 
   const view = () => {

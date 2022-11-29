@@ -1,10 +1,7 @@
 import { FilterIcon, PlusIcon } from "@heroicons/react/outline";
+import { NewNodeDropdown } from "../createPage/newNodeDropdown";
 
-export const MainPageHeader = ({
-  title,
-  filterButtonAction = null,
-  newButtonAction = null,
-}) => {
+export const MainPageHeader = ({ title, filterButtonAction = null }) => {
   return (
     <>
       <div className="relative pb-5 sm:pb-0">
@@ -14,15 +11,13 @@ export const MainPageHeader = ({
               {title}
             </h3>
           </div>
-          <div className="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
-            <button
-              onClick={newButtonAction}
-              type="button"
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-            >
-              <PlusIcon className="h-5 w-5" />
-              <span className="pl-2 hidden md:flex">New</span>
-            </button>
+          <div className="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0 z-20">
+            <NewNodeDropdown>
+              <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <PlusIcon className="h-5 w-5" />
+                <span className="pl-2 hidden md:flex">New</span>
+              </button>
+            </NewNodeDropdown>
             <button
               onClick={filterButtonAction}
               type="button"

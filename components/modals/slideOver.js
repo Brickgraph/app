@@ -10,7 +10,7 @@ export default function SlideOverRight({
 }) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => handleClose()}>
+      <Dialog as="div" className="relative z-40" onClose={() => handleClose()}>
         <div className="fixed inset-0" />
 
         <div className="fixed inset-0 overflow-hidden">
@@ -31,7 +31,7 @@ export default function SlideOverRight({
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
                           <Dialog.Title className="text-lg font-medium text-gray-900">
-                            Filters
+                            Apply Filters
                           </Dialog.Title>
                           <div className="relative bg-white p-4 object-cover rounded border-orange-500 border-1">
                             <button
