@@ -15,6 +15,22 @@ const MapMarker = ({ text, MarkerIcon, onClickAction = null }) => (
   </div>
 );
 
+const MapOptions = (maps) => {
+  return {
+    zoomControlOptions: {
+      position: maps.ControlPosition.TOP_LEFT,
+      style: maps.ZoomControlStyle.SMALL,
+    },
+    mapTypeControlOptions: {
+      position: maps.ControlPosition.TOP_RIGHT,
+    },
+    mapTypeControl: true,
+    streetViewControl: true,
+    fullscreenControl: true,
+    hover: true,
+  };
+};
+
 export default function GoogleMap({
   markers,
   center = { lat: 51.4769, lng: -0.09 },
@@ -31,6 +47,7 @@ export default function GoogleMap({
         bootstrapURLKeys={{ key: `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API}` }}
         defaultCenter={center}
         defaultZoom={zoom}
+        options={MapOptions}
       >
         {markers.map((marker) => (
           <MapMarker
