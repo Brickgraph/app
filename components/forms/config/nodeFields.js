@@ -102,13 +102,6 @@ export const propertyUnitFields = [
     disable: false,
     defaultValue: 0,
   },
-  {
-    id: "access",
-    label: "Access",
-    type: "text",
-    required: false,
-    disable: true,
-  },
 ];
 
 export const investorFields = [

@@ -18,10 +18,12 @@
     "cytoscape": "^3.23.0",
     "cytoscape-cola": "^2.5.1",
     "d3-selection": "^3.0.0",
+    "deck.gl": "^8.8.20",
     "google-map-react": "^2.2.0",
     "headlessui": "^0.0.0",
     "heroicons": "^2.0.11",
     "leaflet": "^1.6.0",
+    "mapbox-gl": "^2.11.0",
     "next": "12.3.1",
     "next-transpile-modules": "^9.1.0",
     "qs": "^6.11.0",
@@ -30,7 +32,9 @@
     "react-dom": "^18.2.0",
     "react-force-graph-2d": "^1.23.11",
     "react-graph-vis": "^1.0.7",
-    "react-leaflet": "^3.2.5"
+    "react-leaflet": "^3.2.5",
+    "react-map-gl": "^7.0.19",
+    "react-map-gl-geocoder": "^2.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
