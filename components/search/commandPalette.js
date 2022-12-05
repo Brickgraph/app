@@ -2,6 +2,8 @@ import { Fragment, useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import Router from "next/router";
+import { brickgraphRequest } from "../../services/brickgraph-api";
+import { useSession } from "@clerk/nextjs";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -9,6 +11,17 @@ function classNames(...classes) {
 
 export default function CommandPalette({ data, isOpen, onClose }) {
   const [query, setQuery] = useState("");
+  const { getToken } = useSession().session;
+
+  const handleSearch = async (e) => {
+    //e.preventDefault();
+    const token = await getToken();
+    const { status, data } = await brickgraphRequest(token).get(
+      "/search?q=" + e
+    );
+    //const result = data.result;
+    return { status, data };
+  };
 
   const filteredItems =
     query === ""
@@ -17,11 +30,12 @@ export default function CommandPalette({ data, isOpen, onClose }) {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
 
-  const handleSelection = (selection) => {
-    console.log(selection);
+  const handleSelection = async (selection) => {
+    const searchResult = await handleSearch(selection);
     const node = data.filter((item) => {
       return item.label === selection;
     });
+    console.log(searchResult);
     const nodeID = node[0].id;
     onClose();
     Router.push(`/nodes/${nodeID}`);

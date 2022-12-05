@@ -28,7 +28,6 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   const [loadingChanges, setLoadingChanges] = useState(false);
 
   const { session } = useSession();
-  const { getToken } = useSession().session;
 
   const nodeApiCall = async () => {
     const { getToken } = session;

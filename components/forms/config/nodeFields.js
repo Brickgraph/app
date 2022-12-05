@@ -7,13 +7,6 @@ export const organisationFields = [
     required: false,
     disabled: true,
   },
-  {
-    id: "access",
-    label: "Access",
-    type: "text",
-    required: false,
-    disable: true,
-  },
 ];
 
 export const propertyFields = [
@@ -48,13 +41,6 @@ export const propertyFields = [
     type: "number",
     defaultValue: 1,
     required: false,
-  },
-  {
-    id: "access",
-    label: "Access",
-    type: "text",
-    required: true,
-    disable: true,
   },
 ];
 

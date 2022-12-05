@@ -160,7 +160,9 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const token = await getToken();
-    const { status, data } = await brickgraphRequest(token).get("subgraph");
+    const { status, data } = await brickgraphRequest(token).get(
+      "/search/subgraph"
+    );
 
     return { props: { token, status, data } };
   }
