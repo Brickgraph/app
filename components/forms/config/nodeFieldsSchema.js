@@ -41,7 +41,7 @@ export const nodeSchema = [
     id: "Organisation",
     fields: organisationFields,
     label: "Organisation",
-    editable: true,
+    editable: false,
     value: "Organisation",
     showInActions: true,
   },

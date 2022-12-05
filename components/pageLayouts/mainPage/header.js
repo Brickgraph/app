@@ -13,10 +13,10 @@ export const MainPageHeader = ({ title, filterButtonAction = null }) => {
           </div>
           <div className="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0 z-20">
             <NewNodeDropdown>
-              <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+              <div className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                 <PlusIcon className="h-5 w-5" />
                 <span className="pl-2 hidden md:flex">New</span>
-              </button>
+              </div>
             </NewNodeDropdown>
             <button
               onClick={filterButtonAction}

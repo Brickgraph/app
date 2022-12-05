@@ -14,7 +14,7 @@ export default function CommandPalette({ data, isOpen, onClose }) {
   const { getToken } = useSession().session;
 
   const handleSearch = async (e) => {
-    //e.preventDefault();
+    e.preventDefault();
     const token = await getToken();
     const { status, data } = await brickgraphRequest(token).get(
       "/search?q=" + e

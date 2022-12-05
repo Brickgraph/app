@@ -14,6 +14,7 @@ import { ExternalLinkIcon } from "@heroicons/react/outline";
 import { getNodeDetails } from "../../services/nodes/getNodeID";
 import { LoadingSpinner } from "../ui/loading/loadingSpinner";
 import { Tabs } from "../ui/tabs/pageTabs";
+import { useNodeStore } from "../../services/stores/nodeStore";
 
 export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   const [nodeDetails, setNodeDetails] = useState(null);
@@ -26,6 +27,9 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   const [showUpdateFailedNotification, setShowUpdateFailedNotification] =
     useState(false);
   const [loadingChanges, setLoadingChanges] = useState(false);
+  const nodeStore = useNodeStore.getState();
+  //.nodes.filter((n) => n.id === nodeID);
+  console.log("Node Modal Store", nodeStore);
 
   const { session } = useSession();
 
@@ -67,8 +71,18 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
     });
   }
 
+  const updateNodeStore = (node) => {
+    //useNodeStore.getState().updateNode(node);
+    useNodeStore.setState().updateNode(node);
+    console.log(
+      "Node Store",
+      useNodeStore.getState().nodes.filter((n) => n.id === nodeID)
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { getToken } = session;
     const token = await getToken();
     const formData = nodeDetails;
     const { id } = nodeDetails;
@@ -87,6 +101,8 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
     switch (status) {
       case 201:
         setUpdatedNode(data);
+        // Update node data in the node store
+        updateNodeStore(data);
         setLoadingChanges(false);
         onClose();
         setShowUpdateNotification(true);

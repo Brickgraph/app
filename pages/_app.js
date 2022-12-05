@@ -12,10 +12,9 @@ import Layout from "../components/layout";
 
 const publicPages = ["login", "signup", "forgot-password", "verify-email"];
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   // Get the pathname
   const { pathname } = useRouter();
-
   // Check if the current route matches a public page
   const isPublicPage = publicPages.includes(pathname);
 
@@ -47,5 +46,3 @@ function MyApp({ Component, pageProps }) {
     </ClerkProvider>
   );
 }
-
-export default MyApp;

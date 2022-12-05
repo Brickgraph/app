@@ -1,7 +1,7 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { brickgraphRequest } from "../services/brickgraph-api";
 import { MainPageLayout } from "../components/pageLayouts/mainPage/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import StandardTable from "../components/visualisations/tables/standardTable";
 import GraphVisual from "../components/visualisations/graph/GraphVisual";
@@ -13,6 +13,8 @@ import {
   HomeIcon,
   CurrencyPoundIcon,
 } from "@heroicons/react/outline";
+//import { useMainStore } from "../services/stores/mainStore";
+import { useNodeStore } from "../services/stores/nodeStore";
 
 export default function Home({ token, status, data }) {
   const [selectedTab, setSelectedTab] = useState("Graph");
@@ -22,6 +24,26 @@ export default function Home({ token, status, data }) {
   const [selectedNodeID, setSelectedNodeID] = useState(null);
   const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
+  useNodeStore.getState();
+  //.setNodes(data.nodes);
+
+  const showStore = () => {
+    const nodeStore = useNodeStore.getState().nodes;
+    console.log("Store", nodeStore);
+  };
+
+  const clearStore = () => {
+    useNodeStore.getState().setNodes([]);
+    console.log("Cleared", useNodeStore.getState().nodes);
+  };
+
+  const resetNodeStore = () => {
+    const clearStore = () => {
+      clearStore();
+    };
+    useNodeStore.getState().setNodes(data.nodes);
+    console.log("Filled", useNodeStore.getState().nodes);
+  };
 
   let uniqueNodeGroups = [...new Set(data.nodes.map((item) => item.group))];
   const nodeGroupsDict = uniqueNodeGroups.map((item) => {
@@ -126,6 +148,27 @@ export default function Home({ token, status, data }) {
         filterButtonAction={() => handleFilterMenu()}
         newButtonAction={() => handleNewItemMenu()}
       >
+        <div className="flex">
+          <button
+            className="px-4 border border-2 border-gray-300"
+            onClick={() => showStore()}
+          >
+            Show Store{" "}
+          </button>
+          <button
+            className="px-4 border border-2 border-gray-300"
+            onClick={() => clearStore()}
+          >
+            Clear Store
+          </button>
+          <button
+            className="px-4 border border-2 border-gray-300"
+            onClick={() => resetNodeStore()}
+          >
+            Reset Store
+          </button>
+        </div>
+
         <div className="mx-auto max-w-7xl border border-1 border-gray-200">
           {view()}
         </div>
@@ -163,6 +206,7 @@ export const getServerSideProps = withServerSideAuth(
     const { status, data } = await brickgraphRequest(token).get(
       "/search/subgraph"
     );
+    //const nodeStore = useNodeStore((state) => state.setNodes(data.nodes));
 
     return { props: { token, status, data } };
   }
