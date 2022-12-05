@@ -14,10 +14,6 @@ function classNames(...classes) {
 }
 
 export default function Layout({ children }) {
-  const testData = [
-    { label: "Brickgraph Holdings", id: 1 },
-    { label: "Buckingham", id: 10 },
-  ];
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { asPath } = useRouter();
   const path = asPath.substring(1) + "/";
@@ -53,7 +49,6 @@ export default function Layout({ children }) {
   return (
     <>
       <CommandPalette
-        data={testData}
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
       />

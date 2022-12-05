@@ -24,8 +24,11 @@ export default function Home({ token, status, data }) {
   const [selectedNodeID, setSelectedNodeID] = useState(null);
   const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
-  useNodeStore.getState();
-  //.setNodes(data.nodes);
+  const nodeStore = useNodeStore.getState()?.nodes;
+  console.log("Node Store", nodeStore);
+  if (nodeStore.length === 0) {
+    useNodeStore.getState().setNodes(data.nodes);
+  }
 
   const showStore = () => {
     const nodeStore = useNodeStore.getState().nodes;

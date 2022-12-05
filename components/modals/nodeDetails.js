@@ -27,9 +27,9 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   const [showUpdateFailedNotification, setShowUpdateFailedNotification] =
     useState(false);
   const [loadingChanges, setLoadingChanges] = useState(false);
-  const nodeStore = useNodeStore.getState();
-  //.nodes.filter((n) => n.id === nodeID);
-  console.log("Node Modal Store", nodeStore);
+  const nodeStore = useNodeStore
+    .getState()
+    .nodes.filter((n) => n.id === nodeID);
 
   const { session } = useSession();
 
@@ -72,12 +72,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   }
 
   const updateNodeStore = (node) => {
-    //useNodeStore.getState().updateNode(node);
-    useNodeStore.setState().updateNode(node);
-    console.log(
-      "Node Store",
-      useNodeStore.getState().nodes.filter((n) => n.id === nodeID)
-    );
+    useNodeStore.getState().updateNode(node);
   };
 
   const handleSubmit = async (e) => {
