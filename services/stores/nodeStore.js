@@ -7,13 +7,14 @@ export const useNodeStore = create(
   persist(
     (set, get) => ({
       nodes: initialState,
-      setNodes: (data) => set({ nodes: data }),
-      addNode: (node) => set((state) => ({ nodes: [...state.nodes, node] })),
-      removeNode: (node) =>
+      setNodesInStore: (data) => set({ nodes: data }),
+      addNodeToStore: (node) =>
+        set((state) => ({ nodes: [...state.nodes, node] })),
+      removeNodeInStore: (node) =>
         set((state) => ({
           nodes: state.nodes.filter((n) => n.id !== node.id),
         })),
-      updateNode: (node) =>
+      updateNodeInStore: (node) =>
         set((state) => ({
           nodes: state.nodes.map((n) => (n.id === node.id ? node : n)),
         })),

@@ -13,8 +13,8 @@ import {
   HomeIcon,
   CurrencyPoundIcon,
 } from "@heroicons/react/outline";
-//import { useMainStore } from "../services/stores/mainStore";
 import { useNodeStore } from "../services/stores/nodeStore";
+import { useEdgeStore } from "../services/stores/edgeStore";
 
 export default function Home({ token, status, data }) {
   const [selectedTab, setSelectedTab] = useState("Graph");
@@ -24,31 +24,53 @@ export default function Home({ token, status, data }) {
   const [selectedNodeID, setSelectedNodeID] = useState(null);
   const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
-  const nodeStore = useNodeStore.getState()?.nodes;
-  console.log("Node Store", nodeStore);
-  if (nodeStore.length === 0) {
-    useNodeStore.getState().setNodes(data.nodes);
-  }
+  const {
+    nodes: nodesInStore,
+    setNodesInStore,
+    updateNodeInStore,
+    removeNodeInStore,
+  } = useNodeStore();
+  useEffect(() => {
+    if (nodesInStore.length === 0) {
+      setNodesInStore(data.nodes);
+    }
+  }, []);
+
+  const {
+    edges: edgesInStore,
+    setEdgesInStore,
+    updateEdgeInStore,
+    removeEdgeInStore,
+  } = useEdgeStore();
+  useEffect(() => {
+    if (edgesInStore.length === 0) {
+      setEdgesInStore(data.edges);
+    }
+  }, []);
 
   const showStore = () => {
-    const nodeStore = useNodeStore.getState().nodes;
-    console.log("Store", nodeStore);
+    console.log("Node Store", nodesInStore);
+    console.log("Edge Store", edgesInStore);
   };
 
   const clearStore = () => {
-    useNodeStore.getState().setNodes([]);
-    console.log("Cleared", useNodeStore.getState().nodes);
+    setNodesInStore([]);
+    setEdgesInStore([]);
   };
 
   const resetNodeStore = () => {
     const clearStore = () => {
       clearStore();
     };
-    useNodeStore.getState().setNodes(data.nodes);
-    console.log("Filled", useNodeStore.getState().nodes);
+    setNodesInStore(data.nodes);
+    setEdgesInStore(data.edges);
   };
 
-  let uniqueNodeGroups = [...new Set(data.nodes.map((item) => item.group))];
+  const graphData = { nodes: nodesInStore, edges: edgesInStore };
+
+  let uniqueNodeGroups = [
+    ...new Set(graphData.nodes.map((item) => item.group)),
+  ];
   const nodeGroupsDict = uniqueNodeGroups.map((item) => {
     const splitItem = item.split(", ");
     return { id: item, label: item, value: item };
@@ -63,7 +85,7 @@ export default function Home({ token, status, data }) {
       case "Graph":
         return (
           <GraphVisual
-            data={data}
+            data={graphData}
             height={"100%"}
             width={"100%"}
             nodeFilterSelections={selectedFilters}
@@ -80,7 +102,7 @@ export default function Home({ token, status, data }) {
         return (
           <div className="px-6">
             <StandardTable
-              data={data.nodes}
+              data={graphData.nodes}
               columnHeaders={[
                 { label: "Label", field: "label" },
                 { label: "Type", field: "group" },

@@ -5,13 +5,14 @@ export const useEdgeStore = create(
   persist(
     (set, get) => ({
       edges: [],
-      setEdges: (edges) => set({ nodes }),
-      addEdge: (edge) => set((state) => ({ edges: [...state.edges, edge] })),
-      removeNode: (edge) =>
+      setEdgesInStore: (edges) => set({ edges }),
+      addEdgeInStore: (edge) =>
+        set((state) => ({ edges: [...state.edges, edge] })),
+      removeEdgeInStore: (edge) =>
         set((state) => ({
           edges: state.edges.filter((e) => e.id !== edge.id),
         })),
-      updateNode: (edge) =>
+      updateEdgeInStore: (edge) =>
         set((state) => ({
           edges: state.edges.map((e) => (e.id === edge.id ? edge : e)),
         })),

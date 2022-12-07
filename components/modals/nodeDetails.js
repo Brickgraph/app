@@ -31,6 +31,9 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
     .getState()
     .nodes.filter((n) => n.id === nodeID);
 
+  const { nodes, setNodesInStore, updateNodeInStore, removeNodeInStore } =
+    useNodeStore();
+
   const { session } = useSession();
 
   const nodeApiCall = async () => {
@@ -71,10 +74,6 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
     });
   }
 
-  const updateNodeStore = (node) => {
-    useNodeStore.getState().updateNode(node);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { getToken } = session;
@@ -97,7 +96,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
       case 201:
         setUpdatedNode(data);
         // Update node data in the node store
-        updateNodeStore(data);
+        updateNodeInStore(data);
         setLoadingChanges(false);
         onClose();
         setShowUpdateNotification(true);
