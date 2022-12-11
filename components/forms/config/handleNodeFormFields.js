@@ -4,6 +4,7 @@ import {
   organisationFields,
   propertyUnitFields,
   investorFields,
+  fundFields,
   defaultFields,
 } from "./nodeFields";
 
@@ -25,6 +26,9 @@ export const switchNodeForm = (nodeGroup) => {
       }
       case "Investor": {
         return investorFields;
+      }
+      case "Fund": {
+        return fundFields;
       }
       default: {
         return defaultFields;

@@ -48,24 +48,6 @@ export default function Home({ token, status, data }) {
     }
   }, []);
 
-  const showStore = () => {
-    console.log("Node Store", nodesInStore);
-    console.log("Edge Store", edgesInStore);
-  };
-
-  const clearStore = () => {
-    setNodesInStore([]);
-    setEdgesInStore([]);
-  };
-
-  const resetNodeStore = () => {
-    const clearStore = () => {
-      clearStore();
-    };
-    setNodesInStore(data.nodes);
-    setEdgesInStore(data.edges);
-  };
-
   const graphData = { nodes: nodesInStore, edges: edgesInStore };
 
   let uniqueNodeGroups = [
@@ -173,27 +155,6 @@ export default function Home({ token, status, data }) {
         filterButtonAction={() => handleFilterMenu()}
         newButtonAction={() => handleNewItemMenu()}
       >
-        <div className="flex">
-          <button
-            className="px-4 border border-2 border-gray-300"
-            onClick={() => showStore()}
-          >
-            Show Store{" "}
-          </button>
-          <button
-            className="px-4 border border-2 border-gray-300"
-            onClick={() => clearStore()}
-          >
-            Clear Store
-          </button>
-          <button
-            className="px-4 border border-2 border-gray-300"
-            onClick={() => resetNodeStore()}
-          >
-            Reset Store
-          </button>
-        </div>
-
         <div className="mx-auto max-w-7xl border border-1 border-gray-200">
           {view()}
         </div>
