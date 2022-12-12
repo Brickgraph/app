@@ -3,23 +3,23 @@ import { switchNodeForm } from "../../forms/config/handleNodeFormFields";
 import { updateNode } from "../../../services/nodes/updateNode";
 import { useNodeStore } from "../../../services/stores/nodeStore";
 
-export function NodeDetails({ token, data }) {
+export function NodeDetails({ session, data }) {
   const fields = switchNodeForm(data.group);
   const { updateNodeInStore } = useNodeStore();
   const editValue = ({ nodeId, field, value }) => {
     const body = { [field]: value };
-    const newNodeData = { ...data };
+    const newNodeData = Object.assign({}, data);
     newNodeData[field] = value;
-    console.log(newNodeData);
+    console.log("New Node Data", newNodeData);
+    updateNode({ session, nodeId, body });
     const { status, data } = updateNode({
-      token: token,
       nodeId: nodeId,
-      dataToUpdate: { body },
+      body: newNodeData,
     });
     console.log(data);
-    /* if (status === 201) {
+    if (status === 201) {
       updateNodeInStore({ newNodeData });
-    } */
+    }
   };
   return (
     <DetailsList

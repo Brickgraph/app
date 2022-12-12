@@ -15,6 +15,7 @@ export const propertyFields = [
     label: "Label",
     type: "text",
     required: true,
+    editable: true,
   },
   {
     id: "description",

@@ -48,11 +48,7 @@ export default function Home({ token, status, data }) {
     }
   }, []);
 
-  const graphData = { nodes: nodesInStore, edges: edgesInStore };
-
-  let uniqueNodeGroups = [
-    ...new Set(graphData.nodes.map((item) => item.group)),
-  ];
+  let uniqueNodeGroups = [...new Set(nodesInStore.map((item) => item.group))];
   const nodeGroupsDict = uniqueNodeGroups.map((item) => {
     const splitItem = item.split(", ");
     return { id: item, label: item, value: item };
@@ -67,7 +63,7 @@ export default function Home({ token, status, data }) {
       case "Graph":
         return (
           <GraphVisual
-            data={graphData}
+            data={{ nodes: nodesInStore, edges: edgesInStore }}
             height={"100%"}
             width={"100%"}
             nodeFilterSelections={selectedFilters}
@@ -84,7 +80,7 @@ export default function Home({ token, status, data }) {
         return (
           <div className="px-6">
             <StandardTable
-              data={graphData.nodes}
+              data={nodesInStore}
               columnHeaders={[
                 { label: "Label", field: "label" },
                 { label: "Type", field: "group" },

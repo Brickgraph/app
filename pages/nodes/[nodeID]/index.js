@@ -4,14 +4,19 @@ import Router from "next/router";
 import { useState } from "react";
 import { NodePageLayout } from "../../../components/pageLayouts/nodePage/layout";
 import { NodeDetails } from "../../../components/pageLayouts/nodePage/details";
+import { useSession } from "@clerk/nextjs";
+import { useNodeStore } from "../../../services/stores/nodeStore";
 
-export default function NodePage({ status, data, accessData, token }) {
+export default function NodePage({ status, data, accessData }) {
   const [tabSelected, setTabSelected] = useState("Details");
-  console.log("DATA", data);
+  const { session } = useSession();
+  const { nodes: nodesInStore } = useNodeStore();
+  const nodeData = nodesInStore.find((node) => node.id === data.id);
+  console.log("Session", session);
   const section = () => {
     switch (tabSelected) {
       case "Details":
-        return <NodeDetails token={token} data={data} />;
+        return <NodeDetails session={session} data={data} />;
       case "Connections":
         return <div>GRAPH GOES HERE</div>;
       case "Logs":
@@ -33,7 +38,7 @@ export default function NodePage({ status, data, accessData, token }) {
   return (
     <>
       <NodePageLayout
-        data={data}
+        data={nodeData}
         selectedTab={tabSelected}
         handleSection={setTabSelected}
       >
@@ -44,13 +49,13 @@ export default function NodePage({ status, data, accessData, token }) {
 }
 
 export const getServerSideProps = withServerSideAuth(
-  async ({ req, resolvedUrl, params }) => {
+  async ({ req, params }) => {
     const { sessionId, getToken } = req.auth;
     const { nodeID } = params;
 
     if (!sessionId) {
       return {
-        redirect: { destination: "/?redirect_url=" + resolvedUrl },
+        redirect: { destination: "/sign-in" },
       };
     }
 
@@ -82,8 +87,18 @@ export const getServerSideProps = withServerSideAuth(
         };
       });
 
+    if (
+      data.group.includes("Organisation") | data.group.includes("UserGroup")
+    ) {
+      return {
+        redirect: {
+          destination: "/groups/" + nodeID,
+        },
+      };
+    }
+
     return {
-      props: { status, data, accessData, token },
+      props: { status, data, accessData },
     };
   }
 );

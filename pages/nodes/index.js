@@ -58,7 +58,7 @@ export const getServerSideProps = withServerSideAuth(
 
     if (!sessionId) {
       return {
-        redirect: { destination: "/?redirect_url=" + resolvedUrl },
+        redirect: { destination: "/sign-in" },
       };
     }
 

@@ -1,15 +1,18 @@
 import { brickgraphRequest } from "../brickgraph-api";
 
-export const updateNode = async ({
-  token,
+export async function updateNode({
+  session,
   nodeId,
-  dataToUpdate,
+  body,
   loading = false,
   success = false,
-}) => {
-  console.log(nodeId, dataToUpdate);
+}) {
+  const { getToken } = session;
+  const token = await getToken();
+
+  console.log(nodeId, body);
   const { status, data } = await brickgraphRequest(token)
-    .put(`nodes/${nodeId}/update/`, dataToUpdate)
+    .put(`nodes/${nodeId}/update/`, body)
     .then((res) => {
       return { data: res.data, status: res.status };
     })
@@ -27,4 +30,4 @@ export const updateNode = async ({
   console.log(data);
 
   return { status, data };
-};
+}

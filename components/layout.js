@@ -135,7 +135,7 @@ export default function Layout({ children }) {
                               ? "bg-orange-400 text-white"
                               : item.disabled
                               ? "text-gray-600"
-                              : "text-gray-800 hover:bg-orange-400 hover:text-white",
+                              : "text-gray-800 hover:bg-orange-100",
                             "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                           )}
                         >
@@ -145,7 +145,7 @@ export default function Layout({ children }) {
                                 ? "bg-orange-400 text-white"
                                 : item.disabled
                                 ? "text-gray-600"
-                                : "text-gray-800 hover:bg-orange-400 group-hover:text-white",
+                                : "text-gray-800 hover:bg-orange-100",
                               "mr-4 flex-shrink-0 h-6 w-6"
                             )}
                             aria-hidden="true"
@@ -201,7 +201,7 @@ export default function Layout({ children }) {
                         ? "bg-orange-400 text-white"
                         : item.disabled
                         ? "text-gray-600"
-                        : "text-gray-800 hover:bg-orange-400 hover:text-white",
+                        : "text-gray-800 hover:bg-orange-100",
                       "group flex items-center px-2 py-2 text-base font-medium rounded-md text-sm lg:text-md"
                     )}
                   >
@@ -211,7 +211,7 @@ export default function Layout({ children }) {
                           ? "bg-orange-400 text-white"
                           : item.disabled
                           ? "text-gray-600"
-                          : "text-gray-800 hover:bg-orange-400 group-hover:text-white",
+                          : "text-gray-800 hover:bg-orange-100",
                         "mr-4 flex-shrink-0 h-6 w-6"
                       )}
                       aria-hidden="true"
