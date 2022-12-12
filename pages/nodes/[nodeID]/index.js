@@ -3,14 +3,15 @@ import { brickgraphRequest } from "../../../services/brickgraph-api";
 import Router from "next/router";
 import { useState } from "react";
 import { NodePageLayout } from "../../../components/pageLayouts/nodePage/layout";
+import { NodeDetails } from "../../../components/pageLayouts/nodePage/details";
 
-export default function NodePage({ status, data, accessData }) {
+export default function NodePage({ status, data, accessData, token }) {
   const [tabSelected, setTabSelected] = useState("Details");
-  console.log("DATA", accessData);
+  console.log("DATA", data);
   const section = () => {
     switch (tabSelected) {
       case "Details":
-        return <div>{data.label} Details</div>;
+        return <NodeDetails token={token} data={data} />;
       case "Connections":
         return <div>GRAPH GOES HERE</div>;
       case "Logs":
@@ -82,7 +83,7 @@ export const getServerSideProps = withServerSideAuth(
       });
 
     return {
-      props: { status, data, accessData },
+      props: { status, data, accessData, token },
     };
   }
 );

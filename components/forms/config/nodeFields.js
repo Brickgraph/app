@@ -52,13 +52,6 @@ export const sectorFields = [
     type: "text",
     required: false,
   },
-  {
-    id: "access",
-    label: "Access",
-    type: "text",
-    required: false,
-    disable: true,
-  },
 ];
 
 export const propertyUnitFields = [

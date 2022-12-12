@@ -1,4 +1,4 @@
-const mainPageTabsList = ["Graph", "Table", "Map", "Permissions"];
+const mainPageTabsList = ["Graph", "Table", "Map"];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

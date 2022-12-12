@@ -178,22 +178,19 @@ export default function Home({ token, status, data }) {
   );
 }
 
-export const getServerSideProps = withServerSideAuth(
-  async ({ req, resolvedUrl }) => {
-    const { sessionId, getToken } = req.auth;
+export const getServerSideProps = withServerSideAuth(async ({ req }) => {
+  const { sessionId, getToken } = req.auth;
 
-    if (!sessionId) {
-      return {
-        redirect: { destination: "/sign-in?redirect_url=" + resolvedUrl },
-      };
-    }
-
-    const token = await getToken();
-    const { status, data } = await brickgraphRequest(token).get(
-      "/search/subgraph"
-    );
-    //const nodeStore = useNodeStore((state) => state.setNodes(data.nodes));
-
-    return { props: { token, status, data } };
+  if (!sessionId) {
+    return {
+      redirect: { destination: "/sign-in" },
+    };
   }
-);
+
+  const token = await getToken();
+  const { status, data } = await brickgraphRequest(token).get(
+    "/search/subgraph"
+  );
+
+  return { props: { token, status, data } };
+});

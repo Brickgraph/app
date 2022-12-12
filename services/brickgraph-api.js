@@ -1,7 +1,4 @@
 import Axios from "axios";
-import Qs from "qs";
-
-//const { getToken } = useSession().session;
 
 export const brickgraph = Axios.create({
   headers: { "Content-Type": "application/json" },
@@ -9,7 +6,7 @@ export const brickgraph = Axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
 
-export function brickgraphRequest(token) {
+export const brickgraphRequest = (token) => {
   const request = Axios.create({
     headers: {
       Authorization: `Bearer ${token}`,
@@ -17,8 +14,6 @@ export function brickgraphRequest(token) {
     },
     authorization: "",
     baseURL: "http://127.0.0.1:8000",
-    paramsSerializer: (params) =>
-      Qs.stringify(params, { arrayFormat: "repeat" }),
   });
   return request;
-}
+};

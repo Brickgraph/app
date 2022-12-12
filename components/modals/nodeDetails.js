@@ -27,12 +27,8 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
   const [showUpdateFailedNotification, setShowUpdateFailedNotification] =
     useState(false);
   const [loadingChanges, setLoadingChanges] = useState(false);
-  const nodeStore = useNodeStore
-    .getState()
-    .nodes.filter((n) => n.id === nodeID);
 
-  const { nodes, setNodesInStore, updateNodeInStore, removeNodeInStore } =
-    useNodeStore();
+  const { updateNodeInStore } = useNodeStore();
 
   const { session } = useSession();
 
