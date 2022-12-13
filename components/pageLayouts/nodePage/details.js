@@ -1,29 +1,38 @@
 import { DetailsList } from "../../ui/details/detailsList";
 import { switchNodeForm } from "../../forms/config/handleNodeFormFields";
 import { updateNode } from "../../../services/nodes/updateNode";
+import { useState } from "react";
+import { useSession } from "@clerk/nextjs";
 import { useNodeStore } from "../../../services/stores/nodeStore";
 
-export function NodeDetails({ session, data }) {
-  const fields = switchNodeForm(data.group);
-  const { updateNodeInStore } = useNodeStore();
-  const editValue = ({ nodeId, field, value }) => {
+export function NodeDetails({ data }) {
+  const [nodeData, setNodeData] = useState(data);
+  const { session } = useSession();
+  let { updateNodeInStore } = useNodeStore();
+  let fields = switchNodeForm(nodeData.group);
+
+  const editValue = async ({ nodeId, field, value }) => {
+    const { getToken } = session;
+    const token = await getToken();
     const body = { [field]: value };
-    const newNodeData = Object.assign({}, data);
+    let newNodeData = Object.assign({}, nodeData);
     newNodeData[field] = value;
-    console.log("New Node Data", newNodeData);
-    updateNode({ session, nodeId, body });
-    const { status, data } = updateNode({
+
+    const { status, data } = await updateNode({
+      token: token,
       nodeId: nodeId,
       body: newNodeData,
     });
-    console.log(data);
+
     if (status === 201) {
-      updateNodeInStore({ newNodeData });
+      console.log("New Node Data", data);
+      updateNodeInStore(newNodeData);
+      setNodeData(newNodeData);
     }
   };
   return (
     <DetailsList
-      data={data}
+      data={nodeData}
       fields={fields}
       editAction={editValue}
       blankValue={""}

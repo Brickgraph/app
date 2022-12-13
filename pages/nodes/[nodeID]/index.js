@@ -9,14 +9,14 @@ import { useNodeStore } from "../../../services/stores/nodeStore";
 
 export default function NodePage({ status, data, accessData }) {
   const [tabSelected, setTabSelected] = useState("Details");
-  const { session } = useSession();
+  //const [nodeData, setNodeData] = useState(data);
+
   const { nodes: nodesInStore } = useNodeStore();
   const nodeData = nodesInStore.find((node) => node.id === data.id);
-  console.log("Session", session);
   const section = () => {
     switch (tabSelected) {
       case "Details":
-        return <NodeDetails session={session} data={data} />;
+        return <NodeDetails data={nodeData} />;
       case "Connections":
         return <div>GRAPH GOES HERE</div>;
       case "Logs":

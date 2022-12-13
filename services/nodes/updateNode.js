@@ -1,16 +1,12 @@
 import { brickgraphRequest } from "../brickgraph-api";
 
 export async function updateNode({
-  session,
+  token,
   nodeId,
   body,
   loading = false,
   success = false,
 }) {
-  const { getToken } = session;
-  const token = await getToken();
-
-  console.log(nodeId, body);
   const { status, data } = await brickgraphRequest(token)
     .put(`nodes/${nodeId}/update/`, body)
     .then((res) => {
@@ -24,10 +20,9 @@ export async function updateNode({
     });
   if (status === 201) {
     () => success(true);
-    console.log(data);
+    console.log("Success", status);
   }
   () => loading(false);
-  console.log(data);
 
   return { status, data };
 }

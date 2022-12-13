@@ -6,6 +6,7 @@ export const DetailItem = ({
   fieldId = "",
   label,
   value,
+  type = "text",
   showReorder,
   ReorderIcon,
   reorderAction,
@@ -25,18 +26,20 @@ export const DetailItem = ({
   return (
     <div
       id="list-item-detail"
-      className="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:p-4"
+      className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-2 sm:py-4 items-center"
     >
       <dt id="label" className="text-sm font-medium text-gray-500">
         {label}
       </dt>
-      <dd className="flex text-sm text-gray-900 sm:col-span-2">
+      <dd className="flex text-sm text-gray-900 sm:col-span-2 items-center">
         <span className="flex-grow">
           <input
+            id={fieldId}
             disabled={!editable}
             value={itemValue ? itemValue : ""}
+            type={type}
             onChange={(e) => handleChange(e)}
-            className="px-2 focus:ring-2 focus:outline-none focus:ring focus:ring-orange-500 block w-full sm:text-sm rounded-sm"
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full p-2"
           />
         </span>
         {showReorder ? (

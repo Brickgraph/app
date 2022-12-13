@@ -20,7 +20,7 @@ export const propertyFields = [
   {
     id: "description",
     label: "Description",
-    type: "textarea",
+    type: "text",
     required: false,
   },
   {
@@ -108,7 +108,7 @@ export const fundFields = [
   {
     id: "registered_addess",
     label: "Registered Address",
-    type: "address",
+    type: "text",
     required: false,
   },
 ];

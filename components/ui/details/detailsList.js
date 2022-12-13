@@ -9,6 +9,7 @@ export function DetailsList({ data, fields, editAction, blankValue = "" }) {
       const item = {
         key: field.id,
         label: field.label,
+        type: field.type,
         editable: field.editable,
         value: data[field.id] ? data[field.id] : blankValue,
       };
@@ -27,6 +28,7 @@ export function DetailsList({ data, fields, editAction, blankValue = "" }) {
                 fieldId={item.key}
                 label={item.label}
                 value={item.value}
+                type={item.type ? item.type : "text"}
                 showReorder={true}
                 ReorderIcon={BarsIcon}
                 reorderAction={() => console.log(`Reordering ${item.value}`)}
