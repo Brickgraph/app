@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EditIcon } from "../buttons/editIcon";
+import { SingleLineInput } from "../inputs/singleLine";
 
 export const DetailItem = ({
   detailId = "",
@@ -19,8 +20,8 @@ export const DetailItem = ({
     editAction({ nodeId: detailId, field: fieldId, value: e.target.value });
   };
 
-  const handleSubmit = () => {
-    editAction({ nodeId: detailId, body: { [fieldId]: itemValue } });
+  const handleSubmit = (newValue) => {
+    editAction({ nodeId: detailId, body: { [fieldId]: newValue } });
   };
 
   return (
@@ -32,16 +33,16 @@ export const DetailItem = ({
         {label}
       </dt>
       <dd className="flex text-sm text-gray-900 sm:col-span-2 items-center">
-        <span className="flex-grow">
-          <input
-            id={fieldId}
-            disabled={!editable}
-            value={itemValue ? itemValue : ""}
-            type={type}
-            onChange={(e) => handleChange(e)}
-            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full p-2"
+        <div className="flex-grow">
+          <SingleLineInput
+            detailId={detailId}
+            inputId={fieldId}
+            inputType={type}
+            inputDisabled={!editable}
+            initialValue={value ? value : ""}
+            onSubmitAction={editAction}
           />
-        </span>
+        </div>
         {showReorder ? (
           <span className="ml-4 flex-shrink-0">
             <button type="button" onClick={() => console.log(value)}>

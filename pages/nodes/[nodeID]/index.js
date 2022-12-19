@@ -9,19 +9,20 @@ import { useNodeStore } from "../../../services/stores/nodeStore";
 
 export default function NodePage({ status, data, accessData }) {
   const [tabSelected, setTabSelected] = useState("Details");
-  //const [nodeData, setNodeData] = useState(data);
+
+  const editRights = accessData.level_int > 1 ? true : false;
 
   const { nodes: nodesInStore } = useNodeStore();
   const nodeData = nodesInStore.find((node) => node.id === data.id);
   const section = () => {
     switch (tabSelected) {
       case "Details":
-        return <NodeDetails data={nodeData} />;
+        return <NodeDetails data={nodeData} editRights={editRights} />;
       case "Connections":
         return <div>GRAPH GOES HERE</div>;
       case "Logs":
         return <div>{data.group} Logs</div>;
-      case "Permissions":
+      case "Access":
         return <div>{data.label} Permissions</div>;
       default:
         return <div>Details</div>;

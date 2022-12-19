@@ -5,27 +5,29 @@ import { useState } from "react";
 import { useSession } from "@clerk/nextjs";
 import { useNodeStore } from "../../../services/stores/nodeStore";
 
-export function NodeDetails({ data }) {
+export function NodeDetails({ data, editRights }) {
   const [nodeData, setNodeData] = useState(data);
   const { session } = useSession();
   let { updateNodeInStore } = useNodeStore();
   let fields = switchNodeForm(nodeData.group);
 
-  const editValue = async ({ nodeId, field, value }) => {
+  const editValue = async ({ nodeId, body }) => {
     const { getToken } = session;
     const token = await getToken();
-    const body = { [field]: value };
     let newNodeData = Object.assign({}, nodeData);
-    newNodeData[field] = value;
 
-    const { status, data } = await updateNode({
+    // iterate through body to get field and value and update newNodeData
+    for (const [key, value] of Object.entries(body)) {
+      newNodeData[key] = value;
+    }
+
+    const { status } = await updateNode({
       token: token,
       nodeId: nodeId,
-      body: newNodeData,
+      body: body,
     });
 
     if (status === 201) {
-      console.log("New Node Data", data);
       updateNodeInStore(newNodeData);
       setNodeData(newNodeData);
     }
@@ -36,6 +38,7 @@ export function NodeDetails({ data }) {
       fields={fields}
       editAction={editValue}
       blankValue={""}
+      editRights={editRights}
     />
   );
 }

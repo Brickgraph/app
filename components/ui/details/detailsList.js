@@ -1,7 +1,13 @@
 import { DetailItem } from "./detail";
 import { BarsIcon } from "../buttons/barsIcon";
 
-export function DetailsList({ data, fields, editAction, blankValue = "" }) {
+export function DetailsList({
+  data,
+  fields,
+  editAction,
+  blankValue = "",
+  editRights = true,
+}) {
   let listItems = [];
 
   if (data !== null) {
@@ -32,7 +38,7 @@ export function DetailsList({ data, fields, editAction, blankValue = "" }) {
                 showReorder={true}
                 ReorderIcon={BarsIcon}
                 reorderAction={() => console.log(`Reordering ${item.value}`)}
-                editable={item.editable}
+                editable={editRights ? item.editable : false}
                 editAction={editAction}
               />
             </div>

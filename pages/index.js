@@ -188,5 +188,12 @@ export const getServerSideProps = withServerSideAuth(async ({ req }) => {
     "/search/subgraph"
   );
 
+  // Redirect if user needs to set up their account
+  if (status !== 200) {
+    return {
+      redirect: { destination: "/sign-in" },
+    };
+  }
+
   return { props: { token, status, data } };
 });
