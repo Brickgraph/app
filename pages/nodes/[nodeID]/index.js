@@ -4,7 +4,6 @@ import Router from "next/router";
 import { useState } from "react";
 import { NodePageLayout } from "../../../components/pageLayouts/nodePage/layout";
 import { NodeDetails } from "../../../components/pageLayouts/nodePage/details";
-import { useSession } from "@clerk/nextjs";
 import { useNodeStore } from "../../../services/stores/nodeStore";
 
 export default function NodePage({ status, data, accessData }) {

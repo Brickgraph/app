@@ -25,7 +25,7 @@ export const SingleLineInput = ({
 
   const handleSubmit = () => {
     if (submitChange) {
-      onSubmitAction({ nodeId: detailId, body: { [inputId]: newValue } });
+      onSubmitAction({ refId: detailId, body: { [inputId]: newValue } });
       setBaseValue(newValue);
       setSubmitChange(false);
     }

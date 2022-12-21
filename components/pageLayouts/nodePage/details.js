@@ -11,7 +11,7 @@ export function NodeDetails({ data, editRights }) {
   let { updateNodeInStore } = useNodeStore();
   let fields = switchNodeForm(nodeData.group);
 
-  const editValue = async ({ nodeId, body }) => {
+  const editValue = async ({ refId: nodeId, body }) => {
     const { getToken } = session;
     const token = await getToken();
     let newNodeData = Object.assign({}, nodeData);
