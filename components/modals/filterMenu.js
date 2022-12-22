@@ -1,5 +1,5 @@
 import SlideOverRight from "./slideOver";
-import { ComboBoxInput } from "../ui/inputs/comboBox";
+import { ComboBoxInput } from "../ui/inputs/comboBoxSelect";
 import { useNodeStore } from "../../services/stores/nodeStore";
 
 export default function FilterMenu({
