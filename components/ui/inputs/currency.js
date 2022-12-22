@@ -32,9 +32,13 @@ export const CurrencyInput = ({
     NZD: "NZ$",
   };
 
+  const body = {
+    [inputId]: newValue,
+    [inputId + "_currency"]: currency,
+  };
+
   const handleChange = (e) => {
     setNewValue(+e.target.value);
-    console.log(newValue.toFixed(decimalPlaces));
     if (baseValue !== e.target.value) {
       setChangeSubmitted(false);
     }
@@ -45,7 +49,7 @@ export const CurrencyInput = ({
 
   const handleSubmit = () => {
     if (!changeSubmitted) {
-      onSubmitAction({ refId: detailId, body: { [inputId]: newValue } });
+      onSubmitAction({ refId: detailId, body: body });
       setBaseValue(+newValue);
       setChangeSubmitted(true);
     }
