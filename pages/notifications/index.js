@@ -1,5 +1,6 @@
 import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationItem } from "../../components/ui/notifications/notificationItem";
+import { NotificationList } from "../../components/ui/notifications/notificationList";
 
 const people = [
   {
@@ -22,32 +23,32 @@ const people = [
 const activityItems = [
   {
     id: 1,
-    person: people[0],
-    project: `King's Cross Station`,
+    user: people[0],
+    entity: `King's Cross Station`,
     detail: "Area (acres)",
     value: "245",
     time: "2hr ago",
   },
   {
     id: 2,
-    person: people[1],
-    project: `Industrial`,
+    user: people[1],
+    entity: `Industrial`,
     detail: "Description",
     value: "Properties zoned exclusively for industrial use",
     time: "1d ago",
   },
   {
     id: 3,
-    person: people[2],
-    project: `Unit 1A`,
+    user: people[2],
+    entity: `Unit 1A`,
     detail: "NIA (sq ft)",
     value: "1500",
     time: "3d ago",
   },
   {
     id: 4,
-    person: people[0],
-    project: `Paddington Station`,
+    user: people[0],
+    entity: `Paddington Station`,
     detail: "Purchase Date",
     value: "10-10-2020",
     time: "1m ago",
@@ -59,13 +60,14 @@ export default function Notifications() {
   return (
     <>
       <PageTitleHeader title="Notifications" />
-      <div>
+      <NotificationList notifications={activityItems} />
+      {/* <div>
         <ul role="list" className="divide-y divide-gray-200">
           {activityItems.map((activityItem) => (
             <li key={activityItem.id} className="py-4">
               <NotificationItem
-                user={activityItem.person}
-                entity={activityItem.project}
+                user={activityItem.user}
+                entity={activityItem.entity}
                 entityDetail={activityItem.detail}
                 detailValue={activityItem.value}
                 time={activityItem.time}
@@ -73,7 +75,7 @@ export default function Notifications() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </>
   );
 }

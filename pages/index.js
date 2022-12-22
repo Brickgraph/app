@@ -21,6 +21,7 @@ export default function Home({ token, status, data }) {
   const [nodeModalVisible, setNodeModalVisible] = useState(false);
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedFilteredNodes, setSelectedFilteredNodes] = useState([]);
   const [selectedNodeID, setSelectedNodeID] = useState(null);
   const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
@@ -47,12 +48,6 @@ export default function Home({ token, status, data }) {
       setEdgesInStore(data.edges);
     }
   }, []);
-
-  let uniqueNodeGroups = [...new Set(nodesInStore.map((item) => item.group))];
-  const nodeGroupsDict = uniqueNodeGroups.map((item) => {
-    const splitItem = item.split(", ");
-    return { id: item, label: item, value: item };
-  });
 
   const handleFilterMenu = () => {
     setFilterMenuVisible((current) => !current);
@@ -158,9 +153,10 @@ export default function Home({ token, status, data }) {
       <FilterMenu
         isOpen={filterMenuVisible}
         handleClose={handleFilterMenu}
-        handleNodeSelections={setSelectedFilters}
-        currentSelections={selectedFilters}
-        filterOptions={nodeGroupsDict}
+        handleNodeLabels={setSelectedFilters}
+        handleNodeSelections={setSelectedFilteredNodes}
+        currentLabelSelections={selectedFilters}
+        currentNodeSelections={selectedFilteredNodes}
       />
       <NodeDetailsModal
         nodeID={selectedNodeID ? selectedNodeID : null}

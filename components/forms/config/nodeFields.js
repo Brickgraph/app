@@ -20,7 +20,7 @@ export const propertyFields = [
   {
     id: "description",
     label: "Description",
-    type: "text",
+    type: "textarea",
     required: false,
   },
   {
@@ -41,6 +41,14 @@ export const propertyFields = [
     label: "Square Feet",
     type: "number",
     defaultValue: 1,
+    required: false,
+  },
+  {
+    id: "purchase_price",
+    label: "Purchase Price",
+    type: "currency",
+    defaultValue: 1,
+    currency: "GBP",
     required: false,
   },
 ];

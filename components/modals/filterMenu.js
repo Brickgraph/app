@@ -1,13 +1,22 @@
 import SlideOverRight from "./slideOver";
-import ComboBox from "../forms/inputs/comboBox";
+import { ComboBoxInput } from "../ui/inputs/comboBox";
+import { useNodeStore } from "../../services/stores/nodeStore";
 
 export default function FilterMenu({
   isOpen,
   handleClose,
+  handleNodeLabels,
   handleNodeSelections,
-  currentSelections,
-  filterOptions,
+  currentLabelSelections,
+  currentNodeSelections,
 }) {
+  const { nodes: nodesInStore } = useNodeStore();
+  let uniqueNodeGroups = [...new Set(nodesInStore.map((item) => item.group))];
+  const nodeGroupsDict = uniqueNodeGroups.map((item) => {
+    const splitItem = item.split(", ");
+    return { id: item, label: item, value: item };
+  });
+
   return (
     <SlideOverRight
       isOpen={isOpen}
@@ -15,12 +24,21 @@ export default function FilterMenu({
       clearFilters={() => handleNodeSelections([])}
     >
       <div className="flex min-h-full flex-col justify-center">
-        <div id="combobox-filter-properties">
-          Node Labels:{" "}
-          <ComboBox
-            options={filterOptions}
+        <div id="combobox-filter-properties" className="px-6 py-4">
+          Labels:{" "}
+          <ComboBoxInput
+            options={nodeGroupsDict}
+            handleSelections={handleNodeLabels}
+            currentSelections={currentLabelSelections}
+            selectMultiple={true}
+          />
+        </div>
+        <div id="combobox-filter-properties" className="px-6 py-4">
+          Nodes:{" "}
+          <ComboBoxInput
+            options={nodesInStore}
             handleSelections={handleNodeSelections}
-            currentSelections={currentSelections}
+            currentSelections={currentNodeSelections}
             selectMultiple={true}
           />
         </div>

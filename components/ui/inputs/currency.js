@@ -1,20 +1,40 @@
 import { useState } from "react";
 
-export const SingleLineInput = ({
+export const CurrencyInput = ({
   detailId,
   inputId,
   initialValue,
-  inputType = "text",
   inputDisabled = false,
-  placeholder = "",
+  placeholder = 0,
+  currency = "GBP",
+  decimalPlaces = 0,
   onSubmitAction,
 }) => {
-  const [baseValue, setBaseValue] = useState(initialValue);
-  const [newValue, setNewValue] = useState(baseValue);
+  const [baseValue, setBaseValue] = useState(+initialValue);
+  const [newValue, setNewValue] = useState(+baseValue);
   const [changeSubmitted, setChangeSubmitted] = useState(true);
 
+  const currencySymbols = {
+    USD: "$",
+    EUR: "€",
+    GBP: "£",
+    AUD: "A$",
+    CAD: "C$",
+    CHF: "Fr.",
+    CNY: "¥",
+    DKK: "kr.",
+    HKD: "HK$",
+    INR: "₹",
+    JPY: "¥",
+    KRW: "₩",
+    MXN: "Mex$",
+    NOK: "kr",
+    NZD: "NZ$",
+  };
+
   const handleChange = (e) => {
-    setNewValue(e.target.value);
+    setNewValue(+e.target.value);
+    console.log(newValue.toFixed(decimalPlaces));
     if (baseValue !== e.target.value) {
       setChangeSubmitted(false);
     }
@@ -26,22 +46,29 @@ export const SingleLineInput = ({
   const handleSubmit = () => {
     if (!changeSubmitted) {
       onSubmitAction({ refId: detailId, body: { [inputId]: newValue } });
-      setBaseValue(newValue);
+      setBaseValue(+newValue);
       setChangeSubmitted(true);
     }
   };
 
   return (
     <div className="relative">
+      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <span className="text-gray-500 sm:text-sm">
+          {currencySymbols[currency]}
+        </span>
+      </div>
       <input
         id={inputId}
         disabled={inputDisabled}
-        value={newValue ? newValue : ""}
-        type={inputType}
-        placeholder={placeholder}
+        value={newValue ? newValue : null}
+        type={"number"}
         step="0.01"
         onChange={(e) => handleChange(e)}
-        className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full p-2"
+        placeholder={
+          placeholder ? placeholder : Number(baseValue.toFixed(decimalPlaces))
+        }
+        className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full pl-7 pr-2 py-2"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
             handleSubmit();

@@ -1,27 +1,28 @@
 import { useState } from "react";
 import { EditIcon } from "../buttons/editIcon";
 import { SingleLineInput } from "../inputs/singleLine";
+import { InputOptionHandler } from "../inputs/inputOptionHandler";
 
 export const DetailItem = ({
   detailId = "",
   fieldId = "",
   label,
   value,
-  type = "text",
+  type,
   showReorder,
   ReorderIcon,
   reorderAction,
   editable = true,
   editAction,
 }) => {
-  const [itemValue, setItemValue] = useState(value);
-  const handleChange = (e) => {
-    setItemValue(e.target.value);
-    editAction({ nodeId: detailId, field: fieldId, value: e.target.value });
-  };
-
-  const handleSubmit = (newValue) => {
-    editAction({ nodeId: detailId, body: { [fieldId]: newValue } });
+  const inputOptions = {
+    detailId: detailId,
+    inputId: fieldId,
+    initialValue: value,
+    inputType: type,
+    inputDisabled: !editable,
+    placeholder: label,
+    onSubmitAction: editAction,
   };
 
   return (
@@ -34,12 +35,9 @@ export const DetailItem = ({
       </dt>
       <dd className="flex text-sm text-gray-900 sm:col-span-2 items-center">
         <div className="flex-grow">
-          <SingleLineInput
-            detailId={detailId}
-            inputId={fieldId}
+          <InputOptionHandler
             inputType={type}
-            inputDisabled={!editable}
-            initialValue={value ? value : ""}
+            inputOptions={inputOptions}
             onSubmitAction={editAction}
           />
         </div>
