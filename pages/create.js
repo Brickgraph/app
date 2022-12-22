@@ -10,7 +10,7 @@ import {
   CreateNodeSuccessful,
   CreateNodeFailed,
 } from "../components/ui/notifications/createNode";
-import ComboBox from "../components/forms/inputs/comboBox";
+import { ComboBoxInput } from "../components/ui/inputs/comboBoxSelect";
 
 export default function CreatePage({ label, comboBoxOptions }) {
   const [createLabel, setCreateLabel] = useState(label);
@@ -92,7 +92,7 @@ export default function CreatePage({ label, comboBoxOptions }) {
           nodeSchema.filter((i) => i.value === createLabel)[0].label
         }`}
       />
-      <ComboBox
+      <ComboBoxInput
         options={comboBoxOptions}
         handleSelections={setCreateLabel}
         currentSelections={createLabel}

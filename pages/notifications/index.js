@@ -61,21 +61,6 @@ export default function Notifications() {
     <>
       <PageTitleHeader title="Notifications" />
       <NotificationList notifications={activityItems} />
-      {/* <div>
-        <ul role="list" className="divide-y divide-gray-200">
-          {activityItems.map((activityItem) => (
-            <li key={activityItem.id} className="py-4">
-              <NotificationItem
-                user={activityItem.user}
-                entity={activityItem.entity}
-                entityDetail={activityItem.detail}
-                detailValue={activityItem.value}
-                time={activityItem.time}
-              />
-            </li>
-          ))}
-        </ul>
-      </div> */}
     </>
   );
 }

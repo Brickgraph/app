@@ -2,7 +2,7 @@ import { SingleLineInput } from "./singleLine";
 import { TextAreaInput } from "./textArea";
 import { NumberInput } from "./number";
 import { CurrencyInput } from "./currency";
-import { ComboboxInput } from "./combobox";
+import { ComboboxInput } from "./comboBoxSelect";
 
 export const InputOptionHandler = ({
   inputType,
