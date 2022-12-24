@@ -32,7 +32,7 @@ export const propertyFields = [
   {
     id: "address",
     label: "Address Line",
-    type: "text",
+    type: "address",
     required: true,
   },
   { id: "city", label: "City", type: "text", required: true },

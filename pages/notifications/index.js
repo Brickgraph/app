@@ -1,5 +1,4 @@
 import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
-import { NotificationItem } from "../../components/ui/notifications/notificationItem";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
 
 const people = [

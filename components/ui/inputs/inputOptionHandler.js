@@ -3,6 +3,7 @@ import { TextAreaInput } from "./textArea";
 import { NumberInput } from "./number";
 import { CurrencyInput } from "./currency";
 import { ComboboxInput } from "./comboBoxSelect";
+import { AddressLookupInput } from "./addressLookup";
 
 export const InputOptionHandler = ({
   inputType,
@@ -17,9 +18,7 @@ export const InputOptionHandler = ({
             detailId={inputOptions.detailId}
             inputId={inputOptions.inputId}
             initialValue={inputOptions.initialValue}
-            inputType={inputOptions.inputType}
             inputDisabled={inputOptions.inputDisabled}
-            placeholder={inputOptions.placeholder}
             onSubmitAction={onSubmitAction}
           />
         );
@@ -51,6 +50,17 @@ export const InputOptionHandler = ({
       case "textarea":
         return (
           <TextAreaInput
+            detailId={inputOptions.detailId}
+            inputId={inputOptions.inputId}
+            initialValue={inputOptions.initialValue}
+            inputDisabled={inputOptions.inputDisabled}
+            placeholder={inputOptions.placeholder}
+            onSubmitAction={onSubmitAction}
+          />
+        );
+      case "address":
+        return (
+          <AddressLookupInput
             detailId={inputOptions.detailId}
             inputId={inputOptions.inputId}
             initialValue={inputOptions.initialValue}

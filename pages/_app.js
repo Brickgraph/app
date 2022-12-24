@@ -7,6 +7,7 @@ import {
 import { useRouter } from "next/router";
 import "../styles/globals.css";
 import Head from "next/head";
+import Script from "next/script";
 import { appDetails } from "../config";
 import Layout from "../components/layout";
 
@@ -19,30 +20,38 @@ export default function MyApp({ Component, pageProps }) {
   const isPublicPage = publicPages.includes(pathname);
 
   return (
-    <ClerkProvider>
-      {isPublicPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <>
-          <SignedIn>
-            <Layout>
-              <Head>
-                <title>{appDetails.appName}</title>
-                <meta name="description" content={appDetails.metaDescription} />
-                <meta
-                  name="viewport"
-                  content="initial-scale=1 width=device-width"
-                />
-                <link rel="icon" href={appDetails.favicon} />
-              </Head>
-              <Component {...pageProps} />
-            </Layout>
-          </SignedIn>
-          <SignedOut>
-            <RedirectToSignIn />
-          </SignedOut>
-        </>
-      )}
-    </ClerkProvider>
+    <>
+      <ClerkProvider>
+        {isPublicPage ? (
+          <Component {...pageProps} />
+        ) : (
+          <>
+            <SignedIn>
+              <Layout>
+                <Head>
+                  <title>{appDetails.appName}</title>
+                  <meta
+                    name="description"
+                    content={appDetails.metaDescription}
+                  />
+                  <meta
+                    name="viewport"
+                    content="initial-scale=1 width=device-width"
+                  />
+                  <link rel="icon" href={appDetails.favicon} />
+                </Head>
+                <Component {...pageProps} />
+              </Layout>
+            </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          </>
+        )}
+      </ClerkProvider>
+      <Script
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API}&libraries=places`}
+      />
+    </>
   );
 }

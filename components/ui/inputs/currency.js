@@ -65,7 +65,7 @@ export const CurrencyInput = ({
       <input
         id={inputId}
         disabled={inputDisabled}
-        value={newValue ? newValue : null}
+        value={newValue ? newValue : ""}
         type={"number"}
         step="0.01"
         onChange={(e) => handleChange(e)}

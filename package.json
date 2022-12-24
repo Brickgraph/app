@@ -28,13 +28,16 @@
     "next-transpile-modules": "^9.1.0",
     "qs": "^6.11.0",
     "react": "^18.2.0",
+    "react-cool-onclickoutside": "^1.7.0",
     "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18.2.0",
     "react-force-graph-2d": "^1.23.11",
+    "react-google-autocomplete": "^2.7.1",
     "react-graph-vis": "^1.0.7",
     "react-leaflet": "^3.2.5",
     "react-map-gl": "^7.0.19",
     "react-map-gl-geocoder": "^2.2.0",
+    "use-places-autocomplete": "^4.0.0",
     "zustand": "^4.1.4"
   },
   "devDependencies": {
