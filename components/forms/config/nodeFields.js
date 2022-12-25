@@ -24,7 +24,7 @@ export const propertyFields = [
     required: false,
   },
   {
-    id: "postcode",
+    id: "address_postcode",
     label: "Postcode",
     type: "text",
     required: true,
