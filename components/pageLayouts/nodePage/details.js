@@ -30,6 +30,7 @@ export function NodeDetails({ data, editRights }) {
     if (status === 201) {
       updateNodeInStore(newNodeData);
       setNodeData(newNodeData);
+      console.log("Updated node data", newNodeData);
     }
   };
   return (

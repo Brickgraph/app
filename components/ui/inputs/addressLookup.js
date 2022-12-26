@@ -45,7 +45,7 @@ export const AddressLookupInput = ({
       return componentName[0];
     };
     const body = {
-      [inputId]: newValue,
+      address: place.name,
       address_postcode: retrieveAddressComponent("postal_code"),
       address_street_number: retrieveAddressComponent("street_number"),
       address_street: retrieveAddressComponent("route"),
@@ -79,10 +79,9 @@ export const AddressLookupInput = ({
   autoComplete.addListener("place_changed", () => {
     const placeSelected = autoComplete.getPlace();
     setNewValue(placeSelected.name);
-    console.log("Selected", placeSelected);
-    const { body } = retrieveAddressComponents(placeSelected);
-    //console.log(body);
-    //onSubmitAction({ refId: detailId, body: body });
+    const components = retrieveAddressComponents(placeSelected);
+    console.log(components);
+    onSubmitAction({ refId: detailId, body: components });
   });
 
   return (

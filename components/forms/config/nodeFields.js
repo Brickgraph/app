@@ -24,18 +24,24 @@ export const propertyFields = [
     required: false,
   },
   {
+    id: "address",
+    label: "Address",
+    type: "address",
+    required: true,
+  },
+  {
     id: "address_postcode",
     label: "Postcode",
     type: "text",
     required: true,
   },
+
   {
-    id: "address",
-    label: "Address Line",
-    type: "address",
+    id: "address_city_town",
+    label: "City / Town",
+    type: "text",
     required: true,
   },
-  { id: "city", label: "City", type: "text", required: true },
   {
     id: "sqft",
     label: "Square Feet",
