@@ -1,10 +1,6 @@
 import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
-import {
-  DatePickerInput,
-  DateFieldInput,
-  ReactDatePicker,
-} from "../../components/ui/inputs/datePicker";
+import { DateInput } from "../../components/ui/inputs/date";
 
 const people = [
   {
@@ -65,9 +61,7 @@ export default function Notifications() {
     <>
       <PageTitleHeader title="Notifications" />
       <div className="flex-grow">
-        {/* <DatePickerInput /> */}
-        <DateFieldInput />
-        <ReactDatePicker />
+        <DateInput initialValue={"nothing"} />
       </div>
       <NotificationList notifications={activityItems} />
     </>

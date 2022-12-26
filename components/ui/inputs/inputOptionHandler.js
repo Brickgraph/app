@@ -4,6 +4,9 @@ import { NumberInput } from "./number";
 import { CurrencyInput } from "./currency";
 import { ComboboxInput } from "./comboBoxSelect";
 import { AddressLookupInput } from "./addressLookup";
+import { DateInput } from "./date";
+import { DatetimeInput } from "./datetime";
+import { FileInput } from "./file";
 
 export const InputOptionHandler = ({
   inputType,
@@ -32,6 +35,26 @@ export const InputOptionHandler = ({
             inputDisabled={inputOptions.inputDisabled}
             placeholder={inputOptions.placeholder}
             decimal={inputOptions.decimal ? inputOptions.decimal : 2}
+            onSubmitAction={onSubmitAction}
+          />
+        );
+      case "date":
+        return (
+          <DateInput
+            detailId={inputOptions.detailId}
+            inputId={inputOptions.inputId}
+            initialValue={inputOptions.initialValue}
+            inputDisabled={inputOptions.inputDisabled}
+            onSubmitAction={onSubmitAction}
+          />
+        );
+      case "datetime":
+        return (
+          <DatetimeInput
+            detailId={inputOptions.detailId}
+            inputId={inputOptions.inputId}
+            initialValue={inputOptions.initialValue}
+            inputDisabled={inputOptions.inputDisabled}
             onSubmitAction={onSubmitAction}
           />
         );
@@ -66,6 +89,16 @@ export const InputOptionHandler = ({
             initialValue={inputOptions.initialValue}
             inputDisabled={inputOptions.inputDisabled}
             placeholder={inputOptions.placeholder}
+            onSubmitAction={onSubmitAction}
+          />
+        );
+      case "file":
+        return (
+          <FileInput
+            detailId={inputOptions.detailId}
+            inputId={inputOptions.inputId}
+            initialValue={inputOptions.initialValue}
+            inputDisabled={inputOptions.inputDisabled}
             onSubmitAction={onSubmitAction}
           />
         );

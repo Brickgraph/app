@@ -57,6 +57,18 @@ export const propertyFields = [
     currency: "GBP",
     required: false,
   },
+  {
+    id: "purchase_date",
+    label: "Purchase Date",
+    type: "date",
+    required: false,
+  },
+  {
+    id: "file",
+    label: "File",
+    type: "file",
+    required: false,
+  },
 ];
 
 export const sectorFields = [
