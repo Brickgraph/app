@@ -1,6 +1,7 @@
-import { Fragment, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import { useEffect, useState } from "react";
+import { CheckIcon, SelectorIcon } from "@heroicons/react/outline";
+import { Combobox } from "@headlessui/react";
+import { useNodeStore } from "../../../services/stores/nodeStore";
 
 const users = [
   {
@@ -69,90 +70,84 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function UserSelect({ label = null }) {
-  const [selected, setSelected] = useState(users[0]);
+export function UserSelect() {
+  const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState(null);
+  const [suggested, setSuggested] = useState([]);
+
+  const { nodes: nodesInStore } = useNodeStore();
+
+  const searchNodes = (e) => {
+    console.log("Execute search of database", searchString);
+  };
+
+  const filteredUsers =
+    query === ""
+      ? users
+      : users.filter((user) => {
+          return user.name.toLowerCase().includes(query.toLowerCase());
+        });
+
+  useEffect(() => {
+    console.log("Selected", selected);
+  }, [selected]);
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
-      {({ open }) => (
-        <>
-          <Listbox.Label className="block text-sm font-medium text-gray-700">
-            {label ? label : null}
-          </Listbox.Label>
-          <div className="relative mt-1">
-            <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 sm:text-sm">
-              <span className="flex items-center">
-                <img
-                  src={selected.avatar}
-                  alt=""
-                  className="h-6 w-6 flex-shrink-0 rounded-full"
-                />
-                <span className="ml-3 block truncate">{selected.name}</span>
-              </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                <ChevronDownIcon
-                  className="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </span>
-            </Listbox.Button>
+    <Combobox as="div" value={selected} onChange={setSelected}>
+      <div className="relative mt-1">
+        <Combobox.Input
+          key="node-select-input"
+          className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-orange-400 focus:outline-none focus:ring-1 focus:ring-orange-100 sm:text-sm"
+          onChange={(event) => setQuery(event.target.value)}
+          displayValue={(user) => user?.name}
+        />
+        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+          <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </Combobox.Button>
 
-            <Transition
-              show={open}
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {users.map((user) => (
-                  <Listbox.Option
-                    key={user.id}
-                    className={({ active }) =>
-                      classNames(
-                        active ? "text-white bg-orange-400" : "text-gray-900",
-                        "relative cursor-default select-none py-2 pl-3 pr-9"
-                      )
-                    }
-                    value={user}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <div className="flex items-center">
-                          <img
-                            src={user.avatar}
-                            alt=""
-                            className="h-6 w-6 flex-shrink-0 rounded-full"
-                          />
-                          <span
-                            className={classNames(
-                              selected ? "font-semibold" : "font-normal",
-                              "ml-3 block truncate"
-                            )}
-                          >
-                            {user.name}
-                          </span>
-                        </div>
+        {filteredUsers.length > 0 && (
+          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {filteredUsers.map((user) => (
+              <Combobox.Option
+                key={user.id}
+                value={{ userId: user.id, name: user.name }}
+                className={({ active }) =>
+                  classNames(
+                    "relative cursor-default select-none py-2 pl-3 pr-9",
+                    active ? "bg-orange-400 text-white" : "text-gray-900"
+                  )
+                }
+              >
+                {({ active, selected }) => (
+                  <>
+                    <div className="flex">
+                      <span className="flex items-center">
+                        <img
+                          src={user.avatar}
+                          alt=""
+                          className="h-6 w-6 flex-shrink-0 rounded-full"
+                        />
+                        <span className="ml-3 block truncate">{user.name}</span>
+                      </span>
+                    </div>
 
-                        {selected ? (
-                          <span
-                            className={classNames(
-                              active ? "text-white" : "text-orange-400",
-                              "absolute inset-y-0 right-0 flex items-center pr-4"
-                            )}
-                          >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
-                      </>
+                    {selected && (
+                      <span
+                        className={classNames(
+                          "absolute inset-y-0 right-0 flex items-center pr-4",
+                          active ? "text-white" : "text-orange-500"
+                        )}
+                      >
+                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
                     )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
-          </div>
-        </>
-      )}
-    </Listbox>
+                  </>
+                )}
+              </Combobox.Option>
+            ))}
+          </Combobox.Options>
+        )}
+      </div>
+    </Combobox>
   );
 }

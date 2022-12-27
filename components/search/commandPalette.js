@@ -11,8 +11,8 @@ function classNames(...classes) {
 }
 
 export default function CommandPalette({ isOpen, onClose }) {
-  const data = useNodeStore.getState().nodes;
   const [query, setQuery] = useState("");
+  const { nodes } = useNodeStore();
   const { getToken } = useSession().session;
 
   const handleSearch = async (e) => {
@@ -27,17 +27,15 @@ export default function CommandPalette({ isOpen, onClose }) {
   const filteredItems =
     query === ""
       ? []
-      : data.filter((item) => {
+      : nodes.filter((item) => {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
 
   const handleSelection = async (selection) => {
-    const node = data.filter((item) => {
-      return item.label === selection;
-    });
-    const nodeID = node[0].id;
+    setLoading(true);
+    Router.push(`/nodes/${selection.id}`);
+    setLoading(false);
     onClose();
-    Router.push(`/nodes/${nodeID}`);
   };
 
   return (
@@ -92,7 +90,7 @@ export default function CommandPalette({ isOpen, onClose }) {
                     {filteredItems.map((item) => (
                       <Combobox.Option
                         key={item.id}
-                        value={item.label}
+                        value={item}
                         className={({ active }) =>
                           classNames(
                             "cursor-default select-none px-4 py-2",
@@ -100,7 +98,12 @@ export default function CommandPalette({ isOpen, onClose }) {
                           )
                         }
                       >
-                        {item.label}
+                        <div className="flex items-baseline">
+                          <span>{item.label}</span>
+                          <span className="ml-2 text-sm italic">
+                            {item.group}
+                          </span>
+                        </div>
                       </Combobox.Option>
                     ))}
                   </Combobox.Options>

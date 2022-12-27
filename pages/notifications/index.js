@@ -1,6 +1,7 @@
 import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
-import { DateInput } from "../../components/ui/inputs/date";
+import { NodeSelect } from "../../components/ui/inputs/nodeSelect";
+import { UserSelect } from "../../components/ui/inputs/userSelect";
 
 const people = [
   {
@@ -61,7 +62,8 @@ export default function Notifications() {
     <>
       <PageTitleHeader title="Notifications" />
       <div className="flex-grow">
-        <DateInput initialValue={"nothing"} />
+        <NodeSelect />
+        <UserSelect />
       </div>
       <NotificationList notifications={activityItems} />
     </>

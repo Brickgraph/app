@@ -37,7 +37,7 @@ export const NumberInput = ({
       <input
         id={inputId}
         disabled={inputDisabled}
-        value={newValue ? Number(newValue.toFixed(decimalPlaces)) : null}
+        value={newValue ? Number(newValue.toFixed(decimalPlaces)) : ""}
         type={"number"}
         step="0.01"
         onChange={(e) => handleChange(e)}
