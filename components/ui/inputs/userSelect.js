@@ -70,16 +70,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function UserSelect() {
+export function UserSelect({
+  users,
+  nameField = "name",
+  imageField = "imageUrl",
+  initialSelection = null,
+  getSelectedUser,
+}) {
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState(null);
-  const [suggested, setSuggested] = useState([]);
-
-  const { nodes: nodesInStore } = useNodeStore();
-
-  const searchNodes = (e) => {
-    console.log("Execute search of database", searchString);
-  };
+  const [selected, setSelected] = useState(initialSelection);
 
   const filteredUsers =
     query === ""
@@ -89,17 +88,17 @@ export function UserSelect() {
         });
 
   useEffect(() => {
-    console.log("Selected", selected);
+    getSelectedUser(selected);
   }, [selected]);
 
   return (
-    <Combobox as="div" value={selected} onChange={setSelected}>
+    <Combobox as="div" value={selected} onChange={setSelected} nullable>
       <div className="relative mt-1">
         <Combobox.Input
-          key="node-select-input"
+          key={open}
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-orange-400 focus:outline-none focus:ring-1 focus:ring-orange-100 sm:text-sm"
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(user) => user?.name}
+          displayValue={(user) => (user ? user[nameField] : "")}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -110,7 +109,7 @@ export function UserSelect() {
             {filteredUsers.map((user) => (
               <Combobox.Option
                 key={user.id}
-                value={{ userId: user.id, name: user.name }}
+                value={{ userId: user.id, name: user[nameField] }}
                 className={({ active }) =>
                   classNames(
                     "relative cursor-default select-none py-2 pl-3 pr-9",
@@ -123,11 +122,13 @@ export function UserSelect() {
                     <div className="flex">
                       <span className="flex items-center">
                         <img
-                          src={user.avatar}
+                          src={user[imageField]}
                           alt=""
                           className="h-6 w-6 flex-shrink-0 rounded-full"
                         />
-                        <span className="ml-3 block truncate">{user.name}</span>
+                        <span className="ml-3 block truncate">
+                          {user[nameField]}
+                        </span>
                       </span>
                     </div>
 

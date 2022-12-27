@@ -28,7 +28,7 @@ export function NodeSelect() {
   }, [selected]);
 
   return (
-    <Combobox as="div" value={selected} onChange={setSelected}>
+    <Combobox as="div" value={selected} onChange={setSelected} nullable>
       <div className="relative mt-1">
         <Combobox.Input
           key="node-select-input"

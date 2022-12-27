@@ -1,21 +1,25 @@
 import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
-import { NodeSelect } from "../../components/ui/inputs/nodeSelect";
 import { UserSelect } from "../../components/ui/inputs/userSelect";
+import { useEffect, useState } from "react";
+import { XIcon } from "@heroicons/react/outline";
 
 const people = [
   {
-    name: "Lindsay Walton",
+    id: 1,
+    name: "Lindsay W",
     imageUrl:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80",
   },
   {
-    name: "Alyssa Rennison",
+    id: 2,
+    name: "Alyssa R",
     imageUrl:
       "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80",
   },
   {
-    name: "Anna Baker",
+    id: 3,
+    name: "Anna B",
     imageUrl:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80",
   },
@@ -58,14 +62,36 @@ const activityItems = [
 ];
 
 export default function Notifications() {
+  const [selectedUser, setSelectedUser] = useState(null);
+  useEffect(() => {
+    console.log("selectedUser", selectedUser);
+  }, [selectedUser]);
+
+  const filteredActivityItems = selectedUser
+    ? activityItems.filter((item) => {
+        return item.user.id === selectedUser?.userId;
+      })
+    : activityItems;
+
+  const clearSelectedUser = () => {
+    return (
+      <>
+        <button onClick={() => setSelectedUser(null)}>x</button>
+      </>
+    );
+  };
+
   return (
     <>
       <PageTitleHeader title="Notifications" />
       <div className="flex-grow">
-        <NodeSelect />
-        <UserSelect />
+        <UserSelect
+          users={people}
+          initialSelection={selectedUser}
+          getSelectedUser={(e) => setSelectedUser(e)}
+        />
       </div>
-      <NotificationList notifications={activityItems} />
+      <NotificationList notifications={filteredActivityItems} />
     </>
   );
 }
