@@ -16,7 +16,7 @@ import { LoadingSpinner } from "../ui/loading/loadingSpinner";
 import { Tabs } from "../ui/tabs/pageTabs";
 import { useNodeStore } from "../../services/stores/nodeStore";
 
-export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
+export const NodeDetailsModal = ({ nodeId, onClose, show }) => {
   const [nodeDetails, setNodeDetails] = useState(null);
   const [permissionDetails, setPermissionDetails] = useState(null);
   const [tabs, setTabs] = useState(null);
@@ -36,7 +36,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
     const { getToken } = session;
     const token = await getToken();
     const { status, data, accessStatus, accessData } = await getNodeDetails(
-      nodeID,
+      nodeId,
       token
     );
     if (status === 200) {
@@ -126,7 +126,7 @@ export const NodeDetailsModal = ({ nodeID, onClose, show }) => {
             onClick={() => setLoadingChanges(true)}
             className="hover:bg-orange-200 px-4 py-2 rounded"
           >
-            <Link href={nodeID ? `/nodes/${nodeID}` : ""}>
+            <Link href={nodeId ? `/nodes/${nodeId}` : ""}>
               <div className="flex items-center">
                 <h1 className="text-lg md:text-xl text-black">
                   {nodeDetails ? (

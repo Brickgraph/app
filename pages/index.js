@@ -22,7 +22,7 @@ export default function Home({ token, status, data }) {
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [selectedFilteredNodes, setSelectedFilteredNodes] = useState([]);
-  const [selectedNodeID, setSelectedNodeID] = useState(null);
+  const [selectedNodeId, setselectedNodeId] = useState(null);
   const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
   const {
@@ -63,7 +63,7 @@ export default function Home({ token, status, data }) {
             width={"100%"}
             nodeFilterSelections={selectedFilters}
             nodeSelectAction={(nodeId) => {
-              setSelectedNodeID(nodeId);
+              setselectedNodeId(nodeId);
               setNodeModalVisible(true);
             }}
             edgeSelectAction={(edgeId) => {
@@ -83,7 +83,7 @@ export default function Home({ token, status, data }) {
               filterSelections={selectedFilters}
               buttonText="View"
               buttonAction={(nodeId) => {
-                setSelectedNodeID(nodeId);
+                setselectedNodeId(nodeId);
                 setNodeModalVisible(true);
               }}
             />
@@ -116,7 +116,7 @@ export default function Home({ token, status, data }) {
         ];
         const onClickAction = (marker) => {
           console.log(marker);
-          setSelectedNodeID(marker.id);
+          setselectedNodeId(marker.id);
           setNodeModalVisible(true);
         };
         return (
@@ -159,10 +159,10 @@ export default function Home({ token, status, data }) {
         currentNodeSelections={selectedFilteredNodes}
       />
       <NodeDetailsModal
-        nodeID={selectedNodeID ? selectedNodeID : null}
+        nodeId={selectedNodeId ? selectedNodeId : null}
         show={nodeModalVisible}
         onClose={() => {
-          setSelectedNodeID(null);
+          setselectedNodeId(null);
           setNodeModalVisible(false);
         }}
       />
