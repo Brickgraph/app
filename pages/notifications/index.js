@@ -2,7 +2,7 @@ import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
 import { UserSelect } from "../../components/ui/inputs/userSelect";
 import { useEffect, useState } from "react";
-import { XIcon } from "@heroicons/react/outline";
+import { EdgeDetailsModal } from "../../components/modals/edgeDetails";
 
 const people = [
   {
@@ -63,9 +63,8 @@ const activityItems = [
 
 export default function Notifications() {
   const [selectedUser, setSelectedUser] = useState(null);
-  useEffect(() => {
-    console.log("selectedUser", selectedUser);
-  }, [selectedUser]);
+  const [modalShow, setModalShow] = useState(false);
+  useEffect(() => {}, [selectedUser]);
 
   const filteredActivityItems = selectedUser
     ? activityItems.filter((item) => {
@@ -85,6 +84,13 @@ export default function Notifications() {
     <>
       <PageTitleHeader title="Notifications" />
       <div className="flex-grow">
+        <button onClick={() => setModalShow(true)}>Show</button>
+        <EdgeDetailsModal
+          sourceNodeId={1}
+          targetNodeId={25}
+          onClose={() => setModalShow(false)}
+          show={modalShow}
+        />
         <UserSelect
           users={people}
           initialSelection={selectedUser}
