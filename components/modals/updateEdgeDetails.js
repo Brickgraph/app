@@ -23,10 +23,6 @@ export const EdgeDetailsModal = ({
   //edgeData.from = sourceNode.label;
   //edgeData.to = targetNode.label;
 
-  //Console log edgeData label in lowercase
-
-  console.log("Edge", edgeData);
-
   return (
     <ModalBase onClose={onClose} show={show}>
       <div>{`${sourceNode.label} ${edgeData.label.toLowerCase()} ${

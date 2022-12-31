@@ -3,16 +3,11 @@ import { useState, useEffect } from "react";
 import { NodeDetailsModal } from "../../modals/nodeDetails";
 
 export const NodeDetailInput = ({ nodeId, inputId }) => {
+  console.log(nodeId);
   const { nodes } = useNodeStore();
-  const [node, setNode] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const node = nodes.filter((n) => n.id === nodeId)[0];
 
-  useEffect(() => {
-    const node = nodes.filter((node) => node.id === nodeId)[0];
-    setNode(node);
-  }, [nodeId]);
-
-  console.log(node);
   return (
     <>
       <div className="block w-full bg-white border border-gray-300 rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 p-2">
