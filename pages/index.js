@@ -175,7 +175,7 @@ export const getServerSideProps = withServerSideAuth(async ({ req }) => {
 
   if (!sessionId) {
     return {
-      redirect: { destination: "/sign-in" },
+      redirect: { destination: "/" },
     };
   }
 
@@ -187,7 +187,7 @@ export const getServerSideProps = withServerSideAuth(async ({ req }) => {
   // Redirect if user needs to set up their account
   if (status !== 200) {
     return {
-      redirect: { destination: "/sign-in" },
+      redirect: { destination: "/" },
     };
   }
 

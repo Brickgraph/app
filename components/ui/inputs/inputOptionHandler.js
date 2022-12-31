@@ -7,6 +7,7 @@ import { AddressLookupInput } from "./addressLookup";
 import { DateInput } from "./date";
 import { DatetimeInput } from "./datetime";
 import { FileInput } from "./file";
+import { NodeDetailInput } from "./nodeDetail";
 
 export const InputOptionHandler = ({
   inputType,
@@ -102,8 +103,21 @@ export const InputOptionHandler = ({
             onSubmitAction={onSubmitAction}
           />
         );
-      /* case "combobox":
-        return <ComboboxInput />; */
+      case "node":
+        return (
+          <NodeDetailInput
+            nodeId={inputOptions.detailId}
+            inputId={`${inputOptions.inputId}-${inputOptions.detailId}`}
+          />
+        );
+      case "combobox":
+        return (
+          <ComboboxInput
+            detailId={inputOptions.detailId}
+            inputId={inputOptions.inputId}
+            initialValue={inputOptions.initialValue}
+          />
+        );
       default:
         return <SingleLineInput />;
     }

@@ -24,6 +24,7 @@ export const DetailItem = ({
     placeholder: label,
     onSubmitAction: editAction,
   };
+  console.log("Fields", inputOptions);
 
   return (
     <div

@@ -2,14 +2,14 @@ export const property2LeaseFields = [
   {
     id: "from",
     label: "Source Node",
-    type: "text",
+    type: "node",
     required: true,
     editable: false,
   },
   {
     id: "to",
     label: "Target Node",
-    type: "text",
+    type: "node",
     required: true,
     editable: false,
   },

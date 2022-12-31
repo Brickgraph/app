@@ -2,7 +2,8 @@ import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
 import { UserSelect } from "../../components/ui/inputs/userSelect";
 import { useEffect, useState } from "react";
-import { EdgeDetailsModal } from "../../components/modals/edgeDetails";
+import { EdgeDetailsModal } from "../../components/modals/updateEdgeDetails";
+import { NodeDetailInput } from "../../components/ui/inputs/nodeDetail";
 
 const people = [
   {
@@ -84,13 +85,14 @@ export default function Notifications() {
     <>
       <PageTitleHeader title="Notifications" />
       <div className="flex-grow">
-        <button onClick={() => setModalShow(true)}>Show</button>
+        <button onClick={() => setModalShow(true)}>Edge Example Modal</button>
         <EdgeDetailsModal
           sourceNodeId={1}
           targetNodeId={25}
           onClose={() => setModalShow(false)}
           show={modalShow}
         />
+        <NodeDetailInput nodeId={1} inputId={"node"} />
         <UserSelect
           users={people}
           initialSelection={selectedUser}

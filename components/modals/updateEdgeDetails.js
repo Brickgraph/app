@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import ModalBase from "./modalBase";
-import { FormBase } from "../forms/layouts/formBase";
 import { DetailsList } from "../ui/details/detailsList";
 import { property2LeaseFields } from "../forms/config/edgeFields";
 import { useEdgeStore } from "../../services/stores/edgeStore";
@@ -22,12 +20,18 @@ export const EdgeDetailsModal = ({
   )[0];
 
   // set 'from' and 'to' fields in edgeData to node labels
-  edgeData.from = sourceNode.label;
-  edgeData.to = targetNode.label;
+  //edgeData.from = sourceNode.label;
+  //edgeData.to = targetNode.label;
+
+  //Console log edgeData label in lowercase
+
+  console.log("Edge", edgeData);
 
   return (
     <ModalBase onClose={onClose} show={show}>
-      <div>Relationship Details</div>
+      <div>{`${sourceNode.label} ${edgeData.label.toLowerCase()} ${
+        targetNode.label
+      }`}</div>
       <form>
         <DetailsList
           data={edgeData}
