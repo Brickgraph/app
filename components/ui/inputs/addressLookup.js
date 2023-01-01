@@ -8,8 +8,6 @@ export const AddressLookupInput = ({
   onSubmitAction,
 }) => {
   const [newValue, setNewValue] = useState(initialValue);
-
-  //const autoCompleteRef = useRef();
   const inputRef = useRef();
   const options = {
     componentRestrictions: { country: "GB" },
@@ -60,27 +58,14 @@ export const AddressLookupInput = ({
     return body;
   };
 
-  /* useEffect(() => {
-    if (place.address_components) {
-      setAddressComponents(retrieveAddressComponents(place));
-    }
-  }, [place]); */
-
-  /* const handlePlaceSelect = (place) => {
-    setNewValue(place.name);
-    const { body } = retrieveAddressComponents(place);
-    onSubmitAction({ refId: detailId, body: body });
-  }; */
-
   const handleChange = (e) => {
     setNewValue(e.target.value);
   };
 
-  autoComplete.addListener("place_changed", () => {
+  autoComplete.addListener("place_changed", (e) => {
     const placeSelected = autoComplete.getPlace();
     setNewValue(placeSelected.name);
     const components = retrieveAddressComponents(placeSelected);
-    console.log(components);
     onSubmitAction({ refId: detailId, body: components });
   });
 

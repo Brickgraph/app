@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const NumberInput = ({
   detailId,
@@ -31,6 +31,10 @@ export const NumberInput = ({
       setChangeSubmitted(true);
     }
   };
+
+  useEffect(() => {
+    setNewValue(initialValue);
+  }, [initialValue]);
 
   return (
     <div className="relative">

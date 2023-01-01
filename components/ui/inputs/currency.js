@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const CurrencyInput = ({
   detailId,
@@ -54,6 +54,10 @@ export const CurrencyInput = ({
       setChangeSubmitted(true);
     }
   };
+
+  useEffect(() => {
+    setNewValue(initialValue);
+  }, [initialValue]);
 
   return (
     <div className="relative">

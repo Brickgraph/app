@@ -3,10 +3,22 @@ import { useState, useEffect } from "react";
 import { NodeDetailsModal } from "../../modals/nodeDetails";
 
 export const NodeDetailInput = ({ nodeId, inputId }) => {
-  console.log(nodeId);
   const { nodes } = useNodeStore();
   const [showModal, setShowModal] = useState(false);
-  const node = nodes.filter((n) => n.id === nodeId)[0];
+  const [dataIsLoaded, setDataIsLoaded] = useState(false);
+  const [node, setNode] = useState(null);
+  //const node = nodes.filter((n) => n.id === nodeId)[0];
+
+  useEffect(() => {
+    if (!node) {
+      setNode(nodes.filter((n) => n.id === nodeId)[0]);
+      setDataIsLoaded(true);
+    }
+  }, [nodeId]);
+
+  if (!dataIsLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { DetailItem } from "./detail";
 import { BarsIcon } from "../buttons/barsIcon";
+import { useEffect, useState } from "react";
 
 export function DetailsList({
   data,
@@ -8,20 +9,30 @@ export function DetailsList({
   blankValue = "",
   editRights = true,
 }) {
-  let listItems = [];
+  const [listItems, setListItems] = useState([]);
+  const [detailsData, setDetailsData] = useState(data);
 
-  if (data !== null) {
-    fields.map((field) => {
-      const item = {
-        key: field.id,
-        label: field.label,
-        type: field.type,
-        editable: field.editable,
-        value: data[field.id] ? data[field.id] : blankValue,
-      };
-      listItems.push(item);
-    });
-  }
+  useEffect(() => {
+    setDetailsData(data);
+  }, [data]);
+
+  useEffect(() => {
+    if (detailsData !== null) {
+      setListItems([]);
+      const newListItems = [];
+      fields.map((field) => {
+        const item = {
+          key: field.id,
+          label: field.label,
+          type: field.type,
+          editable: field.editable,
+          value: detailsData[field.id] ? detailsData[field.id] : blankValue,
+        };
+        newListItems.push(item);
+        setListItems(newListItems);
+      });
+    }
+  }, [detailsData]);
 
   return (
     <>
@@ -30,7 +41,7 @@ export function DetailsList({
           return (
             <div key={item.key}>
               <DetailItem
-                detailId={data.id}
+                detailId={detailsData.id}
                 fieldId={item.key}
                 label={item.label}
                 value={item.value}

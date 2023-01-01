@@ -19,10 +19,6 @@ export const EdgeDetailsModal = ({
     (edge) => edge.from === sourceNodeId && edge.to === targetNodeId
   )[0];
 
-  // set 'from' and 'to' fields in edgeData to node labels
-  //edgeData.from = sourceNode.label;
-  //edgeData.to = targetNode.label;
-
   return (
     <ModalBase onClose={onClose} show={show}>
       <div>{`${sourceNode.label} ${edgeData.label.toLowerCase()} ${

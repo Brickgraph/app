@@ -4,8 +4,8 @@ import { SingleLineInput } from "../inputs/singleLine";
 import { InputOptionHandler } from "../inputs/inputOptionHandler";
 
 export const DetailItem = ({
-  detailId = "",
-  fieldId = "",
+  detailId,
+  fieldId,
   label,
   value,
   type,
@@ -16,7 +16,7 @@ export const DetailItem = ({
   editAction,
 }) => {
   const inputOptions = {
-    detailId: detailId,
+    detailId: detailId || value,
     inputId: fieldId,
     initialValue: value,
     inputType: type,
@@ -24,6 +24,7 @@ export const DetailItem = ({
     placeholder: label,
     onSubmitAction: editAction,
   };
+  console.log(value);
 
   return (
     <div

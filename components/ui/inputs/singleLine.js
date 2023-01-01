@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const SingleLineInput = ({
   detailId,
@@ -30,6 +30,10 @@ export const SingleLineInput = ({
       setChangeSubmitted(true);
     }
   };
+
+  useEffect(() => {
+    setNewValue(initialValue);
+  }, [initialValue]);
 
   return (
     <div className="relative">
