@@ -5,6 +5,7 @@ import {
   GlobeAltIcon,
   ViewGridIcon,
 } from "@heroicons/react/outline";
+import { LoadingSpinner } from "../../ui/loading/LoadingSpinner";
 
 export default function GraphVisual({
   data,
@@ -143,7 +144,10 @@ export default function GraphVisual({
   if (dataLoading !== true) {
     return (
       <>
-        <div>Loading...</div>
+        <div className="flex items-center place-content-center h-[calc(100vh-100px)]">
+          <LoadingSpinner message={"Refreshing graph loading spinner..."} />
+          <span>Refreshing graph...</span>
+        </div>
       </>
     );
   }
@@ -151,7 +155,7 @@ export default function GraphVisual({
   return (
     <>
       <div className="relative h-[calc(100vh-100px)]">
-        <div className="absolute flex flex cols-2 top-4 right-4 gap-2 transform z-10">
+        <div className="absolute flex cols-2 top-4 right-4 gap-2 transform z-10">
           <button
             data-bs-toggle="tooltip"
             title="Change the layout of the graph"

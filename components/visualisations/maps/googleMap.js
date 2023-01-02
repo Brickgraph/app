@@ -48,6 +48,7 @@ export default function GoogleMap({
         defaultCenter={center}
         defaultZoom={zoom}
         options={MapOptions}
+        mapId="b41b729990ebe7ff"
       >
         {markers.map((marker) => (
           <MapMarker
