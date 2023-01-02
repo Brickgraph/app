@@ -2,7 +2,7 @@ import { PageTitleHeader } from "../../components/pageLayouts/titleHeader";
 import { NotificationList } from "../../components/ui/notifications/notificationList";
 import { UserSelect } from "../../components/ui/inputs/userSelect";
 import { useEffect, useState } from "react";
-import { MapboxMap } from "../../components/visualisations/maps/DeckGL";
+import { NodeSelectMulti } from "../../components/ui/inputs/nodeSelectMulti";
 
 const people = [
   {
@@ -83,13 +83,16 @@ export default function Notifications() {
   return (
     <>
       <PageTitleHeader title="Notifications" />
-      <div className="flex-grow">
-        <MapboxMap />
-        <UserSelect
-          users={people}
-          initialSelection={selectedUser}
-          getSelectedUser={(e) => setSelectedUser(e)}
-        />
+      <NodeSelectMulti />
+      <div className="flex items-center">
+        <span className="font-bold text-sm">Filter by User:</span>
+        <div className="flex-grow pl-2">
+          <UserSelect
+            users={people}
+            initialSelection={selectedUser}
+            getSelectedUser={(e) => setSelectedUser(e)}
+          />
+        </div>
       </div>
       <NotificationList notifications={filteredActivityItems} />
     </>
