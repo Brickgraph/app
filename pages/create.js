@@ -11,6 +11,8 @@ import {
   CreateNodeFailed,
 } from "../components/ui/notifications/createNode";
 import { ComboBoxInput } from "../components/ui/inputs/comboBoxSelect";
+import { CreateNodeDetails } from "../components/ui/details/createDetails";
+import { propertyFields } from "../components/forms/config/nodeFields";
 
 export default function CreatePage({ label, comboBoxOptions }) {
   const [createLabel, setCreateLabel] = useState(label);
@@ -92,7 +94,8 @@ export default function CreatePage({ label, comboBoxOptions }) {
           nodeSchema.filter((i) => i.value === createLabel)[0].label
         }`}
       />
-      <ComboBoxInput
+      <CreateNodeDetails nodeLabel={label} />
+      {/* <ComboBoxInput
         options={comboBoxOptions}
         handleSelections={setCreateLabel}
         currentSelections={createLabel}
@@ -106,7 +109,7 @@ export default function CreatePage({ label, comboBoxOptions }) {
           submitAction={handleSubmit}
           formId={"form"}
         />
-      </div>
+      </div> */}
       <LoadingNotification
         isVisible={loadingChanges}
         message={`Creating new ${label}`}
