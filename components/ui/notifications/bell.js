@@ -76,14 +76,14 @@ export const BellNotification = ({ active, onClick }) => {
   return (
     <>
       <NotificationMenu>
-        <div className="relative flex">
+        <div className="relative flex group">
           <span onClick={onClick}>
             <BellIcon
               className="h-8 hover:bg-gray-100 rounded-full p-1 text-gray-500"
               aria-hidden="true"
             />
             <span className="sr-only">View notifications</span>
-            <div className="inline-flex absolute -top-1 -right-1 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-orange-400 rounded-full border-2 border-white dark:border-gray-900" />
+            <div className="inline-flex absolute -top-1 -right-1 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-orange-400 rounded-full border-2 border-white dark:border-gray-900 group-hover:animate-ping" />
           </span>
         </div>
       </NotificationMenu>

@@ -31,7 +31,7 @@ export const DetailItem = ({
       id="list-item-detail"
       className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-2 sm:py-4 items-center"
     >
-      <dt id="label" className="text-sm font-medium text-gray-500">
+      <dt id="label" className="text-sm font-medium text-gray-700">
         {label}
       </dt>
       <dd className="flex text-sm text-gray-900 sm:col-span-2 items-center">

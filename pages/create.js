@@ -12,7 +12,6 @@ import {
 } from "../components/ui/notifications/createNode";
 import { ComboBoxInput } from "../components/ui/inputs/comboBoxSelect";
 import { CreateNodeDetails } from "../components/ui/details/createDetails";
-import { propertyFields } from "../components/forms/config/nodeFields";
 
 export default function CreatePage({ label, comboBoxOptions }) {
   const [createLabel, setCreateLabel] = useState(label);
@@ -90,17 +89,26 @@ export default function CreatePage({ label, comboBoxOptions }) {
   return (
     <>
       <PageTitleHeader
-        title={`New ${
+        title={`Create New ${
           nodeSchema.filter((i) => i.value === createLabel)[0].label
         }`}
       />
-      <CreateNodeDetails nodeLabel={label} />
-      {/* <ComboBoxInput
-        options={comboBoxOptions}
-        handleSelections={setCreateLabel}
-        currentSelections={createLabel}
-        selectMultiple={false}
-      />
+      <div className="p-2 pb-6 border border-2 border-gray-100 shadow-xl">
+        <div className="grid grid-cols-3 pb-6">
+          <div className="col-span-1 text-lg font-medium text-gray-700 border border-2 border-gray-200 rounded-lg">
+            <ComboBoxInput
+              options={comboBoxOptions}
+              handleSelections={setCreateLabel}
+              currentSelections={createLabel}
+              selectMultiple={false}
+            />
+          </div>
+        </div>
+        <div className="px-4">
+          <CreateNodeDetails nodeLabel={createLabel} />
+        </div>
+      </div>
+      {/*
       <div className="p-2 pb-6 border border-2 border-gray-100 shadow-xl">
         <FormBase
           fields={formFields}

@@ -10,7 +10,7 @@ export const CreateNodeDetails = ({
   editAction,
   blankValue = "",
   editRights = true,
-  showReorder = true,
+  showReorder = false,
 }) => {
   const [body, setBody] = useState({});
   const { session } = useSession();

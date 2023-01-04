@@ -19,67 +19,74 @@ const cards = [
   {
     title: "Properties & Units",
     icon: OfficeBuildingIcon,
-    param: "Property,PropertyUnit",
+    viewParam: "Property,PropertyUnit",
+    createParam: "Property",
     createNewDisabled: false,
   },
   {
     title: "Deals",
     icon: BriefcaseIcon,
-    param: "Deal",
+    viewParam: "Deal",
+    createParam: "Deal",
     createNewDisabled: false,
   },
   {
     title: "Users & Groups",
     icon: UsersIcon,
-    param: "Organisation,UserGroup,User",
+    viewParam: "Organisation,UserGroup,User",
+    createParam: "User",
     createNewDisabled: false,
   },
   {
     title: "Funds",
     icon: CollectionIcon,
-    param: "Fund",
+    viewParam: "Fund",
+    createParam: "Fund",
     createNewDisabled: false,
   },
   {
     title: "Leases",
     icon: ClipboardListIcon,
-    param: "Lease",
+    viewParam: "Lease",
+    createParam: "Lease",
     createNewDisabled: false,
   },
   {
     title: "Tenants",
     icon: KeyIcon,
-    param: "Tenant",
+    viewParam: "Tenant",
+    createParam: "Tenant",
     createNewDisabled: false,
   },
   {
     title: "Sectors",
     icon: BriefcaseIcon,
-    param: "Sector",
+    viewParam: "Sector",
     createNewDisabled: true,
   },
   {
     title: "Geographies",
     icon: GlobeIcon,
-    param: "Geography",
+    viewParam: "Geography",
     createNewDisabled: true,
   },
   {
     title: "Investors",
     icon: CashIcon,
-    param: "Investor",
+    viewParam: "Investor",
+    createParam: "Investor",
     createNewDisabled: false,
   },
 ];
 
 export default function SettingsPage() {
   const [query, setQuery] = useState("");
-  const handleCreate = () => {
-    console.log("Create");
+  const handleCreate = (createParam) => {
+    Router.push("/create/?label=" + createParam);
   };
 
-  const handleView = (param) => {
-    Router.push("/nodes/?label=" + param);
+  const handleView = (viewParam) => {
+    Router.push("/nodes/?label=" + viewParam);
   };
 
   const filteredItems =
@@ -98,8 +105,8 @@ export default function SettingsPage() {
             <div key={item.title}>
               <ActionCard
                 item={item}
-                viewAction={() => handleView(item.param)}
-                createAction={() => handleCreate()}
+                viewAction={() => handleView(item.viewParam)}
+                createAction={() => handleCreate(item.createParam)}
                 createDisabled={item.createNewDisabled}
               />
             </div>
