@@ -5,9 +5,9 @@ import {
   GlobeAltIcon,
   ViewGridIcon,
 } from "@heroicons/react/outline";
-import { LoadingSpinner } from "../../ui/loading/LoadingSpinner";
+import { LoadingSpinner } from "../../ui/loading/loadingSpinner";
 
-export default function GraphVisual({
+export function GraphVisual({
   data,
   height = "100%",
   width = "100%",

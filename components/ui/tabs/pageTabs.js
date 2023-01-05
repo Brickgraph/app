@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LoadingSpinner } from "../../ui/loading/loadingSpinner";
+import { LoadingSpinner } from "../loading/loadingSpinner";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

@@ -4,7 +4,7 @@ import { MainPageLayout } from "../components/pageLayouts/mainPage/layout";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import StandardTable from "../components/visualisations/tables/standardTable";
-import GraphVisual from "../components/visualisations/graph/GraphVisual";
+import { GraphVisual } from "../components/visualisations/graph/GraphVisual";
 import GoogleMap from "../components/visualisations/maps/googleMap";
 import FilterMenu from "../components/modals/filterMenu";
 import { NodeDetailsModal } from "../components/modals/nodeDetails";

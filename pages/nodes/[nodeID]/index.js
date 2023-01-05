@@ -5,24 +5,44 @@ import { useState } from "react";
 import { NodePageLayout } from "../../../components/pageLayouts/nodePage/layout";
 import { NodeDetails } from "../../../components/pageLayouts/nodePage/details";
 import { useNodeStore } from "../../../services/stores/nodeStore";
+import { GraphVisual } from "../../../components/visualisations/graph/GraphVisual";
 
-export default function NodePage({ status, data, accessData }) {
+export default function NodePage({ nodePayload }) {
   const [tabSelected, setTabSelected] = useState("Details");
-
-  const editRights = accessData.level_int > 1 ? true : false;
-
   const { nodes: nodesInStore } = useNodeStore();
+
+  const { status, data } = nodePayload;
+  if (status !== 200) {
+    Router.push("/404");
+  }
+
   const nodeData = nodesInStore.find((node) => node.id === data.id);
+  const editRights = nodePayload.accessData.level_int > 1 ? true : false;
+  const { nodes: subgraphNodes, edges: subgraphEdges } =
+    nodePayload.subgraphData;
+
   const section = () => {
     switch (tabSelected) {
       case "Details":
         return <NodeDetails data={nodeData} editRights={editRights} />;
       case "Connections":
-        return <div>GRAPH GOES HERE</div>;
+        return (
+          <GraphVisual data={{ nodes: subgraphNodes, edges: subgraphEdges }} />
+        );
       case "Logs":
-        return <div>{data.group} Logs</div>;
+        return (
+          <div>
+            Logs - <span className="italic">coming soon...</span>
+          </div>
+        );
       case "Access":
-        return <div>{data.label} Permissions</div>;
+        return (
+          <div>
+            {editRights
+              ? `You have edit rights for ${data.label}`
+              : `You do not have edit rights for ${data.label}`}
+          </div>
+        );
       default:
         return <div>Details</div>;
     }
@@ -87,6 +107,18 @@ export const getServerSideProps = withServerSideAuth(
         };
       });
 
+    const { subgraphStatus, subgraphData } = await brickgraphRequest(token)
+      .get(`nodes/${nodeID}/subgraph`)
+      .then((res) => {
+        return { subgraphData: res.data, subgraphStatus: res.status };
+      })
+      .catch((err) => {
+        return {
+          subgraphData: err.response.data,
+          subgraphStatus: err.response.status,
+        };
+      });
+
     if (
       data.group.includes("Organisation") | data.group.includes("UserGroup")
     ) {
@@ -97,8 +129,17 @@ export const getServerSideProps = withServerSideAuth(
       };
     }
 
+    const nodePayload = {
+      status: status,
+      data: data,
+      accessStatus: accessStatus,
+      accessData: accessData,
+      subgraphStatus: subgraphStatus,
+      subgraphData: subgraphData,
+    };
+
     return {
-      props: { status, data, accessData },
+      props: { nodePayload },
     };
   }
 );
