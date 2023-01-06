@@ -1,4 +1,4 @@
-import { DetailItem } from "./detail";
+import { DetailItem } from "./detailItem";
 import { BarsIcon } from "../buttons/barsIcon";
 import { useEffect, useState } from "react";
 
@@ -33,6 +33,8 @@ export function DetailsList({
       });
     }
   }, [detailsData]);
+
+  console.log("Details Data", detailsData);
 
   return (
     <>

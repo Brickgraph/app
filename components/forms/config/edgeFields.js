@@ -26,4 +26,12 @@ export const property2LeaseFields = [
     type: "textarea",
     required: false,
   },
+  ,
+  {
+    id: "level",
+    label: "Link Permission",
+    type: "text",
+    required: false,
+    editable: false,
+  },
 ];

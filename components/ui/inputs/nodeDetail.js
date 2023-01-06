@@ -7,7 +7,6 @@ export const NodeDetailInput = ({ nodeId, inputId }) => {
   const [showModal, setShowModal] = useState(false);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
   const [node, setNode] = useState(null);
-  //const node = nodes.filter((n) => n.id === nodeId)[0];
 
   useEffect(() => {
     if (!node) {
@@ -15,6 +14,8 @@ export const NodeDetailInput = ({ nodeId, inputId }) => {
       setDataIsLoaded(true);
     }
   }, [nodeId]);
+
+  console.log("Node input", nodeId);
 
   if (!dataIsLoaded) {
     return <div>Loading...</div>;
