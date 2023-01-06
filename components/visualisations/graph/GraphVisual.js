@@ -9,6 +9,7 @@ import { useNodeStore } from "../../../services/stores/nodeStore";
 import { useEdgeStore } from "../../../services/stores/edgeStore";
 import { LoadingSpinner } from "../../ui/loading/loadingSpinner";
 import { NodeDetailsModal } from "../../modals/nodeDetails";
+import { EdgeDetailsModal } from "../../modals/edgeDetails";
 import { graphOptions } from "./graphOptions";
 
 export function GraphVisual({
@@ -16,57 +17,66 @@ export function GraphVisual({
   height = "100%",
   width = "100%",
   nodeFilterSelections = [],
-  nodeSelectAction = null,
-  edgeSelectAction = null,
 }) {
-  const [dataLoading, setIsDataLoading] = useState(true);
+  const [dataLoaded, setIsDataLoaded] = useState(true);
   const [graphData, setGraphData] = useState(data);
-
   const [nodeSelected, setNodeSelected] = useState(null);
   const [edgeSelected, setEdgeSelected] = useState(null);
+  const [nodeModalVisible, setNodeModalVisible] = useState(false);
+  const [edgeModalVisible, setEdgeModalVisible] = useState(false);
 
-  const { nodes } = useNodeStore();
-  const { edges } = useEdgeStore();
+  const { nodes: nodesInStore } = useNodeStore();
+  const { edges: edgesInStore } = useEdgeStore();
 
   const [graphState, setGraphState] = useState(
     {
-      graph: data,
+      graph: graphData,
       events: {
         selectNode: (e) => {
+          setEdgeSelected(null);
+          setEdgeModalVisible(false);
           var { nodes } = e;
           var nodeId = nodes[0];
-          nodeSelectAction(nodeId);
-          var selectedNode = nodes.filter((node) => node.id === nodeId);
+          var selectedNode = nodesInStore.filter(
+            (node) => node.id === nodeId
+          )[0];
+          console.log("Node selected", selectedNode);
           setNodeSelected(selectedNode);
+          setNodeModalVisible(true);
         },
         /* hoverNode: ({ node }) => {
           setNodeHovered(node);
         }, */
         selectEdge: (e) => {
-          var { edges } = e;
-          var edgeId = edges[0];
-          edgeSelectAction(edgeId);
-          var selectedEdge = edges.filter((edge) => edge.id === edgeId);
-          setEdgeSelected(selectedEdge);
+          if (nodeSelected === null) {
+            var { edges } = e;
+            var edgeId = edges[0];
+            var selectedEdge = edgesInStore.filter(
+              (edge) => edge.id === edgeId
+            )[0];
+            console.log("Edge selected", selectedEdge);
+            setEdgeSelected(selectedEdge);
+            setEdgeModalVisible(true);
+          }
         },
       },
     },
-    []
+    [data]
   );
 
   const resetData = () => {
-    setIsDataLoading((current) => !current);
+    setIsDataLoaded((current) => !current);
   };
 
   // Refreshes graph when button is clicked, or data is changed
   useEffect(() => {
-    setIsDataLoading(true);
-  }, [dataLoading]);
+    setIsDataLoaded(true);
+  }, [dataLoaded]);
 
   // Refreshes graph when window is resized
   useEffect(() => {
     const handleResize = () => {
-      setIsDataLoading(false);
+      setIsDataLoaded(false);
     };
     window.addEventListener("resize", handleResize);
     return (_) => {
@@ -90,7 +100,7 @@ export function GraphVisual({
       nodeFilterSelections.includes(item.group)
     );
     setGraphData({ nodes: nodes, edges: data.edges });
-    setIsDataLoading((current) => !current);
+    setIsDataLoaded((current) => !current);
   };
 
   useEffect(() => {
@@ -108,7 +118,7 @@ export function GraphVisual({
 
   const { events } = graphState;
 
-  if (dataLoading !== true) {
+  if (dataLoaded !== true) {
     return (
       <>
         <div className="flex items-center place-content-center h-[calc(100vh-100px)]">
@@ -152,6 +162,23 @@ export function GraphVisual({
           clusterThreshold={100}
         />
       </div>
+      <NodeDetailsModal
+        nodeId={nodeSelected ? nodeSelected.id : null}
+        show={nodeModalVisible}
+        onClose={() => {
+          setNodeSelected(null);
+          setNodeModalVisible(false);
+        }}
+      />
+      <EdgeDetailsModal
+        sourceNodeId={edgeSelected ? edgeSelected.from : null}
+        targetNodeId={edgeSelected ? edgeSelected.to : null}
+        show={edgeModalVisible}
+        onClose={() => {
+          setEdgeSelected(null);
+          setEdgeModalVisible(false);
+        }}
+      />
     </>
   );
 }

@@ -1,4 +1,4 @@
-export const graphOptions = ({ hierarchical }) => {
+export const graphOptions = ({ hierarchical = false }) => {
   return {
     layout: {
       hierarchical: hierarchical,
@@ -28,6 +28,7 @@ export const graphOptions = ({ hierarchical }) => {
       hoverConnectedEdges: true,
       hideEdgesOnDrag: false,
       hideNodesOnDrag: false,
+      selectConnectedEdges: false,
     },
     physics: {
       forceAtlas2Based: {

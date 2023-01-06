@@ -16,14 +16,11 @@ import {
 import { useNodeStore } from "../services/stores/nodeStore";
 import { useEdgeStore } from "../services/stores/edgeStore";
 
-export default function Home({ token, status, data }) {
+export default function Home({ status, data }) {
   const [selectedTab, setSelectedTab] = useState("Graph");
-  const [nodeModalVisible, setNodeModalVisible] = useState(false);
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [selectedFilteredNodes, setSelectedFilteredNodes] = useState([]);
-  const [selectedNodeId, setselectedNodeId] = useState(null);
-  const [selectedEdgeID, setSelectedEdgeID] = useState(null);
   const userName = useUser().user.firstName;
   const {
     nodes: nodesInStore,
@@ -62,13 +59,6 @@ export default function Home({ token, status, data }) {
             height={"100%"}
             width={"100%"}
             nodeFilterSelections={selectedFilters}
-            nodeSelectAction={(nodeId) => {
-              setselectedNodeId(nodeId);
-              setNodeModalVisible(true);
-            }}
-            edgeSelectAction={(edgeId) => {
-              setSelectedEdgeID(edgeId);
-            }}
           />
         );
       case "Table":
@@ -137,6 +127,14 @@ export default function Home({ token, status, data }) {
     }
   };
 
+  if (status !== 200) {
+    return (
+      <div>
+        <p>Something went wrong...</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <MainPageLayout
@@ -157,14 +155,6 @@ export default function Home({ token, status, data }) {
         handleNodeSelections={setSelectedFilteredNodes}
         currentLabelSelections={selectedFilters}
         currentNodeSelections={selectedFilteredNodes}
-      />
-      <NodeDetailsModal
-        nodeId={selectedNodeId ? selectedNodeId : null}
-        show={nodeModalVisible}
-        onClose={() => {
-          setselectedNodeId(null);
-          setNodeModalVisible(false);
-        }}
       />
     </>
   );
@@ -191,5 +181,5 @@ export const getServerSideProps = withServerSideAuth(async ({ req }) => {
     };
   }
 
-  return { props: { token, status, data } };
+  return { props: { status, data } };
 });
