@@ -34,8 +34,6 @@ export function DetailsList({
     }
   }, [detailsData]);
 
-  console.log("Details Data", detailsData);
-
   return (
     <>
       <dl className="divide-y divide-gray-200">

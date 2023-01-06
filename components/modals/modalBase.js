@@ -22,10 +22,10 @@ const ModalBase = ({ show, children, onClose }) => {
         <Transition
           as={Fragment}
           show={show}
-          enter="transform transition duration-[40000ms]"
+          enter="transform transition duration-[4000ms]"
           enterFrom="opacity-0 rotate-[-120deg] scale-50"
           enterTo="opacity-100 rotate-0 scale-100"
-          leave="transform duration-[40000ms] transition ease-in-out"
+          leave="transform duration-[4000ms] transition ease-in-out"
           leaveFrom="opacity-100 rotate-0 scale-100 "
           leaveTo="opacity-0 scale-95 "
         >
