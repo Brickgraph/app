@@ -5,7 +5,11 @@ import {
   GlobeAltIcon,
   ViewGridIcon,
 } from "@heroicons/react/outline";
+import { useNodeStore } from "../../../services/stores/nodeStore";
+import { useEdgeStore } from "../../../services/stores/edgeStore";
 import { LoadingSpinner } from "../../ui/loading/loadingSpinner";
+import { NodeDetailsModal } from "../../modals/nodeDetails";
+import { graphOptions } from "./graphOptions";
 
 export function GraphVisual({
   data,
@@ -17,6 +21,13 @@ export function GraphVisual({
 }) {
   const [dataLoading, setIsDataLoading] = useState(true);
   const [graphData, setGraphData] = useState(data);
+
+  const [nodeSelected, setNodeSelected] = useState(null);
+  const [edgeSelected, setEdgeSelected] = useState(null);
+
+  const { nodes } = useNodeStore();
+  const { edges } = useEdgeStore();
+
   const [graphState, setGraphState] = useState(
     {
       graph: data,
@@ -25,6 +36,8 @@ export function GraphVisual({
           var { nodes } = e;
           var nodeId = nodes[0];
           nodeSelectAction(nodeId);
+          var selectedNode = nodes.filter((node) => node.id === nodeId);
+          setNodeSelected(selectedNode);
         },
         /* hoverNode: ({ node }) => {
           setNodeHovered(node);
@@ -33,6 +46,8 @@ export function GraphVisual({
           var { edges } = e;
           var edgeId = edges[0];
           edgeSelectAction(edgeId);
+          var selectedEdge = edges.filter((edge) => edge.id === edgeId);
+          setEdgeSelected(selectedEdge);
         },
       },
     },
@@ -80,7 +95,7 @@ export function GraphVisual({
 
   useEffect(() => {
     setGraphData(graphData);
-  }, [graphData]);
+  }, [data]);
 
   useEffect(() => {
     handleNodeFilter(nodeFilterSelections);
@@ -89,54 +104,6 @@ export function GraphVisual({
   const [hierarchical, setHierachical] = useState(false);
   const changeFormat = () => {
     setHierachical((current) => !current);
-  };
-  const options = {
-    layout: {
-      hierarchical: hierarchical,
-    },
-    nodes: {
-      shape: "circle",
-      size: 12,
-      scaling: {
-        min: 20,
-        max: 20,
-        label: { enabled: false },
-      },
-      widthConstraint: 100,
-    },
-    edges: {
-      color: "orange",
-      physics: false,
-      font: {
-        size: 10,
-      },
-      shadow: { enabled: false, size: 3 },
-      smooth: { enabled: false },
-    },
-    interaction: {
-      hover: true,
-      navigationButtons: true,
-      hoverConnectedEdges: true,
-      hideEdgesOnDrag: false,
-      hideNodesOnDrag: false,
-    },
-    physics: {
-      forceAtlas2Based: {
-        gravitationalConstant: -40,
-        centralGravity: 0.003,
-        springLength: 1,
-        springConstant: 1000,
-        avoidOverlap: 1.2,
-      },
-      maxVelocity: 250,
-      solver: "forceAtlas2Based",
-      timestep: 0.35,
-      stabilization: {
-        enabled: true,
-        iterations: 1000,
-        updateInterval: 25,
-      },
-    },
   };
 
   const { events } = graphState;
@@ -179,7 +146,7 @@ export function GraphVisual({
         </div>
         <Graph
           graph={graphData}
-          options={options}
+          options={graphOptions(hierarchical)}
           events={events}
           style={{ height: height, width: width }}
           clusterThreshold={100}
