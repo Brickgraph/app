@@ -2,7 +2,7 @@ import { useNodeStore } from "../../../services/stores/nodeStore";
 import { useState, useEffect } from "react";
 import { NodeDetailsModal } from "../../modals/nodeDetails";
 
-export const NodeDetailInput = ({ nodeId, inputId }) => {
+export const NodeDetailInput = ({ nodeId, inputId, redirect = "link" }) => {
   const { nodes } = useNodeStore();
   const [showModal, setShowModal] = useState(false);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
@@ -17,6 +17,16 @@ export const NodeDetailInput = ({ nodeId, inputId }) => {
 
   console.log("Node input", nodeId);
 
+  const openDetails = (show) => {
+    if (redirect === "link") {
+      window.open(`/nodes/${nodeId}`, "_blank");
+    } else if (redirect === "modal") {
+      setShowModal(show);
+    } else {
+      console.log("No redirect set");
+    }
+  };
+
   if (!dataIsLoaded) {
     return <div>Loading...</div>;
   }
@@ -24,7 +34,7 @@ export const NodeDetailInput = ({ nodeId, inputId }) => {
   return (
     <>
       <div className="block w-full bg-white border border-gray-300 rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 p-2">
-        <button id={inputId} onClick={() => setShowModal(true)}>
+        <button id={inputId} onClick={() => openDetails(true)}>
           <span className="text-sm md:text-md text-gray-900 ">
             {node ? node.label : "No label"}
           </span>

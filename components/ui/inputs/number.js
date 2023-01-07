@@ -9,13 +9,12 @@ export const NumberInput = ({
   decimalPlaces = 2,
   onSubmitAction,
 }) => {
-  const [baseValue, setBaseValue] = useState(+initialValue);
-  const [newValue, setNewValue] = useState(+baseValue);
+  const [baseValue, setBaseValue] = useState(Number(+initialValue));
+  const [newValue, setNewValue] = useState(Number(+baseValue));
   const [changeSubmitted, setChangeSubmitted] = useState(true);
 
   const handleChange = (e) => {
-    setNewValue(+e.target.value);
-    console.log(newValue.toFixed(decimalPlaces));
+    setNewValue(Number(+e.target.value));
     if (baseValue !== e.target.value) {
       setChangeSubmitted(false);
     }
@@ -36,18 +35,19 @@ export const NumberInput = ({
     setNewValue(initialValue);
   }, [initialValue]);
 
+  console.log(typeof newValue);
+  console.log(newValue);
+
   return (
     <div className="relative">
       <input
         id={inputId}
         disabled={inputDisabled}
-        value={newValue ? Number(newValue.toFixed(decimalPlaces)) : ""}
-        type={"number"}
+        value={newValue ? newValue : ""} // Figure out how to format with decimal places
+        type="number"
         step="0.01"
         onChange={(e) => handleChange(e)}
-        placeholder={
-          placeholder ? placeholder : Number(baseValue.toFixed(decimalPlaces))
-        }
+        placeholder={placeholder ? placeholder : baseValue}
         className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full p-2"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
