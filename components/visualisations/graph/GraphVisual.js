@@ -40,7 +40,6 @@ export function GraphVisual({
           var selectedNode = nodesInStore.filter(
             (node) => node.id === nodeId
           )[0];
-          console.log("Node selected", selectedNode);
           setNodeSelected(selectedNode);
           setNodeModalVisible(true);
         },
@@ -54,7 +53,6 @@ export function GraphVisual({
             var selectedEdge = edgesInStore.filter(
               (edge) => edge.id === edgeId
             )[0];
-            console.log("Edge selected", selectedEdge);
             setEdgeSelected(selectedEdge);
             setEdgeModalVisible(true);
           }

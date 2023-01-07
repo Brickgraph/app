@@ -61,8 +61,8 @@ export const CurrencyInput = ({
 
   return (
     <div className="relative">
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <span className="text-gray-500 sm:text-sm">
+      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+        <span className="text-gray-700 sm:text-sm">
           {currencySymbols[currency]}
         </span>
       </div>
@@ -76,7 +76,7 @@ export const CurrencyInput = ({
         placeholder={
           placeholder ? placeholder : Number(baseValue.toFixed(decimalPlaces))
         }
-        className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full pl-7 pr-2 py-2"
+        className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-gray-50 focus:ring-orange-500 focus:border-orange-500 block w-full pl-5 pr-2 py-2"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
             handleSubmit();

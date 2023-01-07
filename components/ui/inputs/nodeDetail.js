@@ -15,8 +15,6 @@ export const NodeDetailInput = ({ nodeId, inputId, redirect = "link" }) => {
     }
   }, [nodeId]);
 
-  console.log("Node input", nodeId);
-
   const openDetails = (show) => {
     if (redirect === "link") {
       window.open(`/nodes/${nodeId}`, "_blank");

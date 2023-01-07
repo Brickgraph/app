@@ -17,7 +17,12 @@ export const DateInput = ({
     if (!initialValue) {
       setNewValue(convertDateToCalendarFormat(new Date()));
     } else {
-      setNewValue(convertDateToCalendarFormat(new Date(initialValue)));
+      const date = new Date(
+        initialValue.slice(0, 4),
+        initialValue.slice(5, 7),
+        initialValue.slice(8, 10)
+      );
+      setNewValue(convertDateToCalendarFormat(date));
     }
   }, []);
 

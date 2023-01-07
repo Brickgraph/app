@@ -76,7 +76,6 @@ export const AddressLookupInput = ({
         disabled={inputDisabled}
         value={newValue ? newValue : ""}
         ref={inputRef}
-        type="text"
         placeholder="Address Search"
         onChange={(e) => {
           handleChange(e);

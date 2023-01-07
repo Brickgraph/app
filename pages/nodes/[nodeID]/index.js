@@ -4,6 +4,7 @@ import Router from "next/router";
 import { useState } from "react";
 import { NodePageLayout } from "../../../components/pageLayouts/nodePage/layout";
 import { NodeDetails } from "../../../components/pageLayouts/nodePage/details";
+import { NodeAccess } from "../../../components/pageLayouts/nodePage/access";
 import { useNodeStore } from "../../../services/stores/nodeStore";
 import { GraphVisual } from "../../../components/visualisations/graph/GraphVisual";
 
@@ -36,13 +37,7 @@ export default function NodePage({ nodePayload }) {
           </div>
         );
       case "Access":
-        return (
-          <div>
-            {editRights
-              ? `You have edit rights for ${data.label}`
-              : `You do not have edit rights for ${data.label}`}
-          </div>
-        );
+        return <NodeAccess data={nodeData} editRights={editRights} />;
       default:
         return <div>Details</div>;
     }

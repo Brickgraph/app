@@ -35,9 +35,6 @@ export const NumberInput = ({
     setNewValue(initialValue);
   }, [initialValue]);
 
-  console.log(typeof newValue);
-  console.log(newValue);
-
   return (
     <div className="relative">
       <input
