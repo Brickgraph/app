@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DetailItem } from "./detail";
+import { DetailItem } from "./detailItem";
 import { BarsIcon } from "../buttons/barsIcon";
 import { useSession } from "@clerk/nextjs";
 import { useNodeStore } from "../../../services/stores/nodeStore";
@@ -8,7 +8,6 @@ import { switchNodeForm } from "../../forms/config/handleNodeFormFields";
 export const CreateNodeDetails = ({
   nodeLabel,
   editAction,
-  blankValue = "",
   editRights = true,
   showReorder = false,
 }) => {
@@ -58,10 +57,10 @@ export const CreateNodeDetails = ({
         <dl className="divide-y divide-gray-200">
           {fields.map((field) => {
             return (
-              <div key={field.key}>
+              <div key={field.id}>
                 <DetailItem
                   detailId={""}
-                  fieldId={field.key}
+                  fieldId={field.id}
                   label={field.label}
                   value={field.defaultValue ? field.defaultValue : null}
                   type={field.type ? field.type : "text"}

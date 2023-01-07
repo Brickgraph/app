@@ -15,7 +15,11 @@ export const DateInput = ({
 
   useEffect(() => {
     if (!initialValue) {
-      setNewValue(convertDateToCalendarFormat(new Date()));
+      const currentMonthDay = ("0" + new Date().getDate()).slice(-2);
+      const currentMonth = ("0" + (new Date().getMonth() + 1)).slice(-2);
+      const currentYear = new Date().getFullYear();
+      const date = new Date(currentYear, currentMonth, currentMonthDay);
+      setNewValue(convertDateToCalendarFormat(date));
     } else {
       const date = new Date(
         initialValue.slice(0, 4),
