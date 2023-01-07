@@ -16,12 +16,12 @@ export default function SidebarAvatar() {
       <ProfileDropdown>
         <div className="flex items-center justify-center group block">
           <div
-            className="p-1 rounded-full border-2 group-hover:border group-hover:border-2 group-hover:border-orange-400"
+            className="p-1 rounded-full border-2 group-hover:border group-hover:border-2 group-hover:border-orange-400 h-[50px] w-[50px]"
             onClick={() => setAccountIsOpen(true)}
           >
             <Image
-              height={28}
-              width={28}
+              height={64}
+              width={64}
               src={
                 user.profileImageUrl.includes("https://www.gravatar.com/avatar")
                   ? "/images/profiles/giraffe-close-up.png"
