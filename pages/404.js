@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NotFoundPage() {
   return (
@@ -10,15 +11,15 @@ export default function NotFoundPage() {
             Uh oh! I think you’re lost.
           </h1>
           <p className="mt-2 text-lg font-medium text-black text-opacity-50">
-            It looks like the page you’re looking for doesn't exist.
+            {`It looks like the page you're looking for doesn't exist.`}
           </p>
           <div className="mt-6">
-            <a
+            <Link
               href="/"
               className="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black text-opacity-75 hover:bg-gray-100"
             >
               Go back home
-            </a>
+            </Link>
             {/* <Image src="/images/logos/bg-logo-only.png" layout="fill" /> */}
           </div>
         </div>

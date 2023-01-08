@@ -6,6 +6,7 @@ import {
   MailOpenIcon,
   CogIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -33,7 +34,7 @@ export function NotificationMenu({ children }) {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
+                <Link
                   href="/notifications"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
@@ -45,12 +46,12 @@ export function NotificationMenu({ children }) {
                     aria-hidden="true"
                   />
                   View Notifications
-                </a>
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
+                <Link
                   href="/notifications/settings"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
@@ -62,7 +63,7 @@ export function NotificationMenu({ children }) {
                     aria-hidden="true"
                   />
                   Notification Settings
-                </a>
+                </Link>
               )}
             </Menu.Item>
           </div>

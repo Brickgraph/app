@@ -28,9 +28,11 @@ export default function Home({ status, data }) {
     updateNodeInStore,
     removeNodeInStore,
   } = useNodeStore();
+
   useEffect(() => {
+    const nodesToSet = data.nodes;
     if (nodesInStore.length === 0) {
-      setNodesInStore(data.nodes);
+      setNodesInStore(nodesToSet);
     }
   }, []);
 
@@ -40,9 +42,11 @@ export default function Home({ status, data }) {
     updateEdgeInStore,
     removeEdgeInStore,
   } = useEdgeStore();
+
   useEffect(() => {
+    const edgesToSet = data.edges;
     if (edgesInStore.length === 0) {
-      setEdgesInStore(data.edges);
+      setEdgesInStore(edgesToSet);
     }
   }, []);
 

@@ -1,6 +1,7 @@
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { getUserById } from "../../utils/users";
 import { useRef } from "react";
+import Image from "next/image";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -48,7 +49,7 @@ export default function ProfilePage({ user }) {
                         </dt>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                           <span className="flex-grow">
-                            <img
+                            <Image
                               className="h-8 w-8 rounded-full"
                               src={
                                 user.profile_image_url.includes(
