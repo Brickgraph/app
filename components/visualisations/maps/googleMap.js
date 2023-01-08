@@ -5,10 +5,10 @@ const MapMarker = ({ text, MarkerIcon, onClickAction = null }) => (
   <div className="flex items-center justify-center">
     <button
       onClick={onClickAction}
-      className="p-2 border border-2 border-orange-200 rounded bg-orange-400 text-white"
+      className="p-1 border border-2 border-orange-200 rounded bg-orange-400 text-white"
     >
       <h1 className="text-xs">{text}</h1>
-      <div className="h-5 w-5">
+      <div className="h-2 w-2">
         <MarkerIcon />
       </div>
     </button>
@@ -24,10 +24,12 @@ const MapOptions = (maps) => {
     mapTypeControlOptions: {
       position: maps.ControlPosition.TOP_RIGHT,
     },
+    mapTypeId: "hybrid",
     mapTypeControl: true,
     streetViewControl: true,
     fullscreenControl: true,
     hover: true,
+    mapId: process.env.NEXT_PUBLIC_GOOGLE_DEFAULT_MAP_ID,
   };
 };
 
@@ -48,7 +50,6 @@ export default function GoogleMap({
         defaultCenter={center}
         defaultZoom={zoom}
         options={MapOptions}
-        mapId="b41b729990ebe7ff"
       >
         {markers.map((marker) => (
           <MapMarker

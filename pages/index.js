@@ -7,7 +7,6 @@ import StandardTable from "../components/visualisations/tables/standardTable";
 import { GraphVisual } from "../components/visualisations/graph/GraphVisual";
 import GoogleMap from "../components/visualisations/maps/googleMap";
 import FilterMenu from "../components/modals/filterMenu";
-import { NodeDetailsModal } from "../components/modals/nodeDetails";
 import {
   OfficeBuildingIcon,
   HomeIcon,
