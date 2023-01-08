@@ -7,8 +7,8 @@ function classNames(...classes) {
 const tabs = [
   { name: "Details" },
   { name: "Connections" },
-  { name: "Logs" },
   { name: "Access" },
+  { name: "Logs" },
 ];
 
 export const NodePageLayout = ({
