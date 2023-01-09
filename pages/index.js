@@ -83,7 +83,19 @@ export default function Home({ status, data }) {
           </div>
         );
       case "Map":
-        const markers = [
+        // Filter markers by label 'Property' and if they have a lat and lng value
+        const markers = nodesInStore.filter(
+          (node) =>
+            node.group === "Property" &&
+            node.latitude !== null &&
+            node.longitude !== null
+        );
+        // Add OfficeBuildingIcon to each marker
+        markers.forEach((marker) => {
+          marker.icon = OfficeBuildingIcon;
+        });
+        console.log(markers);
+        /* const markers = [
           { id: 14, lat: 51.5, lng: 0.09, label: "Resi", icon: HomeIcon },
           {
             id: 16,
@@ -106,18 +118,10 @@ export default function Home({ status, data }) {
             label: "Office",
             icon: OfficeBuildingIcon,
           },
-        ];
-        const onClickAction = (marker) => {
-          console.log(marker);
-          setselectedNodeId(marker.id);
-          setNodeModalVisible(true);
-        };
+        ]; */
         return (
           <div>
-            <GoogleMap
-              markers={markers}
-              selectedMarker={(e) => onClickAction(e)}
-            />
+            <GoogleMap markers={markers} />
           </div>
         );
 
@@ -164,7 +168,7 @@ export default function Home({ status, data }) {
 }
 
 export const getServerSideProps = withServerSideAuth(async ({ req }) => {
-  const { sessionId, getToken } = req.auth;
+  const { sessionId, getToken, params } = req.auth;
 
   if (!sessionId) {
     return {
@@ -183,6 +187,8 @@ export const getServerSideProps = withServerSideAuth(async ({ req }) => {
       redirect: { destination: "/" },
     };
   }
+
+  console.log(params);
 
   return { props: { status, data } };
 });

@@ -1,5 +1,8 @@
 import React from "react";
+import { useState } from "react";
 import GoogleMapReact from "google-map-react";
+import { useNodeStore } from "../../../services/stores/nodeStore";
+import { NodeDetailsModal } from "../../modals/nodeDetails";
 
 const MapMarker = ({ text, MarkerIcon, onClickAction = null }) => (
   <div className="flex items-center justify-center">
@@ -7,8 +10,8 @@ const MapMarker = ({ text, MarkerIcon, onClickAction = null }) => (
       onClick={onClickAction}
       className="p-1 border border-2 border-orange-200 rounded bg-orange-400 text-white"
     >
-      <h1 className="text-xs">{text}</h1>
-      <div className="h-2 w-2">
+      {/* <p className="text-xs">{text}</p> */}
+      <div className="h-3 w-3">
         <MarkerIcon />
       </div>
     </button>
@@ -37,11 +40,16 @@ export default function GoogleMap({
   markers,
   center = { lat: 51.4769, lng: -0.09 },
   zoom = 11,
-  selectedMarker = null,
 }) {
-  const handleMarkerClick = (markerId) => {
-    selectedMarker(markerId);
+  const [nodeId, setNodeId] = useState(null);
+  const [nodeModalVisible, setNodeModalVisible] = useState(false);
+  const { nodes: nodesInStore } = useNodeStore();
+
+  const handleMarkerClick = (marker) => {
+    setNodeId(marker.id);
+    setNodeModalVisible(true);
   };
+
   return (
     // Important! Always set the container height explicitly
     <div style={{ height: "100vh", width: "100%" }}>
@@ -54,8 +62,8 @@ export default function GoogleMap({
         {markers.map((marker) => (
           <MapMarker
             key={marker.id}
-            lat={marker.lat}
-            lng={marker.lng}
+            lat={marker.latitude}
+            lng={marker.longitude}
             text={marker.label}
             MarkerIcon={marker.icon}
             onClickAction={() => {
@@ -64,6 +72,14 @@ export default function GoogleMap({
           />
         ))}
       </GoogleMapReact>
+      <NodeDetailsModal
+        nodeId={nodeId ? nodeId : null}
+        show={nodeModalVisible}
+        onClose={() => {
+          setNodeId(null);
+          setNodeModalVisible(false);
+        }}
+      />
     </div>
   );
 }
