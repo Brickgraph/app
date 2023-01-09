@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
+import { NodeDetailsModal } from "../../modals/nodeDetails";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -9,7 +10,6 @@ export default function StandardTable({
   data,
   columnHeaders,
   filterSelections = [],
-  buttonAction = null,
   sort = true,
   sortBy = null,
   buttonText = "Edit",
@@ -18,6 +18,8 @@ export default function StandardTable({
     sortBy ? sortBy : columnHeaders[0].field
   );
   const [sortDescending, setSortDescending] = useState(true);
+  const [nodeModalVisible, setNodeModalVisible] = useState(false);
+  const [nodeId, setNodeId] = useState(null);
   const items =
     filterSelections.length === 0
       ? data
@@ -36,6 +38,11 @@ export default function StandardTable({
       setSortValue(field);
       setSortDescending(true);
     }
+  };
+
+  const handleButtonClick = (nodeId) => {
+    setNodeId(nodeId);
+    setNodeModalVisible(true);
   };
 
   return (
@@ -111,7 +118,7 @@ export default function StandardTable({
                       )}
                     >
                       <button
-                        onClick={() => buttonAction(item.id)}
+                        onClick={() => handleButtonClick(item.id)}
                         className="p-2 text-sm rounded bg-orange-200 border-orange-200 border-1 text-gray-700 hover:bg-orange-400"
                       >
                         {buttonText}
@@ -125,6 +132,14 @@ export default function StandardTable({
           </div>
         </div>
       </div>
+      <NodeDetailsModal
+        nodeId={nodeId ? nodeId : null}
+        show={nodeModalVisible}
+        onClose={() => {
+          setNodeId(null);
+          setNodeModalVisible(false);
+        }}
+      />
     </div>
   );
 }

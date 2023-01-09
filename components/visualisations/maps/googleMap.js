@@ -39,11 +39,10 @@ const MapOptions = (maps) => {
 export default function GoogleMap({
   markers,
   center = { lat: 51.4769, lng: -0.09 },
-  zoom = 11,
+  zoom = 8,
 }) {
   const [nodeId, setNodeId] = useState(null);
   const [nodeModalVisible, setNodeModalVisible] = useState(false);
-  const { nodes: nodesInStore } = useNodeStore();
 
   const handleMarkerClick = (marker) => {
     setNodeId(marker.id);

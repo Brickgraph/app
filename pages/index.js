@@ -90,35 +90,10 @@ export default function Home({ status, data }) {
             node.latitude !== null &&
             node.longitude !== null
         );
-        // Add OfficeBuildingIcon to each marker
+
         markers.forEach((marker) => {
           marker.icon = OfficeBuildingIcon;
         });
-        console.log(markers);
-        /* const markers = [
-          { id: 14, lat: 51.5, lng: 0.09, label: "Resi", icon: HomeIcon },
-          {
-            id: 16,
-            lat: 52.6,
-            lng: 1.09,
-            label: "Industrial",
-            icon: OfficeBuildingIcon,
-          },
-          {
-            id: 10,
-            lat: 50.9,
-            lng: 0.2,
-            label: "Retail",
-            icon: CurrencyPoundIcon,
-          },
-          {
-            id: 12,
-            lat: 51.7,
-            lng: -1.09,
-            label: "Office",
-            icon: OfficeBuildingIcon,
-          },
-        ]; */
         return (
           <div>
             <GoogleMap markers={markers} />
