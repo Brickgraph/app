@@ -29,7 +29,7 @@ export function GraphVisual({
   const { edges: edgesInStore } = useEdgeStore();
 
   useEffect(() => {
-    setGraphData(graphData);
+    setGraphData(data);
   }, [data]);
 
   const [graphState, setGraphState] = useState(
@@ -116,7 +116,7 @@ export function GraphVisual({
 
   const { events } = graphState;
 
-  if (dataLoaded !== true || graphData === null) {
+  if (dataLoaded !== true || graphData.nodes.length < 1) {
     return (
       <>
         <div className="flex items-center place-content-center h-[calc(100vh-100px)]">
