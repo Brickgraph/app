@@ -20,6 +20,7 @@ export default function SidebarAvatar() {
             onClick={() => setAccountIsOpen(true)}
           >
             <Image
+              className="rounded-full"
               height={64}
               width={64}
               src={

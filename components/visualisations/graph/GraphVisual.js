@@ -28,6 +28,10 @@ export function GraphVisual({
   const { nodes: nodesInStore } = useNodeStore();
   const { edges: edgesInStore } = useEdgeStore();
 
+  useEffect(() => {
+    setGraphData(graphData);
+  }, [data]);
+
   const [graphState, setGraphState] = useState(
     {
       graph: graphData,
@@ -102,10 +106,6 @@ export function GraphVisual({
   };
 
   useEffect(() => {
-    setGraphData(graphData);
-  }, [data]);
-
-  useEffect(() => {
     handleNodeFilter(nodeFilterSelections);
   }, [nodeFilterSelections]);
 
@@ -116,12 +116,12 @@ export function GraphVisual({
 
   const { events } = graphState;
 
-  if (dataLoaded !== true) {
+  if (dataLoaded !== true || graphData === null) {
     return (
       <>
         <div className="flex items-center place-content-center h-[calc(100vh-100px)]">
           <LoadingSpinner message={"Refreshing graph loading spinner..."} />
-          <span>Refreshing graph...</span>
+          <span>Loading graph...</span>
         </div>
       </>
     );
